@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', function () {
     const fileNameSpan = document.getElementById('fileName');
     const userTokenInput = document.getElementById('userToken');
 
+    console.log('Processor Loaded')
+
     // Add click event to the drop zone to trigger file input click
     dropZone.addEventListener('click', () => fileInput.click());
 
@@ -60,6 +62,11 @@ document.addEventListener('DOMContentLoaded', function () {
         const fromDate = document.getElementById('filterFromDate').value;
         const toDate = document.getElementById('filterToDate').value;
         const userTokenInput = document.getElementById('userToken').value;
+
+         // Add your logic here
+    console.log('From Date:', fromDate);
+    console.log('To Date:', toDate);
+    console.log('User Token:', userTokenInput);
 
         // Check if both dates are selected, if not, alert the user and return
         if (!fromDate || !toDate) {
@@ -114,8 +121,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     // Create a link to the receipt and add it to the table
                     const receiptCell = row.insertCell(6);
                     const receiptLink = document.createElement('a');
-                    receiptLink.href = entry.receiptLink;
-                    receiptLink.textContent = 'receipt';
+                    receiptLink.href = entry.weburl;
+                    receiptLink.textContent = 'Receipt';
                     receiptLink.target = '_blank';
                     receiptCell.appendChild(receiptLink);
 
@@ -217,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function () {
                                 transactionTime: receipt.TransactionTime.valueTime,
                                 itemName: item.valueObject.Name.valueString,
                                 itemTotalPrice: item.valueObject.TotalPrice.valueNumber,
+                                weburl: weburl,
                                 receiptId: receiptId,
                                 userID: userTokenInput.value // Add userID from userToken input field
                             };
