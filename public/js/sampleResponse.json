@@ -1,0 +1,3558 @@
+{
+  "version": "2.1.0",
+  "readResults": [
+    {
+      "page": 1,
+      "angle": -3.3872,
+      "width": 702,
+      "height": 2573,
+      "unit": "pixel",
+      "lines": [
+        {
+          "boundingBox": [
+            246,
+            95,
+            518,
+            87,
+            520,
+            140,
+            248,
+            149
+          ],
+          "text": "SPOTLIGHT BATHURST",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                247,
+                95,
+                382,
+                92,
+                383,
+                146,
+                248,
+                149
+              ],
+              "text": "SPOTLIGHT",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                393,
+                92,
+                519,
+                88,
+                519,
+                140,
+                394,
+                145
+              ],
+              "text": "BATHURST",
+              "confidence": 0.995
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            312,
+            146,
+            454,
+            144,
+            455,
+            176,
+            312,
+            178
+          ],
+          "text": "Tenancy 6,",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                312,
+                148,
+                413,
+                145,
+                414,
+                177,
+                313,
+                179
+              ],
+              "text": "Tenancy",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                421,
+                145,
+                453,
+                145,
+                454,
+                177,
+                423,
+                177
+              ],
+              "text": "6,",
+              "confidence": 0.996
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            236,
+            183,
+            524,
+            177,
+            525,
+            208,
+            236,
+            214
+          ],
+          "text": "3 Pat O'Leary Drive",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                238,
+                184,
+                256,
+                184,
+                257,
+                215,
+                239,
+                215
+              ],
+              "text": "3",
+              "confidence": 0.997
+            },
+            {
+              "boundingBox": [
+                262,
+                183,
+                315,
+                182,
+                316,
+                213,
+                264,
+                215
+              ],
+              "text": "Pat",
+              "confidence": 0.998
+            },
+            {
+              "boundingBox": [
+                322,
+                182,
+                432,
+                179,
+                433,
+                210,
+                323,
+                213
+              ],
+              "text": "O'Leary",
+              "confidence": 0.984
+            },
+            {
+              "boundingBox": [
+                441,
+                179,
+                523,
+                178,
+                523,
+                208,
+                442,
+                210
+              ],
+              "text": "Drive",
+              "confidence": 0.996
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            273,
+            217,
+            486,
+            212,
+            487,
+            241,
+            274,
+            249
+          ],
+          "text": "Kelso NSW 2795",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                273,
+                219,
+                351,
+                215,
+                351,
+                246,
+                275,
+                249
+              ],
+              "text": "Kelso",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                361,
+                215,
+                410,
+                213,
+                409,
+                244,
+                361,
+                246
+              ],
+              "text": "NSW",
+              "confidence": 0.998
+            },
+            {
+              "boundingBox": [
+                422,
+                213,
+                486,
+                212,
+                484,
+                242,
+                422,
+                244
+              ],
+              "text": "2795",
+              "confidence": 0.987
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            267,
+            252,
+            490,
+            245,
+            491,
+            275,
+            267,
+            283
+          ],
+          "text": "Ph 02 5322 1808",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                269,
+                252,
+                298,
+                251,
+                298,
+                283,
+                268,
+                283
+              ],
+              "text": "Ph",
+              "confidence": 0.998
+            },
+            {
+              "boundingBox": [
+                307,
+                251,
+                345,
+                250,
+                345,
+                282,
+                306,
+                283
+              ],
+              "text": "02",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                354,
+                250,
+                419,
+                248,
+                419,
+                279,
+                353,
+                281
+              ],
+              "text": "5322",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                431,
+                247,
+                491,
+                245,
+                492,
+                275,
+                432,
+                278
+              ],
+              "text": "1808",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            268,
+            286,
+            492,
+            280,
+            493,
+            311,
+            269,
+            317
+          ],
+          "text": "ABN 39564861886",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                269,
+                287,
+                312,
+                286,
+                313,
+                317,
+                270,
+                317
+              ],
+              "text": "ABN",
+              "confidence": 0.997
+            },
+            {
+              "boundingBox": [
+                325,
+                285,
+                492,
+                280,
+                491,
+                312,
+                325,
+                317
+              ],
+              "text": "39564861886",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            52,
+            360,
+            225,
+            360,
+            225,
+            390,
+            52,
+            390
+          ],
+          "text": "Description",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                53,
+                361,
+                222,
+                361,
+                221,
+                391,
+                52,
+                391
+              ],
+              "text": "Description",
+              "confidence": 0.991
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            577,
+            354,
+            684,
+            353,
+            685,
+            381,
+            577,
+            384
+          ],
+          "text": "Total $",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                577,
+                355,
+                653,
+                353,
+                654,
+                382,
+                578,
+                385
+              ],
+              "text": "Total",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                659,
+                353,
+                677,
+                353,
+                678,
+                381,
+                660,
+                382
+              ],
+              "text": "$",
+              "confidence": 0.996
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            50,
+            431,
+            463,
+            421,
+            463,
+            454,
+            50,
+            463
+          ],
+          "text": "LOYAL S/S PIPING TIP, NO.234",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                50,
+                432,
+                129,
+                430,
+                130,
+                462,
+                51,
+                463
+              ],
+              "text": "LOYAL",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                138,
+                429,
+                189,
+                428,
+                189,
+                461,
+                138,
+                462
+              ],
+              "text": "S/S",
+              "confidence": 0.998
+            },
+            {
+              "boundingBox": [
+                198,
+                428,
+                298,
+                425,
+                298,
+                459,
+                198,
+                461
+              ],
+              "text": "PIPING",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                306,
+                425,
+                362,
+                424,
+                362,
+                457,
+                307,
+                458
+              ],
+              "text": "TIP,",
+              "confidence": 0.985
+            },
+            {
+              "boundingBox": [
+                368,
+                424,
+                462,
+                422,
+                462,
+                454,
+                368,
+                457
+              ],
+              "text": "NO.234",
+              "confidence": 0.995
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            48,
+            466,
+            207,
+            464,
+            208,
+            494,
+            48,
+            498
+          ],
+          "text": "MLT OPEN M",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                49,
+                467,
+                97,
+                467,
+                97,
+                498,
+                48,
+                498
+              ],
+              "text": "MLT",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                106,
+                466,
+                174,
+                465,
+                173,
+                495,
+                106,
+                497
+              ],
+              "text": "OPEN",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                183,
+                465,
+                201,
+                465,
+                200,
+                493,
+                182,
+                494
+              ],
+              "text": "M",
+              "confidence": 0.996
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            605,
+            423,
+            681,
+            420,
+            681,
+            447,
+            605,
+            453
+          ],
+          "text": "3.60*",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                605,
+                423,
+                678,
+                420,
+                680,
+                448,
+                606,
+                452
+              ],
+              "text": "3.60*",
+              "confidence": 0.996
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            47,
+            500,
+            249,
+            497,
+            250,
+            527,
+            48,
+            532
+          ],
+          "text": "9341671009338",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                48,
+                501,
+                249,
+                497,
+                248,
+                528,
+                49,
+                532
+              ],
+              "text": "9341671009338",
+              "confidence": 0.987
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            80,
+            536,
+            339,
+            530,
+            340,
+            562,
+            81,
+            568
+          ],
+          "text": "VIP SAVING: $0.90",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                81,
+                537,
+                123,
+                535,
+                125,
+                568,
+                82,
+                568
+              ],
+              "text": "VIP",
+              "confidence": 0.997
+            },
+            {
+              "boundingBox": [
+                132,
+                535,
+                251,
+                532,
+                252,
+                565,
+                133,
+                568
+              ],
+              "text": "SAVING:",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                258,
+                532,
+                338,
+                531,
+                340,
+                562,
+                259,
+                565
+              ],
+              "text": "$0.90",
+              "confidence": 0.996
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            46,
+            606,
+            349,
+            597,
+            350,
+            633,
+            47,
+            641
+          ],
+          "text": "TOTAL (Inc GST)",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                47,
+                608,
+                182,
+                604,
+                184,
+                638,
+                49,
+                641
+              ],
+              "text": "TOTAL",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                207,
+                603,
+                276,
+                601,
+                276,
+                635,
+                208,
+                637
+              ],
+              "text": "(Inc",
+              "confidence": 0.889
+            },
+            {
+              "boundingBox": [
+                283,
+                600,
+                348,
+                597,
+                349,
+                634,
+                283,
+                635
+              ],
+              "text": "GST)",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            45,
+            645,
+            136,
+            643,
+            137,
+            673,
+            45,
+            676
+          ],
+          "text": "1 Item",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                46,
+                646,
+                62,
+                645,
+                62,
+                676,
+                45,
+                676
+              ],
+              "text": "1",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                69,
+                645,
+                136,
+                644,
+                136,
+                674,
+                69,
+                676
+              ],
+              "text": "Item",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            602,
+            595,
+            677,
+            596,
+            677,
+            621,
+            603,
+            624
+          ],
+          "text": "$3.60",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                602,
+                595,
+                675,
+                595,
+                675,
+                623,
+                602,
+                624
+              ],
+              "text": "$3.60",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            68,
+            713,
+            199,
+            710,
+            200,
+            744,
+            69,
+            747
+          ],
+          "text": "VIP Card",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                69,
+                715,
+                118,
+                714,
+                119,
+                747,
+                71,
+                746
+              ],
+              "text": "VIP",
+              "confidence": 0.997
+            },
+            {
+              "boundingBox": [
+                126,
+                713,
+                196,
+                711,
+                196,
+                745,
+                128,
+                747
+              ],
+              "text": "Card",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            406,
+            702,
+            601,
+            700,
+            602,
+            732,
+            406,
+            736
+          ],
+          "text": "2730000491451",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                407,
+                703,
+                601,
+                701,
+                601,
+                733,
+                406,
+                737
+              ],
+              "text": "2730000491451",
+              "confidence": 0.986
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            34,
+            789,
+            256,
+            780,
+            257,
+            815,
+            35,
+            823
+          ],
+          "text": "Paid by EFTPOS",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                34,
+                790,
+                99,
+                788,
+                100,
+                822,
+                35,
+                823
+              ],
+              "text": "Paid",
+              "confidence": 0.989
+            },
+            {
+              "boundingBox": [
+                108,
+                788,
+                148,
+                786,
+                148,
+                820,
+                109,
+                821
+              ],
+              "text": "by",
+              "confidence": 0.999
+            },
+            {
+              "boundingBox": [
+                157,
+                786,
+                257,
+                780,
+                257,
+                815,
+                157,
+                820
+              ],
+              "text": "EFTPOS",
+              "confidence": 0.975
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            597,
+            769,
+            672,
+            764,
+            673,
+            792,
+            599,
+            799
+          ],
+          "text": "$3.60",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                597,
+                769,
+                670,
+                764,
+                673,
+                793,
+                599,
+                799
+              ],
+              "text": "$3.60",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            62,
+            899,
+            161,
+            894,
+            162,
+            924,
+            64,
+            931
+          ],
+          "text": "BNCSG2",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                63,
+                899,
+                160,
+                895,
+                159,
+                925,
+                64,
+                932
+              ],
+              "text": "BNCSG2",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            263,
+            888,
+            363,
+            885,
+            364,
+            915,
+            263,
+            919
+          ],
+          "text": "BNCSG2",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                263,
+                888,
+                360,
+                885,
+                359,
+                917,
+                263,
+                919
+              ],
+              "text": "BNCSG2",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            401,
+            882,
+            484,
+            881,
+            482,
+            911,
+            402,
+            913
+          ],
+          "text": "DEBIT",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                401,
+                882,
+                480,
+                881,
+                481,
+                912,
+                401,
+                913
+              ],
+              "text": "DEBIT",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            65,
+            937,
+            220,
+            926,
+            221,
+            957,
+            67,
+            968
+          ],
+          "text": "462239 344",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                65,
+                938,
+                156,
+                931,
+                157,
+                963,
+                67,
+                968
+              ],
+              "text": "462239",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                169,
+                930,
+                219,
+                927,
+                220,
+                958,
+                170,
+                962
+              ],
+              "text": "344",
+              "confidence": 0.998
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            434,
+            918,
+            539,
+            917,
+            539,
+            947,
+            435,
+            949
+          ],
+          "text": "Savings",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                435,
+                919,
+                537,
+                917,
+                539,
+                947,
+                436,
+                950
+              ],
+              "text": "Savings",
+              "confidence": 0.996
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            60,
+            972,
+            188,
+            967,
+            189,
+            997,
+            61,
+            1002
+          ],
+          "text": "PURCHASE",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                61,
+                972,
+                186,
+                967,
+                186,
+                997,
+                62,
+                1002
+              ],
+              "text": "PURCHASE",
+              "confidence": 0.991
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            399,
+            956,
+            463,
+            954,
+            463,
+            982,
+            401,
+            985
+          ],
+          "text": "$AUD",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                399,
+                956,
+                462,
+                954,
+                463,
+                982,
+                400,
+                985
+              ],
+              "text": "$AUD",
+              "confidence": 0.979
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            550,
+            948,
+            609,
+            944,
+            610,
+            974,
+            551,
+            979
+          ],
+          "text": "3.60",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                550,
+                948,
+                608,
+                944,
+                611,
+                974,
+                551,
+                979
+              ],
+              "text": "3.60",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            63,
+            1008,
+            202,
+            1001,
+            203,
+            1031,
+            65,
+            1039
+          ],
+          "text": "TOTAL EFT",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                64,
+                1009,
+                139,
+                1004,
+                140,
+                1036,
+                65,
+                1039
+              ],
+              "text": "TOTAL",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                150,
+                1004,
+                201,
+                1001,
+                202,
+                1032,
+                150,
+                1036
+              ],
+              "text": "EFT",
+              "confidence": 0.997
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            411,
+            993,
+            477,
+            988,
+            478,
+            1016,
+            412,
+            1021
+          ],
+          "text": "$AUD",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                411,
+                993,
+                474,
+                988,
+                476,
+                1016,
+                413,
+                1021
+              ],
+              "text": "$AUD",
+              "confidence": 0.947
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            563,
+            983,
+            625,
+            980,
+            625,
+            1009,
+            564,
+            1013
+          ],
+          "text": "3.60",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                564,
+                983,
+                624,
+                980,
+                626,
+                1009,
+                565,
+                1013
+              ],
+              "text": "3.60",
+              "confidence": 0.961
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            59,
+            1044,
+            249,
+            1034,
+            250,
+            1064,
+            61,
+            1077
+          ],
+          "text": "EXPIRES 0427",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                60,
+                1045,
+                168,
+                1039,
+                168,
+                1071,
+                61,
+                1077
+              ],
+              "text": "EXPIRES",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                177,
+                1039,
+                247,
+                1034,
+                247,
+                1064,
+                177,
+                1070
+              ],
+              "text": "0427",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            61,
+            1084,
+            261,
+            1069,
+            263,
+            1099,
+            62,
+            1116
+          ],
+          "text": "RRN 203100900",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                61,
+                1084,
+                107,
+                1081,
+                108,
+                1113,
+                63,
+                1117
+              ],
+              "text": "RRN",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                116,
+                1080,
+                261,
+                1070,
+                261,
+                1101,
+                117,
+                1112
+              ],
+              "text": "203100900",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            61,
+            1120,
+            290,
+            1103,
+            291,
+            1135,
+            63,
+            1153
+          ],
+          "text": "TRANS. APPROVED",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                62,
+                1121,
+                153,
+                1114,
+                154,
+                1147,
+                63,
+                1153
+              ],
+              "text": "TRANS.",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                159,
+                1113,
+                289,
+                1104,
+                289,
+                1136,
+                161,
+                1146
+              ],
+              "text": "APPROVED",
+              "confidence": 0.995
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            89,
+            1155,
+            411,
+            1132,
+            412,
+            1165,
+            91,
+            1189
+          ],
+          "text": "AUTHORISATION: 238601",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                89,
+                1156,
+                308,
+                1140,
+                309,
+                1173,
+                92,
+                1189
+              ],
+              "text": "AUTHORISATION:",
+              "confidence": 0.986
+            },
+            {
+              "boundingBox": [
+                315,
+                1139,
+                411,
+                1133,
+                411,
+                1166,
+                316,
+                1173
+              ],
+              "text": "238601",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            31,
+            1271,
+            184,
+            1261,
+            186,
+            1295,
+            33,
+            1305
+          ],
+          "text": "Change Due",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                31,
+                1272,
+                123,
+                1267,
+                125,
+                1300,
+                34,
+                1306
+              ],
+              "text": "Change",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                129,
+                1266,
+                184,
+                1262,
+                186,
+                1295,
+                132,
+                1299
+              ],
+              "text": "Due",
+              "confidence": 0.998
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            585,
+            1232,
+            665,
+            1227,
+            665,
+            1256,
+            587,
+            1263
+          ],
+          "text": "$0.00",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                586,
+                1232,
+                663,
+                1227,
+                665,
+                1257,
+                588,
+                1263
+              ],
+              "text": "$0.00",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            29,
+            1309,
+            183,
+            1299,
+            185,
+            1331,
+            31,
+            1342
+          ],
+          "text": "GST Amount",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                30,
+                1310,
+                80,
+                1307,
+                82,
+                1339,
+                32,
+                1343
+              ],
+              "text": "GST",
+              "confidence": 0.997
+            },
+            {
+              "boundingBox": [
+                86,
+                1306,
+                184,
+                1300,
+                185,
+                1332,
+                88,
+                1339
+              ],
+              "text": "Amount",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            585,
+            1267,
+            662,
+            1262,
+            666,
+            1293,
+            588,
+            1298
+          ],
+          "text": "$0.33",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                585,
+                1266,
+                664,
+                1262,
+                666,
+                1293,
+                587,
+                1298
+              ],
+              "text": "$0.33",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            32,
+            1383,
+            453,
+            1348,
+            456,
+            1383,
+            34,
+            1417
+          ],
+          "text": "* Signifies item(s) with GST",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                33,
+                1383,
+                50,
+                1382,
+                52,
+                1416,
+                35,
+                1417
+              ],
+              "text": "*",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                57,
+                1381,
+                200,
+                1370,
+                201,
+                1405,
+                58,
+                1415
+              ],
+              "text": "Signifies",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                209,
+                1370,
+                318,
+                1361,
+                319,
+                1396,
+                211,
+                1405
+              ],
+              "text": "item(s)",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                324,
+                1360,
+                392,
+                1354,
+                393,
+                1389,
+                326,
+                1395
+              ],
+              "text": "with",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                399,
+                1353,
+                453,
+                1349,
+                454,
+                1383,
+                401,
+                1388
+              ],
+              "text": "GST",
+              "confidence": 0.997
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            32,
+            1459,
+            205,
+            1446,
+            207,
+            1476,
+            34,
+            1490
+          ],
+          "text": "Account No:",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                32,
+                1460,
+                141,
+                1451,
+                142,
+                1482,
+                34,
+                1491
+              ],
+              "text": "Account",
+              "confidence": 0.995
+            },
+            {
+              "boundingBox": [
+                147,
+                1451,
+                202,
+                1446,
+                203,
+                1478,
+                149,
+                1482
+              ],
+              "text": "No:",
+              "confidence": 0.999
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            242,
+            1439,
+            437,
+            1425,
+            439,
+            1458,
+            244,
+            1472
+          ],
+          "text": "2730000491451",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                242,
+                1440,
+                437,
+                1425,
+                439,
+                1459,
+                244,
+                1472
+              ],
+              "text": "2730000491451",
+              "confidence": 0.986
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            34,
+            1532,
+            660,
+            1484,
+            662,
+            1513,
+            35,
+            1559
+          ],
+          "text": "************* BARGAINS GALORE! ***********",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                34,
+                1534,
+                228,
+                1517,
+                228,
+                1548,
+                35,
+                1559
+              ],
+              "text": "*************",
+              "confidence": 0.986
+            },
+            {
+              "boundingBox": [
+                238,
+                1516,
+                360,
+                1506,
+                360,
+                1538,
+                238,
+                1547
+              ],
+              "text": "BARGAINS",
+              "confidence": 0.995
+            },
+            {
+              "boundingBox": [
+                371,
+                1505,
+                479,
+                1497,
+                479,
+                1528,
+                372,
+                1537
+              ],
+              "text": "GALORE!",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                492,
+                1496,
+                657,
+                1485,
+                658,
+                1511,
+                492,
+                1527
+              ],
+              "text": "***********",
+              "confidence": 0.968
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            33,
+            1571,
+            61,
+            1568,
+            65,
+            1593,
+            37,
+            1596
+          ],
+          "text": "**",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                33,
+                1571,
+                62,
+                1568,
+                65,
+                1593,
+                36,
+                1596
+              ],
+              "text": "**",
+              "confidence": 0.998
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            33,
+            1605,
+            374,
+            1583,
+            376,
+            1612,
+            35,
+            1636
+          ],
+          "text": "Your total savings are:",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                33,
+                1606,
+                98,
+                1601,
+                100,
+                1633,
+                35,
+                1637
+              ],
+              "text": "Your",
+              "confidence": 0.987
+            },
+            {
+              "boundingBox": [
+                107,
+                1601,
+                188,
+                1595,
+                190,
+                1626,
+                109,
+                1632
+              ],
+              "text": "total",
+              "confidence": 0.995
+            },
+            {
+              "boundingBox": [
+                194,
+                1595,
+                304,
+                1588,
+                307,
+                1617,
+                197,
+                1626
+              ],
+              "text": "savings",
+              "confidence": 0.995
+            },
+            {
+              "boundingBox": [
+                311,
+                1587,
+                373,
+                1584,
+                376,
+                1611,
+                314,
+                1616
+              ],
+              "text": "are:",
+              "confidence": 0.993
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            581,
+            1563,
+            660,
+            1556,
+            661,
+            1585,
+            584,
+            1594
+          ],
+          "text": "$0.90",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                581,
+                1563,
+                658,
+                1556,
+                661,
+                1586,
+                584,
+                1594
+              ],
+              "text": "$0.90",
+              "confidence": 0.989
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            193,
+            1663,
+            514,
+            1640,
+            517,
+            1673,
+            196,
+            1698
+          ],
+          "text": "TAX INVOICE",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                194,
+                1665,
+                263,
+                1659,
+                266,
+                1693,
+                196,
+                1699
+              ],
+              "text": "TAX",
+              "confidence": 0.997
+            },
+            {
+              "boundingBox": [
+                302,
+                1656,
+                498,
+                1642,
+                500,
+                1676,
+                304,
+                1690
+              ],
+              "text": "INVOICE",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            260,
+            1696,
+            440,
+            1684,
+            443,
+            1716,
+            263,
+            1729
+          ],
+          "text": "005402031009",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                261,
+                1697,
+                440,
+                1685,
+                442,
+                1716,
+                263,
+                1730
+              ],
+              "text": "005402031009",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            166,
+            1775,
+            540,
+            1752,
+            542,
+            1784,
+            168,
+            1809
+          ],
+          "text": "Served by Linda on lane 2",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                167,
+                1778,
+                256,
+                1770,
+                258,
+                1804,
+                169,
+                1809
+              ],
+              "text": "Served",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                262,
+                1770,
+                300,
+                1767,
+                302,
+                1801,
+                265,
+                1804
+              ],
+              "text": "by",
+              "confidence": 0.998
+            },
+            {
+              "boundingBox": [
+                306,
+                1767,
+                390,
+                1761,
+                392,
+                1796,
+                308,
+                1801
+              ],
+              "text": "Linda",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                397,
+                1761,
+                432,
+                1758,
+                434,
+                1793,
+                399,
+                1795
+              ],
+              "text": "on",
+              "confidence": 0.999
+            },
+            {
+              "boundingBox": [
+                443,
+                1758,
+                507,
+                1754,
+                509,
+                1788,
+                445,
+                1792
+              ],
+              "text": "lane",
+              "confidence": 0.99
+            },
+            {
+              "boundingBox": [
+                514,
+                1754,
+                532,
+                1753,
+                534,
+                1786,
+                516,
+                1787
+              ],
+              "text": "2",
+              "confidence": 0.996
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            192,
+            1811,
+            515,
+            1789,
+            518,
+            1823,
+            193,
+            1846
+          ],
+          "text": "17/04/2024 11:45:38 AM",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                193,
+                1812,
+                338,
+                1801,
+                340,
+                1836,
+                194,
+                1847
+              ],
+              "text": "17/04/2024",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                346,
+                1801,
+                470,
+                1793,
+                472,
+                1827,
+                347,
+                1836
+              ],
+              "text": "11:45:38",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                476,
+                1792,
+                515,
+                1790,
+                517,
+                1824,
+                478,
+                1827
+              ],
+              "text": "AM",
+              "confidence": 0.999
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            95,
+            1937,
+            136,
+            1934,
+            136,
+            1952,
+            95,
+            1955
+          ],
+          "text": "===",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                95,
+                1937,
+                133,
+                1934,
+                134,
+                1951,
+                95,
+                1954
+              ],
+              "text": "===",
+              "confidence": 0.996
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            480,
+            1911,
+            608,
+            1901,
+            609,
+            1921,
+            480,
+            1930
+          ],
+          "text": "=========",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                480,
+                1912,
+                603,
+                1902,
+                603,
+                1922,
+                481,
+                1930
+              ],
+              "text": "=========",
+              "confidence": 0.715
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            106,
+            1963,
+            595,
+            1932,
+            596,
+            1967,
+            107,
+            1996
+          ],
+          "text": "Please retain receipt as proof of",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                107,
+                1964,
+                196,
+                1959,
+                197,
+                1992,
+                107,
+                1996
+              ],
+              "text": "Please",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                205,
+                1958,
+                298,
+                1953,
+                298,
+                1987,
+                206,
+                1991
+              ],
+              "text": "retain",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                307,
+                1952,
+                418,
+                1945,
+                418,
+                1979,
+                307,
+                1986
+              ],
+              "text": "receipt",
+              "confidence": 0.995
+            },
+            {
+              "boundingBox": [
+                425,
+                1945,
+                460,
+                1942,
+                460,
+                1977,
+                425,
+                1979
+              ],
+              "text": "as",
+              "confidence": 0.997
+            },
+            {
+              "boundingBox": [
+                467,
+                1942,
+                551,
+                1936,
+                551,
+                1970,
+                467,
+                1976
+              ],
+              "text": "proof",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                558,
+                1935,
+                595,
+                1933,
+                595,
+                1967,
+                558,
+                1970
+              ],
+              "text": "of",
+              "confidence": 0.999
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            278,
+            1993,
+            412,
+            1982,
+            415,
+            2013,
+            281,
+            2024
+          ],
+          "text": "purchase.",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                279,
+                1993,
+                413,
+                1982,
+                415,
+                2014,
+                281,
+                2024
+              ],
+              "text": "purchase.",
+              "confidence": 0.979
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            56,
+            2040,
+            644,
+            2006,
+            646,
+            2038,
+            57,
+            2073
+          ],
+          "text": "We accept 28 day change of mind returns.",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                57,
+                2041,
+                89,
+                2039,
+                90,
+                2071,
+                58,
+                2073
+              ],
+              "text": "We",
+              "confidence": 0.998
+            },
+            {
+              "boundingBox": [
+                96,
+                2039,
+                189,
+                2033,
+                190,
+                2066,
+                97,
+                2071
+              ],
+              "text": "accept",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                196,
+                2032,
+                231,
+                2030,
+                232,
+                2064,
+                197,
+                2066
+              ],
+              "text": "28",
+              "confidence": 0.997
+            },
+            {
+              "boundingBox": [
+                237,
+                2030,
+                289,
+                2026,
+                290,
+                2061,
+                239,
+                2064
+              ],
+              "text": "day",
+              "confidence": 0.998
+            },
+            {
+              "boundingBox": [
+                298,
+                2026,
+                393,
+                2020,
+                394,
+                2054,
+                299,
+                2060
+              ],
+              "text": "change",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                400,
+                2020,
+                437,
+                2018,
+                439,
+                2051,
+                401,
+                2054
+              ],
+              "text": "of",
+              "confidence": 0.999
+            },
+            {
+              "boundingBox": [
+                444,
+                2017,
+                512,
+                2013,
+                513,
+                2046,
+                445,
+                2051
+              ],
+              "text": "mind",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                521,
+                2013,
+                644,
+                2006,
+                645,
+                2037,
+                522,
+                2046
+              ],
+              "text": "returns.",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            105,
+            2074,
+            591,
+            2044,
+            593,
+            2078,
+            106,
+            2107
+          ],
+          "text": "Merchandise must be in a saleable",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                105,
+                2075,
+                266,
+                2065,
+                268,
+                2099,
+                106,
+                2107
+              ],
+              "text": "Merchandise",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                273,
+                2065,
+                341,
+                2060,
+                342,
+                2094,
+                274,
+                2098
+              ],
+              "text": "must",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                347,
+                2060,
+                386,
+                2058,
+                388,
+                2091,
+                348,
+                2094
+              ],
+              "text": "be",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                395,
+                2057,
+                429,
+                2055,
+                430,
+                2089,
+                397,
+                2091
+              ],
+              "text": "in",
+              "confidence": 0.999
+            },
+            {
+              "boundingBox": [
+                438,
+                2054,
+                456,
+                2053,
+                457,
+                2087,
+                439,
+                2088
+              ],
+              "text": "a",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                467,
+                2053,
+                591,
+                2045,
+                592,
+                2078,
+                468,
+                2086
+              ],
+              "text": "saleable",
+              "confidence": 0.995
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            88,
+            2112,
+            617,
+            2079,
+            619,
+            2114,
+            89,
+            2146
+          ],
+          "text": "condition and some exclusions apply.",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                89,
+                2114,
+                216,
+                2106,
+                217,
+                2138,
+                89,
+                2146
+              ],
+              "text": "condition",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                223,
+                2105,
+                275,
+                2102,
+                276,
+                2135,
+                224,
+                2138
+              ],
+              "text": "and",
+              "confidence": 0.998
+            },
+            {
+              "boundingBox": [
+                282,
+                2102,
+                349,
+                2097,
+                350,
+                2131,
+                283,
+                2135
+              ],
+              "text": "some",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                356,
+                2097,
+                511,
+                2087,
+                513,
+                2121,
+                357,
+                2130
+              ],
+              "text": "exclusions",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                518,
+                2087,
+                616,
+                2080,
+                618,
+                2115,
+                519,
+                2121
+              ],
+              "text": "apply.",
+              "confidence": 0.996
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            40,
+            2150,
+            654,
+            2114,
+            656,
+            2148,
+            41,
+            2184
+          ],
+          "text": "Please visit our website for more details.",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                40,
+                2150,
+                130,
+                2146,
+                131,
+                2180,
+                42,
+                2184
+              ],
+              "text": "Please",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                136,
+                2145,
+                215,
+                2141,
+                217,
+                2175,
+                138,
+                2180
+              ],
+              "text": "visit",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                222,
+                2141,
+                274,
+                2138,
+                275,
+                2172,
+                223,
+                2175
+              ],
+              "text": "our",
+              "confidence": 0.998
+            },
+            {
+              "boundingBox": [
+                280,
+                2137,
+                392,
+                2131,
+                393,
+                2165,
+                282,
+                2172
+              ],
+              "text": "website",
+              "confidence": 0.996
+            },
+            {
+              "boundingBox": [
+                399,
+                2130,
+                451,
+                2127,
+                452,
+                2161,
+                401,
+                2165
+              ],
+              "text": "for",
+              "confidence": 0.997
+            },
+            {
+              "boundingBox": [
+                458,
+                2127,
+                525,
+                2123,
+                526,
+                2156,
+                459,
+                2161
+              ],
+              "text": "more",
+              "confidence": 0.994
+            },
+            {
+              "boundingBox": [
+                532,
+                2122,
+                654,
+                2115,
+                655,
+                2147,
+                533,
+                2156
+              ],
+              "text": "details.",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            55,
+            2185,
+            648,
+            2149,
+            650,
+            2186,
+            56,
+            2221
+          ],
+          "text": "spotlightstores.com/shop-with-spotlight/",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                55,
+                2187,
+                644,
+                2150,
+                646,
+                2187,
+                57,
+                2221
+              ],
+              "text": "spotlightstores.com/shop-with-spotlight/",
+              "confidence": 0.924
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            193,
+            2217,
+            503,
+            2200,
+            504,
+            2231,
+            195,
+            2249
+          ],
+          "text": "returns-and-exchanges",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                194,
+                2218,
+                502,
+                2200,
+                501,
+                2232,
+                197,
+                2249
+              ],
+              "text": "returns-and-exchanges",
+              "confidence": 0.994
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            91,
+            2265,
+            120,
+            2265,
+            119,
+            2282,
+            91,
+            2282
+          ],
+          "text": "==",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                92,
+                2265,
+                115,
+                2265,
+                115,
+                2282,
+                92,
+                2282
+              ],
+              "text": "==",
+              "confidence": 0.871
+            }
+          ]
+        },
+        {
+          "boundingBox": [
+            238,
+            2434,
+            447,
+            2427,
+            448,
+            2459,
+            239,
+            2467
+          ],
+          "text": "0540200310092",
+          "appearance": {
+            "style": {
+              "name": "other",
+              "confidence": 0.878
+            }
+          },
+          "words": [
+            {
+              "boundingBox": [
+                239,
+                2436,
+                446,
+                2427,
+                445,
+                2460,
+                240,
+                2467
+              ],
+              "text": "0540200310092",
+              "confidence": 0.994
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "documentResults": [
+    {
+      "docType": "prebuilt:receipt",
+      "pageRange": [
+        1,
+        1
+      ],
+      "fields": {
+        "Items": {
+          "type": "array",
+          "valueArray": [
+            {
+              "type": "object",
+              "valueObject": {
+                "Name": {
+                  "type": "string",
+                  "valueString": "LOYAL S/S PIPING TIP, NO.234",
+                  "text": "LOYAL S/S PIPING TIP, NO.234",
+                  "boundingBox": [
+                    50,
+                    429.9,
+                    462,
+                    421.8,
+                    462.7,
+                    455.8,
+                    50.6,
+                    463.9
+                  ],
+                  "page": 1,
+                  "confidence": 0.954,
+                  "elements": [
+                    "#/readResults/0/lines/8/words/0",
+                    "#/readResults/0/lines/8/words/1",
+                    "#/readResults/0/lines/8/words/2",
+                    "#/readResults/0/lines/8/words/3",
+                    "#/readResults/0/lines/8/words/4"
+                  ]
+                }
+              }
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Name": {
+                  "type": "string",
+                  "valueString": "MLT OPEN M",
+                  "text": "MLT OPEN M",
+                  "boundingBox": [
+                    47.3,
+                    467,
+                    201,
+                    463.6,
+                    201.7,
+                    495.7,
+                    48,
+                    499.1
+                  ],
+                  "page": 1,
+                  "confidence": 0.969,
+                  "elements": [
+                    "#/readResults/0/lines/9/words/0",
+                    "#/readResults/0/lines/9/words/1",
+                    "#/readResults/0/lines/9/words/2"
+                  ]
+                },
+                "TotalPrice": {
+                  "type": "number",
+                  "valueNumber": 3.6,
+                  "text": "3.60*",
+                  "boundingBox": [
+                    605,
+                    423,
+                    678,
+                    420,
+                    680,
+                    448,
+                    606,
+                    452
+                  ],
+                  "page": 1,
+                  "confidence": 0.984,
+                  "elements": [
+                    "#/readResults/0/lines/10/words/0"
+                  ]
+                }
+              }
+            }
+          ]
+        },
+        "MerchantAddress": {
+          "type": "string",
+          "valueString": "3 Pat O'Leary Drive Kelso NSW 2795",
+          "text": "3 Pat O'Leary Drive Kelso NSW 2795",
+          "boundingBox": [
+            238,
+            183.7,
+            522.9,
+            175.9,
+            524.8,
+            242.2,
+            239.8,
+            250
+          ],
+          "page": 1,
+          "confidence": 0.309,
+          "elements": [
+            "#/readResults/0/lines/2/words/0",
+            "#/readResults/0/lines/2/words/1",
+            "#/readResults/0/lines/2/words/2",
+            "#/readResults/0/lines/2/words/3",
+            "#/readResults/0/lines/3/words/0",
+            "#/readResults/0/lines/3/words/1",
+            "#/readResults/0/lines/3/words/2"
+          ]
+        },
+        "MerchantName": {
+          "type": "string",
+          "valueString": "SPOTLIGHT BATHURST",
+          "text": "SPOTLIGHT BATHURST",
+          "boundingBox": [
+            246.8,
+            94,
+            519,
+            88,
+            520.2,
+            143,
+            248,
+            149
+          ],
+          "page": 1,
+          "confidence": 0.549,
+          "elements": [
+            "#/readResults/0/lines/0/words/0",
+            "#/readResults/0/lines/0/words/1"
+          ]
+        },
+        "MerchantPhoneNumber": {
+          "type": "phoneNumber",
+          "valuePhoneNumber": "+61253221808",
+          "text": "02 5322 1808",
+          "boundingBox": [
+            305,
+            250.7,
+            491.1,
+            245,
+            492.1,
+            277.5,
+            306,
+            283.2
+          ],
+          "page": 1,
+          "confidence": 0.989,
+          "elements": [
+            "#/readResults/0/lines/4/words/1",
+            "#/readResults/0/lines/4/words/2",
+            "#/readResults/0/lines/4/words/3"
+          ]
+        },
+        "ReceiptType": {
+          "type": "string",
+          "valueString": "Itemized",
+          "confidence": 0.995
+        },
+        "Tax": {
+          "type": "number",
+          "valueNumber": 0.33,
+          "text": "$0.33",
+          "boundingBox": [
+            585,
+            1266,
+            664,
+            1262,
+            666,
+            1293,
+            587,
+            1298
+          ],
+          "page": 1,
+          "confidence": 0.988,
+          "elements": [
+            "#/readResults/0/lines/38/words/0"
+          ]
+        },
+        "Total": {
+          "type": "number",
+          "valueNumber": 3.6,
+          "text": "$3.60",
+          "boundingBox": [
+            602,
+            595,
+            675,
+            595,
+            675,
+            623,
+            602,
+            624
+          ],
+          "page": 1,
+          "confidence": 0.983,
+          "elements": [
+            "#/readResults/0/lines/15/words/0"
+          ]
+        },
+        "TransactionDate": {
+          "type": "date",
+          "valueDate": "2024-04-17",
+          "text": "17/04/2024",
+          "boundingBox": [
+            193,
+            1812,
+            338,
+            1801,
+            340,
+            1836,
+            194,
+            1847
+          ],
+          "page": 1,
+          "confidence": 0.988,
+          "elements": [
+            "#/readResults/0/lines/49/words/0"
+          ]
+        },
+        "TransactionTime": {
+          "type": "time",
+          "valueTime": "11:45:38",
+          "text": "11:45:38 AM",
+          "boundingBox": [
+            344.7,
+            1800.4,
+            515,
+            1789.5,
+            517.2,
+            1825.1,
+            347,
+            1836
+          ],
+          "page": 1,
+          "confidence": 0.985,
+          "elements": [
+            "#/readResults/0/lines/49/words/1",
+            "#/readResults/0/lines/49/words/2"
+          ]
+        }
+      }
+    }
+  ],
+  "id": "f0dfe5f2-281e-40df-b70f-02cb606723b2",
+  "weburl": "https://autopastorage.blob.core.windows.net/images/ReceiptTest1.jpg?sv=2023-11-03&st=2024-08-28T05%3A33%3A45Z&se=2024-08-29T06%3A33%3A45Z&sr=b&sp=r&sig=sXLb9YMEuxuBhTE%2FatISOjhXqZGy0Dd6iB6WQY%2FiJIM%3D",
+  "_rid": "8uBMAPUUxwyFhB4AAAAAAA==",
+  "_self": "dbs/8uBMAA==/colls/8uBMAPUUxww=/docs/8uBMAPUUxwyFhB4AAAAAAA==/",
+  "_etag": "\"0300e2e7-0000-1b00-0000-66cec4d20000\"",
+  "_attachments": "attachments/",
+  "_ts": 1724826834
+}

@@ -1,0 +1,30 @@
+.hidden {
+  display: none;
+}
+label {
+  margin-bottom: 10px;
+  display: block;
+}
+
+.navbar {
+  min-height: 115px;
+}
+
+.drop-zone {
+  border: 2px dashed #007bff;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  background-color: #f9f9f9;
+  transition: background-color 0.3s ease;
+}
+
+.drop-zone.dragover {
+  background-color: #e9ecef;
+}
+
+.processing-indicator {
+  display: none;
+  text-align: center;
+  margin-top: 20px;
+}
