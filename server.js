@@ -16,7 +16,7 @@ app.get("/auth_config.json", (req, res) => {
 
 // Serve index.html for all other routes
 app.get("/*", (req, res) => {
-  res.sendFile(join(__dirname, "public/index.html"));
+  res.sendFile(join(__dirname, "/public/index.html"));
 });
 
 // Graceful shutdown
