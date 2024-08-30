@@ -277,7 +277,10 @@ function tableToCSV() {
 
     rows.forEach(row => {
         const cols = row.querySelectorAll('td, th');
-        const rowData = Array.from(cols).map(col => col.textContent).join(',');
+        const rowData = Array.from(cols).map(col => {
+            const anchor = col.querySelector('a');
+            return anchor ? anchor.href : col.textContent;
+        }).join(',');
         csvContent += rowData + '\n';
     });
 
