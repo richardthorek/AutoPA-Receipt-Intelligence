@@ -57,12 +57,9 @@ const logout = async () => {
  * Initializes the Auth0 client
  */
 const configureClient = async () => {
-  // const response = await fetchAuthConfig();
-  // const config = await response.json();
-
   auth0Client = await auth0.createAuth0Client({
-    domain: process.env.DOMAIN,
-    clientId: process.env.CLIENT_ID
+    domain: window.env.DOMAIN,
+    clientId: window.env.CLIENT_ID
   });
 };
 
