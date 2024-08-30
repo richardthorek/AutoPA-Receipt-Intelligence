@@ -49,8 +49,10 @@ const fetchAuthConfig = () => fetch("/auth_config.json");
  * Initializes the Auth0 client
  */
 const configureClient = async () => {
-  const response = await fetchAuthConfig();
-  const config = await response.json();
+  const config = {
+    domain: "dev-3o7psdv4.au.auth0.com",
+    clientId: "xIZUUAoMBtO6ovYNymRCG5kLEYCLIpMF"
+  };
 
   auth0Client = await auth0.createAuth0Client({
     domain: config.domain,
