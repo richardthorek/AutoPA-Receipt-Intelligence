@@ -3,7 +3,7 @@
 Login
 - Select the Login Button at the Top Right
 - Enter Pre-existing credentials or 'Sign Up'
-- After Successful Login you can view your profile settings by selecting profile inside the user menu at the top right.
+- After Successful Login you can view your profile settings by selecting profile inside the menu
 
 Submit Receipt
 - Either click to select a file or drag and drop onto the Upload File field.
