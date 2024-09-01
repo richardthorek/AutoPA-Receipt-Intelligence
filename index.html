@@ -257,17 +257,28 @@
   <script type="text/javascript" src="https://unpkg.com/markdown-it/dist/markdown-it.min.js"></script>
   <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
 
-<script>
+  <script>
     document.addEventListener('DOMContentLoaded', function () {
-      fetch('/README.md')
-          .then(response => response.text())
-          .then(markdown => {
-              // const htmlContent = marked(markdown);
-              document.getElementById('documentationContent').innerHTML = marked.parse(markdown);
-          })
-          .catch(error => console.error('Error fetching README.md:', error));
-    });
+        const githubRepo = 'richardthorek/AutoPA-Receipt-Intelligence'; // Replace with your GitHub username/repo
+        const readmeUrl = `https://api.github.com/repos/${githubRepo}/contents/README.md`;
 
+        fetch(readmeUrl, {
+            headers: {
+                'Accept': 'application/vnd.github.v3.raw'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(markdown => {
+            // const htmlContent = marked(markdown);
+            document.getElementById('documentationContent').innerHTML = marked.parse(markdown);
+        })
+        .catch(error => console.error('Error fetching README.md:', error));
+    });
 </script>
 
 </body>
