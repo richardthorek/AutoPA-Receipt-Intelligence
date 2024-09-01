@@ -15,7 +15,7 @@ app.get("/auth_config.json", (req, res) => {
 });
 
 // Serve Readme.md
-app.get("/readme.md", (req, res) => {
+app.get("/README.md", (req, res) => {
   res.sendFile(join(__dirname, "README.md"));
 });
 
