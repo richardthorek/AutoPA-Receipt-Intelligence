@@ -1,17 +1,46 @@
 // Wait for the DOM to fully load before running the script
+
 document.addEventListener('DOMContentLoaded', function () {
     // Get references to the necessary DOM elements
     const dropZone = document.getElementById('dropZone');
     const fileInput = document.getElementById('fileInput');
-    const uploadBtn = document.getElementById('uploadBtn');
-    const processingIndicator = document.getElementById('processingIndicator');
-    const countdownSpan = document.getElementById('countdown');
-    const fileNameSpan = document.getElementById('fileName');
     const userTokenInput = document.getElementById('userToken');
 
-    console.log('Processor Loaded')
+    // Function to hide the results table
+    function hideResultsTable() {
+        const resultsTable = document.getElementById('resultsTable');
+        if (resultsTable) {
+            resultsTable.style.display = 'none';
+        }
+    }
 
-    // Add click event to the drop zone to trigger file input click
+    // Function to show the results table
+    function showResultsTable() {
+        const resultsTable = document.getElementById('resultsTable');
+        if (resultsTable) {
+            resultsTable.style.display = 'table';
+        }
+    }
+
+    // Hide the results table initially
+    //   hideResultsTable();
+
+    // Show the results table after processing the file
+    document.getElementById('fileInput').addEventListener('change', function () {
+        // Process the file and then show the results table
+        showResultsTable();
+    });
+
+    // Function to open the off-canvas and load the image
+    function openReceiptOffCanvas(imageUrl) {
+        const canvasImg = document.getElementById('canvasImg');
+        if (canvasImg) {
+            canvasImg.src = imageUrl;
+            UIkit.offcanvas('#receiptOffCanvas').show();
+        }
+    }
+
+    // // Add click event to the drop zone to trigger file input click
     dropZone.addEventListener('click', () => fileInput.click());
 
     // Add dragover event to the drop zone to allow file dragging
@@ -23,50 +52,206 @@ document.addEventListener('DOMContentLoaded', function () {
     // Remove dragover class when the file is dragged out of the drop zone
     dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
 
-    // Handle file drop event
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('dragover');
-        const files = e.dataTransfer.files;
-        if (files.length) {
-            fileInput.files = files; // Set the files to the file input
-            handleFileUpload(files[0]); // Handle the file upload
+ // Handle file drop event
+dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const files = e.dataTransfer.files;
+    if (files.length) {
+        for (let i = 0; i < files.length; i++) {
+            handleFileUpload(files[i]); // Handle each file upload individually
         }
-    });
+    }
+});
 
-    // Handle file selection via file input
-    fileInput.addEventListener('change', () => {
-        if (fileInput.files.length) {
-            handleFileUpload(fileInput.files[0]); // Handle the file upload
+// Handle file selection via file input
+fileInput.addEventListener('change', () => {
+    if (fileInput.files.length) {
+        for (let i = 0; i < fileInput.files.length; i++) {
+            handleFileUpload(fileInput.files[i]); // Handle each file upload individually
         }
-    });
+    }
+});
 
-    // Function to start a countdown timer
-    function startCountdown(seconds) {
-        let remaining = seconds;
-        countdownSpan.textContent = remaining;
-        processingIndicator.style.display = 'block'; // Show the processing indicator
+    // Function to handle file upload
+    function handleFileUpload(file) {
+        if (!file) return;
 
-        const interval = setInterval(() => {
-            remaining -= 1;
-            countdownSpan.textContent = remaining;
-            if (remaining <= 0) {
-                clearInterval(interval); // Clear the interval when countdown reaches 0
+        // Check if the file type is allowed
+        const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
+        if (!allowedTypes.includes(file.type)) {
+            alert('Invalid file type. Please upload a JPG, PNG, or PDF file.');
+            return;
+        }
+
+
+        // Function to generate a GUID
+        function generateGUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        const receiptGUID = generateGUID();
+        console.log(receiptGUID);
+
+        // Create an image preview before uploading
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            const previewSection = document.getElementById('receiptPreview');
+
+            // Create a container for the grid if it doesn't exist
+            let gridContainer = document.getElementById('gridContainer');
+            if (!gridContainer) {
+                gridContainer = document.createElement('div');
+                gridContainer.id = 'gridContainer';
+                gridContainer.className = 'uk-grid uk-grid-small uk-child-width-1-4@s';
+                previewSection.appendChild(gridContainer);
             }
-        }, 1000);
+
+            // Create the preview card
+            const previewCard = document.createElement('div');
+            previewCard.id = receiptGUID;
+            previewCard.className = 'uk-card uk-card-default uk-card-small uk-card-body uk-margin-top uk-margin-auto uk-animation-slide-right uk-height-max-small';
+            previewCard.style.overflowY = 'hidden';
+            previewCard.innerHTML = `
+        <div class="uk-card uk-card-default uk-card-small uk-flex uk-flex-center uk-flex-middle">
+            <img src="${event.target.result}" class="uk-width-1-1" style="padding: 10px;" alt="Receipt Image">
+        </div>
+        <div class="uk-overlay uk-overlay-primary uk-position-cover">
+            <div uk-spinner></div>
+        </div>
+    `;
+            gridContainer.appendChild(previewCard);
+        };
+        reader.readAsDataURL(file);
+
+        // Create a new FormData object and append the file and additional metadata
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('date', new Date().toISOString());
+        formData.append('filename', file.name);
+        formData.append('content-type', file.type);
+        formData.append('file-extension', file.name.split('.').pop());
+        formData.append('receiptGUID', receiptGUID);
+
+
+        // Perform the file upload using fetch
+        fetch('https://prod-04.australiasoutheast.logic.azure.com:443/workflows/bd37bd65a79d49499f5b0e91986f8a00/triggers/Receive_POST_File/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FReceive_POST_File%2Frun&sv=1.0&sig=X1QhmY8PSR3wq38j4Q7_kfSMxRtMSzmfKGIj67aBMiY', {
+            method: 'POST',
+            body: formData,
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok'); // Throw an error if the response is not ok
+                }
+                return response.json(); // Parse the response as JSON
+            })
+            .then(data => {
+                // Process the response data
+                const receipt = data.documentResults[0].fields;
+                const items = receipt.Items.valueArray;
+                const tableBody = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
+                const weburl = data.weburl;
+                const receiptId = data.receiptID;
+
+
+                // Remove the preview card after the fetch request is completed
+                const cardToRemove = document.getElementById(data.receiptID);
+                if (cardToRemove) {
+                    cardToRemove.remove();
+                }
+
+                // Iterate over each item in the receipt and add it to the table
+                items.forEach(item => {
+                    try {
+                        const row = tableBody.insertRow();
+                        row.insertCell(0).textContent = receipt.MerchantName.valueString;
+                        row.insertCell(1).textContent = receipt.MerchantAddress.valueString;
+                        row.insertCell(2).textContent = receipt.TransactionDate.valueDate;
+                        row.insertCell(3).textContent = receipt.TransactionTime.valueTime;
+                        row.insertCell(4).textContent = item.valueObject.Name.valueString;
+                        row.insertCell(5).textContent = item.valueObject.TotalPrice.valueNumber;
+
+                        // Create a link to the receipt and add it to the table
+                        const thumbnailCell = row.insertCell(6);
+                        const receiptLink = document.createElement('a');
+                        receiptLink.href = weburl;
+                        receiptLink.setAttribute('uk-toggle', 'target: #imgCanvas');
+                        receiptLink.textContent = 'Receipt';
+                        receiptLink.target = '_blank';
+                        thumbnailCell.appendChild(receiptLink);
+
+                        // Add event listener to the receipt link
+                        receiptLink.addEventListener('click', function (event) {
+                            event.preventDefault(); // Prevent the default action of opening in a new tab
+                            openReceiptOffCanvas(weburl);
+                        });
+
+                        // Create a submit button for each row
+                        const submitCell = row.insertCell(7);
+                        const submitButton = document.createElement('button');
+                        submitButton.className = 'uk-icon-button';
+                        submitButton.setAttribute('uk-icon', 'plus-circle');
+
+                        submitButton.addEventListener('click', function () {
+                            // Prepare the data to be submitted
+                            const rowData = {
+                                merchantName: receipt.MerchantName.valueString,
+                                merchantAddress: receipt.MerchantAddress.valueString,
+                                transactionDate: receipt.TransactionDate.valueDate,
+                                transactionTime: receipt.TransactionTime.valueTime,
+                                itemName: item.valueObject.Name.valueString,
+                                itemTotalPrice: item.valueObject.TotalPrice.valueNumber,
+                                weburl: weburl,
+                                receiptId: receiptId,
+                                userID: userTokenInput.value // Add userID from userToken input field
+                            };
+                            // Submit the individual data line items
+                            fetch('https://prod-06.australiasoutheast.logic.azure.com:443/workflows/4339c710204042cf9787b5f4e548ee2c/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=E7sskUxpn9_lGrl1jXtCrpF-FQXqU2Pkd-SsDL4fi6U', {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': 'application/json'
+                                },
+                                body: JSON.stringify(rowData)
+                            })
+                                .then(response => {
+                                    if (response.ok) {
+                                        return response.json();
+                                    } else {
+                                        throw new Error('Failed to submit row data.');
+                                    }
+                                })
+                                .then(result => {
+                                    console.log('Success:', result);
+                                    submitButton.setAttribute('uk-icon', 'check');
+                                    submitButton.className = 'uk-icon-button success';
+                                    submitButton.disabled = true;
+                                })
+                                .catch(error => {
+                                    console.error('Error:', error);
+                                });
+                        });
+                        submitCell.appendChild(submitButton);
+                    } catch (error) {
+                        console.error('Error processing item:', error);
+                    }
+                });
+
+            })
+            .catch(error => {
+                console.error('Error uploading file:', error);
+            });
+
+
     }
 
-     // Add an event listener to the 'getBtn' button to handle click events
-     document.getElementById('getBtn').addEventListener('click', function () {
+    // Add an event listener to the 'getBtn' button to handle click events
+    document.getElementById('getBtn').addEventListener('click', function () {
         // Get the values of the 'from' and 'to' date filters and the user token
         const fromDate = document.getElementById('filterFromDate').value;
         const toDate = document.getElementById('filterToDate').value;
         const userTokenInput = document.getElementById('userToken').value;
-
-         // Add your logic here
-    console.log('From Date:', fromDate);
-    console.log('To Date:', toDate);
-    console.log('User Token:', userTokenInput);
 
         // Check if both dates are selected, if not, alert the user and return
         if (!fromDate || !toDate) {
@@ -122,22 +307,18 @@ document.addEventListener('DOMContentLoaded', function () {
                     const receiptCell = row.insertCell(6);
                     const receiptLink = document.createElement('a');
                     receiptLink.href = entry.weburl;
+                    receiptLink.setAttribute('uk-toggle', 'target: #imgCanvas');
                     receiptLink.textContent = 'Receipt';
                     receiptLink.target = '_blank';
                     receiptCell.appendChild(receiptLink);
+                    row.insertCell(7).textContent = 'N/A';
 
-                    row.insertCell(7).textContent = entry.receiptId;
+                    // Add event listener to the receipt link
+                    receiptLink.addEventListener('click', function (event) {
+                        event.preventDefault(); // Prevent the default action of opening in a new tab
+                        openReceiptOffCanvas(entry.weburl);
+                    });
 
-                    // // Create a submit button for each row - ## FUTURE FEATURE TO BE A DELETE BUTTON.
-                    // const submitCell = row.insertCell(8);
-                    // const submitButton = document.createElement('button');
-                    // submitButton.textContent = 'Submit';
-                    // submitButton.className = 'btn btn-primary';
-                    // submitCell.appendChild(submitButton);
-
-                    row.insertCell(8).textContent = 'N/A';
-
-                    row.insertCell(9).textContent = entry.id
                 });
             })
             .catch(error => {
@@ -145,136 +326,7 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 
-    // Function to handle file upload
-    function handleFileUpload(file) {
-        if (!file) return;
 
-        // Check if the file type is allowed
-        const allowedTypes = ['image/jpeg', 'image/png', 'application/pdf'];
-        if (!allowedTypes.includes(file.type)) {
-            alert('Invalid file type. Please upload a JPG, PNG, or PDF file.');
-            return;
-        }
-
-        fileNameSpan.textContent = file.name; // Display the file name
-        startCountdown(10); // Start the countdown
-
-        // Create a new FormData object and append the file and additional metadata
-        const formData = new FormData();
-        formData.append('file', file);
-        formData.append('date', new Date().toISOString());
-        formData.append('filename', file.name);
-        formData.append('content-type', file.type);
-        formData.append('file-extension', file.name.split('.').pop());
-
-        uploadBtn.textContent = 'Uploading...'; // Update the upload button text to indicate uploading
-        uploadBtn.disabled = true; // Disable the upload button to prevent multiple submissions
-
-        // Perform the file upload using fetch
-        fetch('https://prod-04.australiasoutheast.logic.azure.com:443/workflows/bd37bd65a79d49499f5b0e91986f8a00/triggers/Receive_POST_File/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FReceive_POST_File%2Frun&sv=1.0&sig=X1QhmY8PSR3wq38j4Q7_kfSMxRtMSzmfKGIj67aBMiY', {
-            method: 'POST',
-            body: formData,
-        })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok'); // Throw an error if the response is not ok
-                }
-                return response.json(); // Parse the response as JSON
-            })
-            .then(data => {
-                // Process the response data
-                const receipt = data.documentResults[0].fields;
-                const items = receipt.Items.valueArray;
-                const tableBody = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
-                const weburl = data.weburl;
-                const receiptId = data.receiptID;
-
-                // Iterate over each item in the receipt and add it to the table
-                items.forEach(item => {
-                    try {
-                        const row = tableBody.insertRow();
-                        row.insertCell(0).textContent = receipt.MerchantName.valueString;
-                        row.insertCell(1).textContent = receipt.MerchantAddress.valueString;
-                        row.insertCell(2).textContent = receipt.TransactionDate.valueDate;
-                        row.insertCell(3).textContent = receipt.TransactionTime.valueTime;
-                        row.insertCell(4).textContent = item.valueObject.Name.valueString;
-                        row.insertCell(5).textContent = item.valueObject.TotalPrice.valueNumber;
-
-                        // Create a link to the receipt and add it to the table
-                        const thumbnailCell = row.insertCell(6);
-                        const receiptLink = document.createElement('a');
-                        receiptLink.href = weburl;
-                        receiptLink.textContent = 'receipt';
-                        receiptLink.target = '_blank';
-                        thumbnailCell.appendChild(receiptLink);
-
-                        row.insertCell(7).textContent = receiptId; // Add Receipt ID column
-
-                        // Create a submit button for each row
-                        const submitCell = row.insertCell(8);
-                        const submitButton = document.createElement('button');
-                        submitButton.textContent = 'Submit';
-                        submitButton.className = 'btn btn-primary';
-                        submitButton.addEventListener('click', function () {
-                            // Prepare the data to be submitted
-                            const rowData = {
-                                merchantName: receipt.MerchantName.valueString,
-                                merchantAddress: receipt.MerchantAddress.valueString,
-                                transactionDate: receipt.TransactionDate.valueDate,
-                                transactionTime: receipt.TransactionTime.valueTime,
-                                itemName: item.valueObject.Name.valueString,
-                                itemTotalPrice: item.valueObject.TotalPrice.valueNumber,
-                                weburl: weburl,
-                                receiptId: receiptId,
-                                userID: userTokenInput.value // Add userID from userToken input field
-                            };
-                            // Submit the individual data line items
-                            fetch('https://prod-06.australiasoutheast.logic.azure.com:443/workflows/4339c710204042cf9787b5f4e548ee2c/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=E7sskUxpn9_lGrl1jXtCrpF-FQXqU2Pkd-SsDL4fi6U', {
-                                method: 'POST',
-                                headers: {
-                                    'Content-Type': 'application/json'
-                                },
-                                body: JSON.stringify(rowData)
-                            })
-                                .then(response => {
-                                    if (response.ok) {
-                                        return response.json();
-                                    } else {
-                                        throw new Error('Failed to submit row data.');
-                                    }
-                                })
-                                .then(result => {
-                                    console.log('Success:', result);
-                                    submitButton.textContent = 'Submitted';
-                                    submitButton.className = 'btn btn-success';
-                                    submitButton.disabled = true;
-                                    // Update the table row with the item ID
-                                    const itemIdCell = row.insertCell(9); // Assuming the item ID column is the 9th column
-                                    itemIdCell.textContent = result.id;
-                                })
-                                .catch(error => {
-                                    console.error('Error:', error);
-                                });
-                        });
-                        submitCell.appendChild(submitButton);
-                    } catch (error) {
-                        console.error('Error processing item:', error);
-                    }
-                });
-
-                uploadBtn.textContent = 'Upload'; // Reset the upload button text
-                uploadBtn.disabled = false; // Enable the upload button
-                processingIndicator.style.display = 'none'; // Hide the processing indicator
-            })
-            .catch(error => {
-                console.error('Error uploading file:', error);
-                uploadBtn.textContent = 'Upload'; // Reset the upload button text
-                uploadBtn.disabled = false; // Enable the upload button
-                processingIndicator.style.display = 'none'; // Hide the processing indicator
-            });
-
-       
-    }
 })
 
 // Function to convert table data to CSV format

@@ -1,11 +1,16 @@
 <!DOCTYPE html>
-<html class="h-100">
+<html class="uk-background-muted" lang="en-au" dir="ltr">
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AutoPA Receipt Intelligence</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-  
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> -->
+
+  <!-- UIkit CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.11/dist/css/uikit.min.css" />
+
+
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/monokai-sublime.min.css" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/solid.css"
     integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous" />
@@ -14,7 +19,7 @@
   <link rel="stylesheet" href="https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css" />
 
   <script>
-    (function() {
+    (function () {
       const isLocalhost = window.location.hostname === 'localhost' && window.location.port === '3000';
       const stylesheets = [
         { href: isLocalhost ? '/css/main.css' : '/public/css/main.css' }
@@ -30,184 +35,143 @@
     })();
   </script>
 
-
-
-
 </head>
 
-<body class="h-100">
-  <div id="app" class="h-100 d-flex flex-column">
-    <div class="nav-container">
-      <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <div class="container">
-          <div class="navbar-brand logo"></div>
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarNav"
-            aria-controls="navbarNav"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-
-          <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto">
-              <li class="nav-item">
-                <a href="/" class="nav-link route-link">Home</a>
-              </li>
-              <li class="nav-item">
-                <a href="https://github.com/richardthorek/AutoPA-Receipt-Intelligence/blob/dc548691be6d746415cd20fa33a63b363dacf946/README.md" class="nav-link" target="_blank">Documentation</a>
-              </li>
-            </ul>
-            <ul class="navbar-nav d-none d-md-block">
-              <!-- Login button: show if NOT authenticated -->
-              <li class="nav-item auth-invisible">
-                <button
-                  id="qsLoginBtn"
-                  onclick="login()"
-                  class="btn btn-primary btn-margin auth-invisible hidden"
-                >
-                  Log in
-                </button>
-              </li>
-              <!-- / Login button -->
-
-              <!-- Fullsize dropdown: show if authenticated -->
-              <li class="nav-item dropdown auth-visible hidden">
-                <a
-                  class="nav-link dropdown-toggle"
-                  href="#"
-                  id="profileDropDown"
-                  data-toggle="dropdown"
-                >
-                  <!-- Profile image should be set to the profile picture from the id token -->
-                  <img
-                    alt="Profile picture"
-                    class="nav-user-profile profile-image rounded-circle"
-                    width="50"
-                  />
-                </a>
-                <div class="dropdown-menu">
-                  <!-- Show the user's full name from the id token here -->
-                  <div class="dropdown-header nav-user-name user-name"></div>
-                  <a
-                    href="/profile"
-                    class="dropdown-item dropdown-profile route-link"
-                  >
+<body>
+  <!-- Whole Page Container -->
+  <div id="app" class="uk-container uk-container-center uk-margin-auto">
+    <!-- Navigation Bar -->
+    <nav class="uk-navbar uk-margin-auto">
+      <div class="uk-navbar-container uk-navbar-transparent">
+        <ul class="uk-navbar-nav uk-hidden-small">
+          <li>
+            <a href="/">Home</a>
+          </li>
+          <!-- <li>
+            <a href="https://github.com/richardthorek/AutoPA-Receipt-Intelligence/blob/dc548691be6d746415cd20fa33a63b363dacf946/README.md"
+              target="_blank">Documentation</a>
+          </li> -->
+          <!-- Login button: show if NOT authenticated -->
+          <li class="auth-invisible uk-flex uk-flex-middle">
+            <button id="qsLoginBtn" onclick="login()"
+              class="uk-button uk-button-small uk-button-primary auth-invisible hidden">
+              Log in
+            </button>
+          </li>
+          <li class="auth-visible hidden">
+            <a href="">Menu</a> <!-- Profile Dropdown -->
+            <div uk-dropdown>
+              <ul class="uk-nav uk-dropdown-nav">
+                <li>
+                  <a href="/profile" class="dropdown-item dropdown-profile route-link">
                     <i class="fas fa-user mr-3"></i> Profile
                   </a>
-                  <a
-                    href="#"
-                    class="dropdown-item"
-                    id="qsLogoutBtn"
-                    onclick="logout()"
-                  >
+                </li>
+                <li>
+                  <a href="#" class="dropdown-item" id="qsLogoutBtn" onclick="logout()">
                     <i class="fas fa-power-off mr-3"></i> Log out
                   </a>
-                </div>
-              </li>
-              <!-- /Fullsize dropdown -->
-            </ul>
+                </li>
+              </ul>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-            <!-- Responsive login button: show if NOT authenticated -->
-            <ul class="navbar-nav d-md-none auth-invisible">
-              <button
-                class="btn btn-primary btn-block auth-invisible hidden"
-                id="qsLoginBtn"
-                onclick="login()"
-              >
-                Log in
-              </button>
-            </ul>
-            <!-- /Responsive login button -->
-
-            <!-- Responsive profile dropdown: show if authenticated -->
-            <ul
-              class="
-                navbar-nav
-                d-md-none
-                auth-visible
-                hidden
-                justify-content-between
-              "
-              style="min-height: 125px"
-            >
-              <li class="nav-item">
-                <span class="user-info">
-                  <!-- Profile image should be set to the profile picture from the id token -->
-                  <img
-                    alt="Profile picture"
-                    class="
-                      nav-user-profile
-                      d-inline-block
-                      profile-image
-                      rounded-circle
-                      mr-3
-                    "
-                    width="50"
-                  />
-                  <!-- Show the user's full name from the id token here -->
-                  <h6 class="d-inline-block nav-user-name user-name"></h6>
-                </span>
-              </li>
-              <li>
-                <i class="fas fa-user mr-3"></i>
-                <a href="/profile" class="route-link">Profile</a>
-              </li>
-
-              <li>
-                <i class="fas fa-power-off mr-3"></i>
-                <a href="#" id="qsLogoutBtn" onclick="logout()">Log out</a>
-              </li>
-            </ul>
-          </div>
-        </div>
-      </nav>
-    </div>
-
-    <div id="main-content" class="container mt-5 flex-grow-1">
+    <!-- Main Content -->
+    <div id="main-content" class="">
       <div id="content-home" class="page">
-        <div class="container mt-5">
-          <div class="row">
-            <input type="hidden" id="userToken" value="" />
+        <h1 class="uk-heading-divider">AutoPA Receipt Intelligence</h1>
 
-            <!-- Single Column: File Upload and Results Table -->
-            <div class="col-md-12" id="uploadSection" style="display: none;">
-              <h3>Upload File</h3>
-              <div id="dropZone" class="drop-zone">
-                <p>Drag & drop a file here or click to select a file</p>
-                <input type="file" id="fileInput" class="form-control" accept=".jpg,.jpeg,.png,.pdf"
-                  style="display: none;" />
-              </div>
-              <button id="uploadBtn" class="btn btn-primary mt-3" style="display: none;">Upload</button>
+        <div id="authenticatedContent" class="uk-container uk-container-expand" style="display: none;">
 
-              <div id="processingIndicator" class="alert alert-info" style="display: none;">
-                Processing <span id="fileName"></span>... <span id="countdown">10</span> seconds remaining.
+          <!-- User Profile Data Hidden Input -->
+          <input type="hidden" id="userToken" value="" />
+
+
+          <!-- Upload Section -->
+          <div id="uploadSection" class="uk-flex uk-flex-center uk-flex-middle uk-child-width-expand">
+            <div class="uk-grid uk-card uk-card-default uk-child-width-expand drop-zone uk-margin-auto" id="dropZone">
+              <div class="js-upload uk-placeholder uk-text-center">
+                <span uk-icon="icon: cloud-upload"></span>
+                <span class="uk-text-middle">Attach receipts by dropping them here or click to select one</span>
+                <div uk-form-custom>
+                  <input id="fileInput" type="file" multiple accept=".jpg,.jpeg,.png,.pdf">
+                </div>
               </div>
             </div>
+          </div>
 
-            <div class="col-md-12 mt-5" id="resultsSection" style="display: none;">
-              <h3>Results</h3>
-              <div class="form-group">
-                <div class="d-flex">
-                  <div class="mr-2">
-                    <label for="filterFromDate">From:</label>
-                    <input type="date" id="filterFromDate" class="form-control" />
-                  </div>
-                  <div class="mr-2">
-                    <label for="filterToDate">To:</label>
-                    <input type="date" id="filterToDate" class="form-control" />
-                  </div>
-                  <div class="mr-2 align-self-end">
-                    <button id="getBtn" class="btn btn-primary">Get</button>
-                    <button id="downloadBtn" class="btn btn-primary">Download</button>
-                  </div>
+
+          <div id="receiptPreview" class="">
+          
+          </div>
+
+          <!-- Receipt Images Off Canvas -->
+
+          <div id="imgCanvas" uk-offcanvas>
+            <div class="uk-offcanvas-bar">
+
+              <button class="uk-offcanvas-close" type="button" uk-close></button>
+              <h4>Receipt Image</h4>
+              <div class="uk-card uk-card-default uk-card-body uk-padding-small">
+                <img id="canvasImg" class="uk-width-1-1" style="padding: 10px;" alt="Receipt Image">
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- Profile Off Canvas -->
+
+          <div id="profileCanvas" uk-offcanvas>
+            <div class="uk-offcanvas-bar">
+
+              <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+            </div>
+          </div>
+
+          <h3 class="uk-card-title">Filter</h3>
+
+          <!-- Filter Section -->
+
+          <div id="filterSection" class="uk-card uk-card-default uk-card-body uk-margin-auto">
+            <div class="uk-grid-small uk-child-width-expand@s uk-grid-match" data-uk-grid>
+              <div>
+                <div class="uk-card uk-card-small ">
+                  <label class="uk-text-muted uk-text-small" for="filterFromDate">From:</label>
+                  <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterFromDate" class="uk-input"
+                    placeholder="Date From" />
                 </div>
               </div>
-              <table id="resultsTable" class="table table-striped">
+              <div>
+                <div class="uk-card uk-card-small">
+                  <label class="uk-text-muted uk-text-small" for="filterToDate">To:</label>
+                  <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterToDate" class="uk-input"
+                    placeholder="Date To" />
+                </div>
+              </div>
+              <div>
+                <div class="uk-card uk-card-small uk-flex uk-flex-middle uk-flex-bottom">
+                  <button id="getBtn" class="uk-button uk-button-default uk-width-1-1">Get</button>
+                </div>
+              </div>
+              <div>
+                <div class="uk-card uk-card-small uk-flex uk-flex-middle uk-flex-bottom">
+                  <button id="downloadBtn" class="uk-button uk-button-default uk-width-1-1">Download</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Results Table -->
+          <h3 class="uk-card-title">Results</h3>
+          <div id="resultsSection"
+            class="uk-grid uk-flex uk-flex-center uk-flex-middle uk-child-width-expand uk-margin-auto">
+            <div class="uk-card uk-card-default uk-card-body uk-width-1-1">
+              <table id="resultsTable" class="uk-table uk-table-divider uk-table-responsive">
                 <thead>
                   <tr>
                     <th>Merchant Name</th>
@@ -217,58 +181,68 @@
                     <th>Item Name</th>
                     <th>Item Total Price</th>
                     <th>Receipt</th>
-                    <th>Receipt ID</th>
                     <th>Action</th>
-                    <th>Item ID</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
               </table>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
 
-<!-- User Profile Data and Page -->
-    <div class="page" id="content-profile">
-      <div class="container">
-        <div class="row align-items-center profile-header">
-          <div class="col-md-2">
-            <img
-              alt="User's profile picture"
-              class="rounded-circle img-fluid profile-image mb-3 mb-md-0"
-            />
-          </div>
-          <div class="col-md">
-            <h2 class="user-name"></h2>
-            <p class="lead text-muted user-email"></p>
-          </div>
-        </div>
-
-        <div class="row">
-          <pre class="rounded">
-            <code id="profile-data" class="json"></code></pre>
         </div>
       </div>
     </div>
   </div>
 
-    <!-- Footer -->
-    <footer class="bg-light text-center p-5">
-    </footer>
-  </div>
+  <!-- User Profile Data and Page -->
+  <div class="page" id="content-profile">
+    <div class="uk-container">
+      <div class="uk-grid">
+        <div class="uk-width-1-1">
+          <!-- <pre class="uk-card uk-card-default uk-card-body">
+            <code id="profile-data" class="json"></code>
+          </pre> -->
+
+          <div class="auth-visible hidden uk-card uk-card-default uk-width-1-2@m">
+            <div class="uk-card-header">
+              <div class="uk-grid-small uk-flex-middle" uk-grid>
+                <div class="uk-width-auto">
+                  <img id="profileImg" class="uk-border-circle" width="40" height="40" src="images/avatar.jpg"
+                    alt="Avatar">
+                </div>
+                <div class="uk-width-expand">
+                  <h3 id="profileNickname" class="uk-card-title uk-margin-remove-bottom uk-text-capitalize">Title</h3>
+                  <p id="profileLastUpdated" class="uk-text-meta uk-margin-remove-top"><time
+                      datetime="2016-04-01T19:00">April 01, 2016</time></p>
+                </div>
+              </div>
+            </div>
+            <div class="uk-card-body">
+              <ul class="uk-list uk-list-disc uk-list-muted">
+                <li id="profileSub">List item 1</li>
+                <li id="profileEmail">List item 2</li>
+              </ul>
+            </div>
+            <div class="uk-card-footer">
+              <a id="profile-link" href="#" class="uk-button uk-button-text">Read more</a>
+            </div>
+          </div>
+
+
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
-    (function() {
+    (function () {
       const isLocalhost = window.location.hostname === 'localhost' && window.location.port === '3000';
       const scripts = [
         { src: isLocalhost ? '/js/ui.js' : '/public/js/ui.js' },
         { src: isLocalhost ? '/js/app.js' : '/public/js/app.js' },
         { src: isLocalhost ? '/js/fileProcessing.js' : '/public/js/fileProcessing.js' }
       ];
-  
+
       scripts.forEach(scriptInfo => {
         const script = document.createElement('script');
         script.src = scriptInfo.src;
@@ -277,6 +251,9 @@
     })();
   </script>
 
+  <!-- UIkit JS -->
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.11/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.11/dist/js/uikit-icons.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
   <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>

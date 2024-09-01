@@ -107,8 +107,7 @@ window.onload = async () => {
     window.history.replaceState({}, document.title, window.location.pathname);
 
     // Show the upload and results sections
-    document.getElementById('uploadSection').style.display = 'block';
-    document.getElementById('resultsSection').style.display = 'block';
+    document.getElementById('authenticatedContent').style.display = 'block';
 
     // Get the ID token and populate the hidden input
     const token = await auth0Client.getIdTokenClaims();
@@ -134,8 +133,7 @@ window.onload = async () => {
 
       console.log("Logged in!");
       // Show the upload and results sections
-      document.getElementById('uploadSection').style.display = 'block';
-      document.getElementById('resultsSection').style.display = 'block';
+      document.getElementById('authenticatedContent').style.display = 'block';
 
       // Get the ID token and populate the hidden input
       const token = await auth0Client.getIdTokenClaims();

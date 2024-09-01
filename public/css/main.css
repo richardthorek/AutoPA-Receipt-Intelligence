@@ -1,6 +1,7 @@
 .hidden {
   display: none;
 }
+
 label {
   margin-bottom: 10px;
   display: block;
@@ -11,20 +12,19 @@ label {
 }
 
 .drop-zone {
-  border: 2px dashed #007bff;
+  border: 1px dashed #007bff;
   border-radius: 5px;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
   background-color: #f9f9f9;
   transition: background-color 0.3s ease;
 }
 
 .drop-zone.dragover {
-  background-color: #e9ecef;
+  background-color: lightgrey;
 }
 
-.processing-indicator {
-  display: none;
-  text-align: center;
-  margin-top: 20px;
+.success{
+  color: white;
+  background-color: green;
 }
