@@ -3,6 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AutoPA Receipt Intelligence</title>
   <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> -->
 
@@ -40,32 +41,37 @@
   <!-- Whole Page Container -->
   <div id="app" class="uk-container uk-container-center uk-margin-auto">
     <!-- Navigation Bar -->
-
-
-
     <nav class="uk-navbar uk-margin-auto">
-      <div class="collapse navbar-collapse" id="navbarNav">
+      <div class="uk-navbar-container uk-navbar-transparent">
         <ul class="uk-navbar-nav uk-hidden-small">
           <li>
             <a href="/">Home</a>
           </li>
-          <li class="">
+          <!-- <li>
             <a href="https://github.com/richardthorek/AutoPA-Receipt-Intelligence/blob/dc548691be6d746415cd20fa33a63b363dacf946/README.md"
-              class="" target="_blank">Documentation</a>
-          </li>
+              target="_blank">Documentation</a>
+          </li> -->
           <!-- Login button: show if NOT authenticated -->
-          <li class="auth-invisible">
-            <a id="qsLoginBtn" onclick="login()" class="uk-button uk-button-small auth-invisible hidden">
+          <li class="auth-invisible uk-flex uk-flex-middle">
+            <button id="qsLoginBtn" onclick="login()"
+              class="uk-button uk-button-small uk-button-primary auth-invisible hidden">
               Log in
-            </a>
+            </button>
           </li>
-          <li class="auth-visible hidden"><a href="">Menu</a> <!-- Profile Dropdown -->
+          <li class="auth-visible hidden">
+            <a href="">Menu</a> <!-- Profile Dropdown -->
             <div uk-dropdown>
               <ul class="uk-nav uk-dropdown-nav">
-                <li><a href="/profile" class="dropdown-item dropdown-profile route-link">
-                    <i class="fas fa-user mr-3"></i> Profile</a></li>
-                <li> <a href="#" class="dropdown-item" id="qsLogoutBtn" onclick="logout()">
-                    <i class="fas fa-power-off mr-3"></i> Log out</a></li>
+                <li>
+                  <a href="/profile" class="dropdown-item dropdown-profile route-link">
+                    <i class="fas fa-user mr-3"></i> Profile
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="dropdown-item" id="qsLogoutBtn" onclick="logout()">
+                    <i class="fas fa-power-off mr-3"></i> Log out
+                  </a>
+                </li>
               </ul>
             </div>
           </li>
@@ -76,12 +82,13 @@
     <!-- Main Content -->
     <div id="main-content" class="">
       <div id="content-home" class="page">
+        <h1 class="uk-heading-divider">AutoPA Receipt Intelligence</h1>
+
         <div id="authenticatedContent" class="uk-container uk-container-expand" style="display: none;">
 
           <!-- User Profile Data Hidden Input -->
           <input type="hidden" id="userToken" value="" />
-          
-          <h1 class="uk-heading-divider">AutoPA Receipt Intelligence</h1>
+
 
           <!-- Upload Section -->
           <div id="uploadSection" class="uk-flex uk-flex-center uk-flex-middle uk-child-width-expand">
@@ -96,40 +103,68 @@
             </div>
           </div>
 
+          <!-- Receipt Images Off Canvas -->
+
+          <div id="imgCanvas" uk-offcanvas>
+            <div class="uk-offcanvas-bar">
+
+              <button class="uk-offcanvas-close" type="button" uk-close></button>
+              <h4>Receipt Image</h4>
+              <div class="uk-card uk-card-default uk-card-body uk-padding-small">
+                <img id="canvasImg" class="uk-width-1-1" style="padding: 10px;" alt="Receipt Image">
+              </div>
+
+            </div>
+          </div>
+
+
+          <!-- Profile Off Canvas -->
+
+          <div id="profileCanvas" uk-offcanvas>
+            <div class="uk-offcanvas-bar">
+
+              <button class="uk-offcanvas-close" type="button" uk-close></button>
+
+            </div>
+          </div>
+
           <h3 class="uk-card-title">Filter</h3>
 
           <!-- Filter Section -->
 
           <div id="filterSection" class="uk-card uk-card-default uk-card-body uk-margin-auto">
             <div class="uk-grid-small uk-child-width-expand@s uk-grid-match" data-uk-grid>
-                <div>
-                    <div class="uk-card uk-card-small ">
-                        <label class="uk-text-muted uk-text-small" for="filterFromDate">From:</label>
-                        <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterFromDate" class="uk-input" placeholder="Date From" />
-                    </div>
+              <div>
+                <div class="uk-card uk-card-small ">
+                  <label class="uk-text-muted uk-text-small" for="filterFromDate">From:</label>
+                  <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterFromDate" class="uk-input"
+                    placeholder="Date From" />
                 </div>
-                <div>
-                    <div class="uk-card uk-card-small">
-                        <label class="uk-text-muted uk-text-small" for="filterToDate">To:</label>
-                        <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterToDate" class="uk-input" placeholder="Date To" />
-                    </div>
+              </div>
+              <div>
+                <div class="uk-card uk-card-small">
+                  <label class="uk-text-muted uk-text-small" for="filterToDate">To:</label>
+                  <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterToDate" class="uk-input"
+                    placeholder="Date To" />
                 </div>
-                <div>
-                    <div class="uk-card uk-card-small uk-flex uk-flex-middle uk-flex-bottom">
-                        <button id="getBtn" class="uk-button uk-button-default uk-width-1-1">Get</button>
-                    </div>
+              </div>
+              <div>
+                <div class="uk-card uk-card-small uk-flex uk-flex-middle uk-flex-bottom">
+                  <button id="getBtn" class="uk-button uk-button-default uk-width-1-1">Get</button>
                 </div>
-                <div>
-                    <div class="uk-card uk-card-small uk-flex uk-flex-middle uk-flex-bottom">
-                        <button id="downloadBtn" class="uk-button uk-button-default uk-width-1-1">Download</button>
-                    </div>
+              </div>
+              <div>
+                <div class="uk-card uk-card-small uk-flex uk-flex-middle uk-flex-bottom">
+                  <button id="downloadBtn" class="uk-button uk-button-default uk-width-1-1">Download</button>
                 </div>
+              </div>
             </div>
-        </div>
+          </div>
 
           <!-- Results Table -->
           <h3 class="uk-card-title">Results</h3>
-          <div id="resultsSection" class="uk-grid uk-flex uk-flex-center uk-flex-middle uk-child-width-expand uk-margin-auto">
+          <div id="resultsSection"
+            class="uk-grid uk-flex uk-flex-center uk-flex-middle uk-child-width-expand uk-margin-auto">
             <div class="uk-card uk-card-default uk-card-body uk-width-1-1">
               <table id="resultsTable" class="uk-table uk-table-divider uk-table-responsive">
                 <thead>
@@ -163,28 +198,30 @@
             <code id="profile-data" class="json"></code>
           </pre> -->
 
-          <div class="auth-visible uk-card uk-card-default uk-width-1-2@m">
+          <div class="auth-visible hidden uk-card uk-card-default uk-width-1-2@m">
             <div class="uk-card-header">
-                <div class="uk-grid-small uk-flex-middle" uk-grid>
-                    <div class="uk-width-auto">
-                        <img id="profileImg" class="uk-border-circle" width="40" height="40" src="images/avatar.jpg" alt="Avatar">
-                    </div>
-                    <div class="uk-width-expand">
-                        <h3 id="profileNickname" class="uk-card-title uk-margin-remove-bottom uk-text-capitalize">Title</h3>
-                        <p id="profileLastUpdated" class="uk-text-meta uk-margin-remove-top"><time datetime="2016-04-01T19:00">April 01, 2016</time></p>
-                    </div>
+              <div class="uk-grid-small uk-flex-middle" uk-grid>
+                <div class="uk-width-auto">
+                  <img id="profileImg" class="uk-border-circle" width="40" height="40" src="images/avatar.jpg"
+                    alt="Avatar">
                 </div>
+                <div class="uk-width-expand">
+                  <h3 id="profileNickname" class="uk-card-title uk-margin-remove-bottom uk-text-capitalize">Title</h3>
+                  <p id="profileLastUpdated" class="uk-text-meta uk-margin-remove-top"><time
+                      datetime="2016-04-01T19:00">April 01, 2016</time></p>
+                </div>
+              </div>
             </div>
             <div class="uk-card-body">
               <ul class="uk-list uk-list-disc uk-list-muted">
                 <li id="profileSub">List item 1</li>
                 <li id="profileEmail">List item 2</li>
-            </ul>
+              </ul>
             </div>
             <div class="uk-card-footer">
-                <a id="profile-link" href="#" class="uk-button uk-button-text">Read more</a>
+              <a id="profile-link" href="#" class="uk-button uk-button-text">Read more</a>
             </div>
-        </div>
+          </div>
 
 
         </div>

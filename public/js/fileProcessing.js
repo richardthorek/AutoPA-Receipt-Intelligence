@@ -5,6 +5,40 @@ document.addEventListener('DOMContentLoaded', function () {
     const fileInput = document.getElementById('fileInput');
     const userTokenInput = document.getElementById('userToken');
 
+    // Function to hide the results table
+    function hideResultsTable() {
+        const resultsTable = document.getElementById('resultsTable');
+        if (resultsTable) {
+            resultsTable.style.display = 'none';
+        }
+    }
+
+    // Function to show the results table
+    function showResultsTable() {
+        const resultsTable = document.getElementById('resultsTable');
+        if (resultsTable) {
+            resultsTable.style.display = 'table';
+        }
+    }
+
+    // Hide the results table initially
+    //   hideResultsTable();
+
+    // Show the results table after processing the file
+    document.getElementById('fileInput').addEventListener('change', function () {
+        // Process the file and then show the results table
+        showResultsTable();
+    });
+
+    // Function to open the off-canvas and load the image
+    function openReceiptOffCanvas(imageUrl) {
+        const canvasImg = document.getElementById('canvasImg');
+        if (canvasImg) {
+            canvasImg.src = imageUrl;
+            UIkit.offcanvas('#receiptOffCanvas').show();
+        }
+    }
+
     // // Add click event to the drop zone to trigger file input click
     dropZone.addEventListener('click', () => fileInput.click());
 
@@ -96,9 +130,16 @@ document.addEventListener('DOMContentLoaded', function () {
                         const thumbnailCell = row.insertCell(6);
                         const receiptLink = document.createElement('a');
                         receiptLink.href = weburl;
+                        receiptLink.setAttribute('uk-toggle', 'target: #imgCanvas');
                         receiptLink.textContent = 'Receipt';
                         receiptLink.target = '_blank';
                         thumbnailCell.appendChild(receiptLink);
+
+                        // Add event listener to the receipt link
+                        receiptLink.addEventListener('click', function (event) {
+                            event.preventDefault(); // Prevent the default action of opening in a new tab
+                            openReceiptOffCanvas(weburl);
+                        });
 
                         // Create a submit button for each row
                         const submitCell = row.insertCell(7);
@@ -219,10 +260,17 @@ document.addEventListener('DOMContentLoaded', function () {
                     const receiptCell = row.insertCell(6);
                     const receiptLink = document.createElement('a');
                     receiptLink.href = entry.weburl;
+                    receiptLink.setAttribute('uk-toggle', 'target: #imgCanvas');
                     receiptLink.textContent = 'Receipt';
                     receiptLink.target = '_blank';
                     receiptCell.appendChild(receiptLink);
                     row.insertCell(7).textContent = 'N/A';
+
+                    // Add event listener to the receipt link
+                    receiptLink.addEventListener('click', function (event) {
+                        event.preventDefault(); // Prevent the default action of opening in a new tab
+                        openReceiptOffCanvas(entry.weburl);
+                    });
 
                 });
             })
