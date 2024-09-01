@@ -5,19 +5,16 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AutoPA Receipt Intelligence</title>
-  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" /> -->
 
   <!-- UIkit CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.11/dist/css/uikit.min.css" />
-
-
   <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/monokai-sublime.min.css" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/solid.css"
     integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css"
     integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css" />
-
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     (function () {
       const isLocalhost = window.location.hostname === 'localhost' && window.location.port === '3000';
@@ -47,10 +44,9 @@
           <li>
             <a href="/">Home</a>
           </li>
-          <!-- <li>
-            <a href="https://github.com/richardthorek/AutoPA-Receipt-Intelligence/blob/dc548691be6d746415cd20fa33a63b363dacf946/README.md"
-              target="_blank">Documentation</a>
-          </li> -->
+          <li>
+            <a href="#documentationCanvas" uk-toggle>Documentation</a>
+          </li>
           <!-- Login button: show if NOT authenticated -->
           <li class="auth-invisible uk-flex uk-flex-middle">
             <button id="qsLoginBtn" onclick="login()"
@@ -59,7 +55,7 @@
             </button>
           </li>
           <li class="auth-visible hidden">
-            <a href="">Menu</a> <!-- Profile Dropdown -->
+            <a href="#offcanvas-usage" uk-toggle>Menu</a> <!-- Profile Dropdown -->
             <div uk-dropdown>
               <ul class="uk-nav uk-dropdown-nav">
                 <li>
@@ -105,7 +101,7 @@
 
 
           <div id="receiptPreview" class="">
-          
+
           </div>
 
           <!-- Receipt Images Off Canvas -->
@@ -118,18 +114,18 @@
               <div class="uk-card uk-card-default uk-card-body uk-padding-small">
                 <img id="canvasImg" class="uk-width-1-1" style="padding: 10px;" alt="Receipt Image">
               </div>
-
             </div>
           </div>
 
 
-          <!-- Profile Off Canvas -->
 
-          <div id="profileCanvas" uk-offcanvas>
+          <!-- User Guide -->
+
+          <div id="documentationCanvas" uk-offcanvas="flip: true">
             <div class="uk-offcanvas-bar">
 
               <button class="uk-offcanvas-close" type="button" uk-close></button>
-
+              <div id="documentationContent"></div>
             </div>
           </div>
 
@@ -252,17 +248,38 @@
   </script>
 
   <!-- UIkit JS -->
+
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.11/dist/js/uikit.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.11/dist/js/uikit-icons.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
-  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
-
-  <script src="https://unpkg.com/adaptivecards/dist/adaptivecards.min.js"></script>
   <script type="text/javascript" src="https://unpkg.com/markdown-it/dist/markdown-it.min.js"></script>
+  <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
 
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const githubRepo = 'richardthorek/AutoPA-Receipt-Intelligence'; // Replace with your GitHub username/repo
+        const readmeUrl = `https://api.github.com/repos/${githubRepo}/contents/README.md`;
 
+        fetch(readmeUrl, {
+            headers: {
+                'Accept': 'application/vnd.github.v3.raw'
+            }
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.text();
+        })
+        .then(markdown => {
+            // const htmlContent = marked(markdown);
+            document.getElementById('documentationContent').innerHTML = marked.parse(markdown);
+        })
+        .catch(error => console.error('Error fetching README.md:', error));
+    });
+</script>
 
 </body>
 

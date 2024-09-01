@@ -113,7 +113,12 @@ window.onload = async () => {
     const token = await auth0Client.getIdTokenClaims();
     // document.getElementById('userToken').value = token.__raw;
 
+
+
     updateUI();
+
+
+
     return;
   }
 

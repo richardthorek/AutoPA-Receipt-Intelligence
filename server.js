@@ -14,6 +14,11 @@ app.get("/auth_config.json", (req, res) => {
   res.sendFile(join(__dirname, "auth_config.json"));
 });
 
+// Serve Readme.md
+app.get("/README.md", (req, res) => {
+  res.sendFile(join(__dirname, "README.md"));
+});
+
 // Serve index.html for the root route
 app.get("/", (req, res) => {
   res.sendFile(join(__dirname, "index.html"));
