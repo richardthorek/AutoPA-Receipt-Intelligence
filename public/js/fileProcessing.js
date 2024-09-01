@@ -1,4 +1,5 @@
 // Wait for the DOM to fully load before running the script
+
 document.addEventListener('DOMContentLoaded', function () {
     // Get references to the necessary DOM elements
     const dropZone = document.getElementById('dropZone');
@@ -51,23 +52,26 @@ document.addEventListener('DOMContentLoaded', function () {
     // Remove dragover class when the file is dragged out of the drop zone
     dropZone.addEventListener('dragleave', () => dropZone.classList.remove('dragover'));
 
-    // Handle file drop event
-    dropZone.addEventListener('drop', (e) => {
-        e.preventDefault();
-        dropZone.classList.remove('dragover');
-        const files = e.dataTransfer.files;
-        if (files.length) {
-            fileInput.files = files; // Set the files to the file input
-            handleFileUpload(files[0]); // Handle the file upload
+ // Handle file drop event
+dropZone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropZone.classList.remove('dragover');
+    const files = e.dataTransfer.files;
+    if (files.length) {
+        for (let i = 0; i < files.length; i++) {
+            handleFileUpload(files[i]); // Handle each file upload individually
         }
-    });
+    }
+});
 
-    // Handle file selection via file input
-    fileInput.addEventListener('change', () => {
-        if (fileInput.files.length) {
-            handleFileUpload(fileInput.files[0]); // Handle the file upload
+// Handle file selection via file input
+fileInput.addEventListener('change', () => {
+    if (fileInput.files.length) {
+        for (let i = 0; i < fileInput.files.length; i++) {
+            handleFileUpload(fileInput.files[i]); // Handle each file upload individually
         }
-    });
+    }
+});
 
     // Function to handle file upload
     function handleFileUpload(file) {
@@ -80,12 +84,47 @@ document.addEventListener('DOMContentLoaded', function () {
             return;
         }
 
-        UIkit.notification({
-            message: 'Processing file...',
-            status: 'primary',
-            pos: 'top-center',
-            timeout: 10000
-        });
+
+        // Function to generate a GUID
+        function generateGUID() {
+            return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+                const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+                return v.toString(16);
+            });
+        }
+        const receiptGUID = generateGUID();
+        console.log(receiptGUID);
+
+        // Create an image preview before uploading
+        const reader = new FileReader();
+        reader.onload = function (event) {
+            const previewSection = document.getElementById('receiptPreview');
+
+            // Create a container for the grid if it doesn't exist
+            let gridContainer = document.getElementById('gridContainer');
+            if (!gridContainer) {
+                gridContainer = document.createElement('div');
+                gridContainer.id = 'gridContainer';
+                gridContainer.className = 'uk-grid uk-grid-small uk-child-width-1-4@s';
+                previewSection.appendChild(gridContainer);
+            }
+
+            // Create the preview card
+            const previewCard = document.createElement('div');
+            previewCard.id = receiptGUID;
+            previewCard.className = 'uk-card uk-card-default uk-card-small uk-card-body uk-margin-top uk-margin-auto uk-animation-slide-right uk-height-max-small';
+            previewCard.style.overflowY = 'hidden';
+            previewCard.innerHTML = `
+        <div class="uk-card uk-card-default uk-card-small uk-flex uk-flex-center uk-flex-middle">
+            <img src="${event.target.result}" class="uk-width-1-1" style="padding: 10px;" alt="Receipt Image">
+        </div>
+        <div class="uk-overlay uk-overlay-primary uk-position-cover">
+            <div uk-spinner></div>
+        </div>
+    `;
+            gridContainer.appendChild(previewCard);
+        };
+        reader.readAsDataURL(file);
 
         // Create a new FormData object and append the file and additional metadata
         const formData = new FormData();
@@ -94,6 +133,7 @@ document.addEventListener('DOMContentLoaded', function () {
         formData.append('filename', file.name);
         formData.append('content-type', file.type);
         formData.append('file-extension', file.name.split('.').pop());
+        formData.append('receiptGUID', receiptGUID);
 
 
         // Perform the file upload using fetch
@@ -114,6 +154,13 @@ document.addEventListener('DOMContentLoaded', function () {
                 const tableBody = document.getElementById('resultsTable').getElementsByTagName('tbody')[0];
                 const weburl = data.weburl;
                 const receiptId = data.receiptID;
+
+
+                // Remove the preview card after the fetch request is completed
+                const cardToRemove = document.getElementById(data.receiptID);
+                if (cardToRemove) {
+                    cardToRemove.remove();
+                }
 
                 // Iterate over each item in the receipt and add it to the table
                 items.forEach(item => {
