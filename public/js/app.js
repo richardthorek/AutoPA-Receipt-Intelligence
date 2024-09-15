@@ -6,7 +6,7 @@ let auth0Client = null;
  */
 const login = async (targetUrl) => {
   try {
-    console.log("Logging in", targetUrl);
+    // console.log("Logging in", targetUrl);
 
     const options = {
       authorizationParams: {
@@ -29,7 +29,7 @@ const login = async (targetUrl) => {
  */
 const logout = async () => {
   try {
-    console.log("Logging out");
+    // console.log("Logging out");
     await auth0Client.logout({
       logoutParams: {
         returnTo: window.location.origin
@@ -103,7 +103,7 @@ window.onload = async () => {
   const isAuthenticated = await auth0Client.isAuthenticated();
 
   if (isAuthenticated) {
-    console.log("> User is authenticated");
+    // console.log("> User is authenticated");
     window.history.replaceState({}, document.title, window.location.pathname);
 
     // Show the upload and results sections
@@ -122,13 +122,13 @@ window.onload = async () => {
     return;
   }
 
-  console.log("> User not authenticated");
+  // console.log("> User not authenticated");
 
   const query = window.location.search;
   const shouldParseResult = query.includes("code=") && query.includes("state=");
 
   if (shouldParseResult) {
-    console.log("> Parsing redirect");
+    // console.log("> Parsing redirect");
     try {
       const result = await auth0Client.handleRedirectCallback();
 
@@ -136,7 +136,7 @@ window.onload = async () => {
         showContentFromUrl(result.appState.targetUrl);
       }
 
-      console.log("Logged in!");
+      // console.log("Logged in!");
       // Show the upload and results sections
       document.getElementById('authenticatedContent').style.display = 'block';
 

@@ -28,3 +28,9 @@ label {
   color: white;
   background-color: green;
 }
+
+/* CSS to style table rows with the class 'duplicate' */
+tr.duplicate {
+  background-color: #ffe5e5
+  ;
+}
