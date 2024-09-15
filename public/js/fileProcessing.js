@@ -306,11 +306,12 @@ document.addEventListener('DOMContentLoaded', function () {
                                     console.error('Error:', error);
                                 });
                         });
-                        checkForDuplicates();
+                        
                         submitCell.appendChild(submitButton);
                         // Check for duplicates after adding the row
                     }, index * 200); // Delay of 200ms between each row
                 });
+                checkForDuplicates();
             })
             .catch(error => {
                 console.error('Error uploading file:', error);
@@ -446,7 +447,10 @@ document.addEventListener('DOMContentLoaded', function () {
                         // Check for duplicates after adding the row
                         checkForDuplicates();
                     }, index * 200); // Delay of 200ms between each row
+                   
                 });
+
+              
 
 
 
