@@ -76,7 +76,7 @@ const updateUI = async () => {
       document.getElementById("profileEmail").innerText = user.email;
 
       document.getElementById("userToken").value = user.sub;
-      console.log(user.sub)
+      // console.log(user.sub)
 
       document.querySelectorAll("pre code").forEach(hljs.highlightBlock);
 
@@ -94,7 +94,7 @@ const updateUI = async () => {
     return;
   }
 
-  console.log("UI updated");
+  // console.log("UI updated");
 };
 
 window.onpopstate = (e) => {
