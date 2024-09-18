@@ -253,15 +253,19 @@ document.addEventListener("DOMContentLoaded", function () {
               receipt.TransactionDate?.valueDate || "N/A";
             row.insertCell(3).textContent =
               receipt.TransactionTime?.valueTime || "N/A";
-            row.insertCell(4).textContent =
+              row.insertCell(4).textContent =
+              typeof item.valueObject?.Quantity?.valueNumber === "number"
+                ? item.valueObject.Quantity.valueNumber
+                : 0;
+              row.insertCell(5).textContent =
               item.valueObject?.Name?.valueString || "N/A";
-            row.insertCell(5).textContent =
+            row.insertCell(6).textContent =
               typeof item.valueObject?.TotalPrice?.valueNumber === "number"
                 ? item.valueObject.TotalPrice.valueNumber
                 : 0;
 
             // Create a link to the receipt and add it to the table
-            const thumbnailCell = row.insertCell(6);
+            const thumbnailCell = row.insertCell(7);
             const receiptLink = document.createElement("a");
             receiptLink.href = weburl;
             receiptLink.setAttribute("uk-toggle", "target: #imgCanvas");
@@ -276,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             // Create a submit button for each row
-            const submitCell = row.insertCell(7);
+            const submitCell = row.insertCell(8);
             const submitButton = document.createElement("button");
             submitButton.className = "uk-icon-button";
             submitButton.setAttribute("uk-icon", "plus-circle");
@@ -402,13 +406,19 @@ document.addEventListener("DOMContentLoaded", function () {
             row.insertCell(2).textContent = entry.transactionDate || "N/A";
             row.insertCell(3).textContent = entry.transactionTime || "N/A";
             row.insertCell(4).textContent = entry.itemName || "N/A";
+
             row.insertCell(5).textContent =
+            typeof entry.itemQuantity === "number"
+              ? entry.itemQuantity
+              : 0;
+
+            row.insertCell(6).textContent =
               typeof entry.itemTotalPrice === "number"
                 ? entry.itemTotalPrice
                 : 0;
 
             // Create a link to the receipt and add it to the table
-            const receiptCell = row.insertCell(6);
+            const receiptCell = row.insertCell(7);
             const receiptLink = document.createElement("a");
             receiptLink.href = entry.weburl;
             receiptLink.setAttribute("uk-toggle", "target: #imgCanvas");
@@ -423,7 +433,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
 
             // Create a delete button for each row
-            const editCell = row.insertCell(7);
+            const editCell = row.insertCell(8);
             const editButton = document.createElement("button");
             editButton.className = "uk-icon-button";
             editButton.setAttribute("uk-icon", "minus-circle");
