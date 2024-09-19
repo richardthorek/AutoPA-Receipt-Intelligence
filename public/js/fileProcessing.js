@@ -233,6 +233,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
         showResultsTable();
 
+        // Get the current date and time
+        const now = new Date();
+
+        // Format the date as YYYY-MM-DD
+        const formattedDate = now.toISOString().split("T")[0];
+
+        // Round the time to the nearest minute
+        now.setSeconds(0, 0);
+        if (now.getSeconds() >= 30) {
+          now.setMinutes(now.getMinutes() + 1);
+        }
+        const formattedTime = now.toTimeString().split(" ")[0].substring(0, 5);
+
         // Iterate over each item in the receipt and add it to the table with a delay
         items.forEach((item, index) => {
           setTimeout(() => {
@@ -246,19 +259,25 @@ document.addEventListener("DOMContentLoaded", function () {
             row.setAttribute("data-row-id", rowID);
 
             row.insertCell(0).textContent =
-              receipt.MerchantName?.valueString || "N/A";
+              receipt.MerchantName?.valueString || "";
+
             row.insertCell(1).textContent =
-              receipt.MerchantAddress?.valueString || "N/A";
+              receipt.MerchantAddress?.valueString || "";
+
+            // Insert the date and time into the table cells
             row.insertCell(2).textContent =
-              receipt.TransactionDate?.valueDate || "N/A";
+              receipt.TransactionDate?.valueDate || formattedDate;
+
             row.insertCell(3).textContent =
-              receipt.TransactionTime?.valueTime || "N/A";
-              row.insertCell(4).textContent =
+              receipt.TransactionTime?.valueTime || formattedTime;
+
+            row.insertCell(4).textContent =
               typeof item.valueObject?.Quantity?.valueNumber === "number"
                 ? item.valueObject.Quantity.valueNumber
                 : 0;
-              row.insertCell(5).textContent =
-              item.valueObject?.Name?.valueString || "N/A";
+            row.insertCell(5).textContent =
+              item.valueObject?.Name?.valueString || "";
+
             row.insertCell(6).textContent =
               typeof item.valueObject?.TotalPrice?.valueNumber === "number"
                 ? item.valueObject.TotalPrice.valueNumber
@@ -288,18 +307,19 @@ document.addEventListener("DOMContentLoaded", function () {
             submitButton.addEventListener("click", function () {
               // Prepare the data to be submitted
               const rowData = {
-                merchantName: receipt.MerchantName.valueString,
-                merchantAddress: receipt.MerchantAddress.valueString,
-                transactionDate: receipt.TransactionDate.valueDate,
-                transactionTime: receipt.TransactionTime.valueTime,
-                itemName: item.valueObject.Name.valueString,
-                itemTotalPrice: item.valueObject.TotalPrice.valueNumber,
-                weburl: weburl,
-                receiptId: receiptId,
-                userID: userTokenInput.value, // Add userID from userToken input field
+                merchantName: receipt.MerchantName?.valueString ?? "",
+                merchantAddress: receipt.MerchantAddress?.valueString ?? "",
+                transactionDate: receipt.TransactionDate?.valueDate || formattedDate,
+                transactionTime: receipt.TransactionTime?.valueTime || formattedTime,
+                itemName: item.valueObject?.Name?.valueString ?? "",
+                itemTotalPrice: item.valueObject?.TotalPrice?.valueNumber ?? "",
+                weburl: weburl ?? "",
+                receiptId: receiptId ?? "",
+                userID: userTokenInput.value ?? "", // Add userID from userToken input field
                 itemStatus: "active",
-                id: row.getAttribute("data-row-id"), // Include the rowID from the attribute
+                id: row.getAttribute("data-row-id") ?? "", // Include the rowID from the attribute
               };
+
               // Submit the individual data line items
               fetch(
                 "https://prod-06.australiasoutheast.logic.azure.com:443/workflows/4339c710204042cf9787b5f4e548ee2c/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=E7sskUxpn9_lGrl1jXtCrpF-FQXqU2Pkd-SsDL4fi6U",
@@ -401,16 +421,14 @@ document.addEventListener("DOMContentLoaded", function () {
             // Add the uk-animation-fade class to the row
             row.classList.add("uk-animation-fade");
             row.setAttribute("data-row-id", entry.id);
-            row.insertCell(0).textContent = entry.merchantName || "N/A";
-            row.insertCell(1).textContent = entry.merchantAddress || "N/A";
-            row.insertCell(2).textContent = entry.transactionDate || "N/A";
-            row.insertCell(3).textContent = entry.transactionTime || "N/A";
-            row.insertCell(4).textContent = entry.itemName || "N/A";
+            row.insertCell(0).textContent = entry.merchantName || "";
+            row.insertCell(1).textContent = entry.merchantAddress || "";
+            row.insertCell(2).textContent = entry.transactionDate || "";
+            row.insertCell(3).textContent = entry.transactionTime || "";
+            row.insertCell(4).textContent = entry.itemName || "";
 
             row.insertCell(5).textContent =
-            typeof entry.itemQuantity === "number"
-              ? entry.itemQuantity
-              : 0;
+              typeof entry.itemQuantity === "number" ? entry.itemQuantity : 0;
 
             row.insertCell(6).textContent =
               typeof entry.itemTotalPrice === "number"
