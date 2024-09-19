@@ -147,17 +147,6 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    // Function to generate a GUID
-    function generateGUID() {
-      return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
-        /[xy]/g,
-        function (c) {
-          const r = (Math.random() * 16) | 0,
-            v = c === "x" ? r : (r & 0x3) | 0x8;
-          return v.toString(16);
-        }
-      );
-    }
     const receiptGUID = generateGUID();
 
     // Create an image preview before uploading
@@ -233,124 +222,31 @@ document.addEventListener("DOMContentLoaded", function () {
 
         showResultsTable();
 
-        // Get the current date and time
-        const now = new Date();
-
-        // Format the date as YYYY-MM-DD
-        const formattedDate = now.toISOString().split("T")[0];
-
-        // Round the time to the nearest minute
-        now.setSeconds(0, 0);
-        if (now.getSeconds() >= 30) {
-          now.setMinutes(now.getMinutes() + 1);
-        }
-        const formattedTime = now.toTimeString().split(" ")[0].substring(0, 5);
-
-        // Iterate over each item in the receipt and add it to the table with a delay
+        // Create a new row for each item in the receipt
         items.forEach((item, index) => {
           setTimeout(() => {
-            const row = tableBody.insertRow(0);
-            const rowID = generateGUID(); // Generate a unique ID for the row
-
-            // Add the uk-animation-fade class to the row
-            row.classList.add("uk-animation-fade");
-
-            // Set the ID of the row using the value of the id attribute from the entry
-            row.setAttribute("data-row-id", rowID);
-
-            row.insertCell(0).textContent =
-              receipt.MerchantName?.valueString || "";
-
-            row.insertCell(1).textContent =
-              receipt.MerchantAddress?.valueString || "";
-
-            // Insert the date and time into the table cells
-            row.insertCell(2).textContent =
-              receipt.TransactionDate?.valueDate || formattedDate;
-
-            row.insertCell(3).textContent =
-              receipt.TransactionTime?.valueTime || formattedTime;
-
-            row.insertCell(4).textContent =
-              typeof item.valueObject?.Quantity?.valueNumber === "number"
-                ? item.valueObject.Quantity.valueNumber
-                : 0;
-            row.insertCell(5).textContent =
-              item.valueObject?.Name?.valueString || "";
-
-            row.insertCell(6).textContent =
-              typeof item.valueObject?.TotalPrice?.valueNumber === "number"
-                ? item.valueObject.TotalPrice.valueNumber
-                : 0;
-
-            // Create a link to the receipt and add it to the table
-            const thumbnailCell = row.insertCell(7);
-            const receiptLink = document.createElement("a");
-            receiptLink.href = weburl;
-            receiptLink.setAttribute("uk-toggle", "target: #imgCanvas");
-            receiptLink.textContent = "Receipt";
-            receiptLink.target = "_blank";
-            thumbnailCell.appendChild(receiptLink);
-
-            // Add event listener to the receipt link
-            receiptLink.addEventListener("click", function (event) {
-              event.preventDefault(); // Prevent the default action of opening in a new tab
-              openReceiptOffCanvas(weburl);
-            });
-
-            // Create a submit button for each row
-            const submitCell = row.insertCell(8);
-            const submitButton = document.createElement("button");
-            submitButton.className = "uk-icon-button";
-            submitButton.setAttribute("uk-icon", "plus-circle");
-
-            submitButton.addEventListener("click", function () {
-              // Prepare the data to be submitted
-              const rowData = {
-                merchantName: receipt.MerchantName?.valueString ?? "",
-                merchantAddress: receipt.MerchantAddress?.valueString ?? "",
-                transactionDate: receipt.TransactionDate?.valueDate || formattedDate,
-                transactionTime: receipt.TransactionTime?.valueTime || formattedTime,
-                itemName: item.valueObject?.Name?.valueString ?? "",
-                itemTotalPrice: item.valueObject?.TotalPrice?.valueNumber ?? "",
-                weburl: weburl ?? "",
-                receiptId: receiptId ?? "",
-                userID: userTokenInput.value ?? "", // Add userID from userToken input field
-                itemStatus: "active",
-                id: row.getAttribute("data-row-id") ?? "", // Include the rowID from the attribute
-              };
-
-              // Submit the individual data line items
-              fetch(
-                "https://prod-06.australiasoutheast.logic.azure.com:443/workflows/4339c710204042cf9787b5f4e548ee2c/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=E7sskUxpn9_lGrl1jXtCrpF-FQXqU2Pkd-SsDL4fi6U",
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(rowData),
-                }
-              )
-                .then((response) => {
-                  if (response.ok) {
-                    return response.json();
-                  } else {
-                    throw new Error("Failed to submit row data.");
-                  }
-                })
-                .then((result) => {
-                  console.log("Success:", result);
-                  submitButton.setAttribute("uk-icon", "check");
-                  submitButton.className = "uk-icon-button success";
-                  submitButton.disabled = true;
-                })
-                .catch((error) => {
-                  console.error("Error:", error);
-                });
-            });
-
-            submitCell.appendChild(submitButton);
-            // Check for duplicates after adding the row
+            const formattedDate = getFormattedDate();
+            const formattedTime = getFormattedTime();
+            const itemID = generateGUID();
+            const rowData = {
+              merchantName: receipt.MerchantName?.valueString || "",
+              merchantAddress: receipt.MerchantAddress?.valueString || "",
+              transactionDate:
+                receipt.TransactionDate?.valueDate || formattedDate,
+              transactionTime:
+                receipt.TransactionTime?.valueTime || formattedTime,
+              itemName: item.valueObject?.Name?.valueString || "",
+              itemQuantity: item.valueObject?.Quantity?.valueNumber || 0,
+              itemTotalPrice: item.valueObject?.TotalPrice?.valueNumber || 0,
+              id: itemID
+            };
+            populateTableRow(
+              tableBody,
+              rowData,
+              weburl,
+              receiptId,
+              userTokenInput
+            );
           }, index * 200); // Delay of 200ms between each row
         });
         checkForDuplicates();
@@ -414,95 +310,26 @@ document.addEventListener("DOMContentLoaded", function () {
 
         showResultsTable();
 
-        // Iterate over each entry in the response data and add it to the table with a delay
+        // Populate table row from historical data
         data.value.forEach((entry, index) => {
           setTimeout(() => {
-            const row = tableBody.insertRow(0);
-            // Add the uk-animation-fade class to the row
-            row.classList.add("uk-animation-fade");
-            row.setAttribute("data-row-id", entry.id);
-            row.insertCell(0).textContent = entry.merchantName || "";
-            row.insertCell(1).textContent = entry.merchantAddress || "";
-            row.insertCell(2).textContent = entry.transactionDate || "";
-            row.insertCell(3).textContent = entry.transactionTime || "";
-            row.insertCell(4).textContent = entry.itemName || "";
-
-            row.insertCell(5).textContent =
-              typeof entry.itemQuantity === "number" ? entry.itemQuantity : 0;
-
-            row.insertCell(6).textContent =
-              typeof entry.itemTotalPrice === "number"
-                ? entry.itemTotalPrice
-                : 0;
-
-            // Create a link to the receipt and add it to the table
-            const receiptCell = row.insertCell(7);
-            const receiptLink = document.createElement("a");
-            receiptLink.href = entry.weburl;
-            receiptLink.setAttribute("uk-toggle", "target: #imgCanvas");
-            receiptLink.textContent = "Receipt";
-            receiptLink.target = "_blank";
-            receiptCell.appendChild(receiptLink);
-
-            // Add event listener to the receipt link
-            receiptLink.addEventListener("click", function (event) {
-              event.preventDefault(); // Prevent the default action of opening in a new tab
-              openReceiptOffCanvas(entry.weburl);
-            });
-
-            // Create a delete button for each row
-            const editCell = row.insertCell(8);
-            const editButton = document.createElement("button");
-            editButton.className = "uk-icon-button";
-            editButton.setAttribute("uk-icon", "minus-circle");
-            editButton.setAttribute("title", "Permanently Delete");
-
-            editButton.addEventListener("click", function () {
-              // Prepare the data to be submitted
-              const rowData = {
-                id: row.getAttribute("data-row-id"), // Include the rowID from the attribute
-                itemStatus: "inactive",
-              };
-              // Edit (Delete) the individual data line items
-              fetch(
-                "https://prod-06.australiasoutheast.logic.azure.com:443/workflows/4339c710204042cf9787b5f4e548ee2c/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=E7sskUxpn9_lGrl1jXtCrpF-FQXqU2Pkd-SsDL4fi6U",
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
-                  body: JSON.stringify(rowData),
-                }
-              )
-                .then((response) => {
-                  if (response.ok) {
-                    return response.json();
-                  } else {
-                    throw new Error("Failed to submit row data.");
-                  }
-                })
-                .then((result) => {
-                  console.log("Deleted:", result);
-
-                  // Retrieve the rowID from the data-row-id attribute
-                  const rowID = row.getAttribute("data-row-id");
-
-                  // Find the row using the rowID and remove it
-                  const rowElement = document.querySelector(
-                    `[data-row-id="${rowID}"]`
-                  );
-                  if (rowElement) {
-                    rowElement.remove();
-                  }
-                  checkForDuplicates();
-                })
-                .catch((error) => {
-                  console.error("Error:", error);
-                });
-            });
-            editCell.appendChild(editButton);
-            // Check for duplicates after adding the row
-            checkForDuplicates();
+            const rowData = {
+              merchantName: entry.merchantName || "",
+              merchantAddress: entry.merchantAddress || "",
+              transactionDate: entry.transactionDate || "",
+              transactionTime: entry.transactionTime || "",
+              itemName: entry.itemName || "",
+              itemQuantity: entry.itemQuantity || 0,
+              itemTotalPrice: entry.itemTotalPrice || 0,
+              id: entry.id
+            };
+            populateTableRow(
+              tableBody,
+              rowData,
+              entry.weburl,
+              entry.receiptId,
+              userTokenInput
+            );
           }, index * 200); // Delay of 200ms between each row
         });
       })
@@ -548,3 +375,298 @@ document.getElementById("downloadBtn").addEventListener("click", () => {
   const csvContent = tableToCSV();
   downloadCSV(csvContent, "table_data.csv");
 });
+
+
+
+//POPULATE ROW
+function populateTableRow(
+  tableBody,
+  rowData,
+  weburl,
+  receiptId,
+  userTokenInput
+) {
+  const row = tableBody.insertRow(0);
+  // const rowID = generateGUID(); // Generate a unique ID for the row
+
+  // Add the uk-animation-fade class to the row
+  row.classList.add("uk-animation-fade");
+
+  // Set the ID of the row using the value of the id attribute from the entry
+  row.setAttribute("data-row-id", rowData.rowID);
+  row.insertCell(0).textContent = rowData.merchantName || "";
+  row.insertCell(1).textContent = rowData.merchantAddress || "";
+  row.insertCell(2).textContent = rowData.transactionDate || "";
+  row.insertCell(3).textContent = rowData.transactionTime || "";
+  row.insertCell(4).textContent = rowData.itemName || "";
+  row.insertCell(5).textContent =
+    typeof rowData.itemQuantity === "number" ? rowData.itemQuantity : 0;
+  row.insertCell(6).textContent =
+    typeof rowData.itemTotalPrice === "number" ? rowData.itemTotalPrice : 0;
+
+  // Create a link to the receipt and add it to the table
+  const receiptCell = row.insertCell(7);
+  const receiptLink = document.createElement("a");
+  receiptLink.href = weburl;
+  receiptLink.setAttribute("uk-toggle", "target: #imgCanvas");
+  receiptLink.textContent = "Receipt";
+  receiptLink.target = "_blank";
+  receiptCell.appendChild(receiptLink);
+
+  // Add event listener to the receipt link
+  receiptLink.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default action of opening in a new tab
+    openReceiptOffCanvas(weburl);
+  });
+
+  // Create a cell for the buttons
+  const buttonCell = row.insertCell(8);
+
+  // Create a submit button for each row
+  const submitButton = document.createElement("button");
+  submitButton.className = "uk-icon-button";
+  submitButton.setAttribute("uk-icon", "plus-circle");
+
+  submitButton.addEventListener("click", function () {
+    const rowData = getRowData(row, weburl, receiptId, userTokenInput);
+    submitRowData(rowData, submitButton);
+  });
+
+  buttonCell.appendChild(submitButton);
+
+  // Create an edit button for each row
+  const editButton = document.createElement("button");
+  editButton.className = "uk-icon-button";
+  editButton.setAttribute("uk-icon", "pencil");
+
+  editButton.addEventListener("click", function () {
+    openEditModal(row);
+  });
+
+  buttonCell.appendChild(editButton);
+
+  // Create a delete button for each row
+  const deleteButton = document.createElement("button");
+  deleteButton.className = "uk-icon-button";
+  deleteButton.setAttribute("uk-icon", "trash");
+
+  deleteButton.addEventListener("click", function () {
+    deleteRow(row);
+  });
+
+  buttonCell.appendChild(deleteButton);
+}
+
+//GET ROW
+function getRowData(row, weburl, receiptId, userTokenInput) {
+  return {
+    merchantName: row.cells[0].textContent || "",
+    merchantAddress: row.cells[1].textContent || "",
+    transactionDate: row.cells[2].textContent || "",
+    transactionTime: row.cells[3].textContent || "",
+    itemName: row.cells[4].textContent || "",
+    itemTotalPrice: parseFloat(row.cells[6].textContent) || 0,
+    itemQuantity: parseInt(row.cells[5].textContent, 10) || 0,
+    weburl: weburl ?? "",
+    receiptId: receiptId ?? "",
+    userID: userTokenInput.value ?? "", // Add userID from userToken input field
+    itemStatus: "active",
+    id: row.getAttribute("data-row-id") ?? "", // Include the rowID from the attribute
+  };
+}
+
+//SUBMIT ROW
+
+function submitRowData(rowData, submitButton) {
+  fetch(
+    "https://prod-06.australiasoutheast.logic.azure.com:443/workflows/4339c710204042cf9787b5f4e548ee2c/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=E7sskUxpn9_lGrl1jXtCrpF-FQXqU2Pkd-SsDL4fi6U",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rowData),
+    }
+  )
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Failed to submit row data.");
+      }
+    })
+    .then((result) => {
+      console.log("Success:", result);
+      submitButton.setAttribute("uk-icon", "check");
+      submitButton.className = "uk-icon-button success";
+      // Delay for half a second and then remove the 'success' class
+      setTimeout(() => {
+        // submitButton.classList.remove("success");
+        // submitButton.removeAttribute("check");
+        // submitButton.classList.add("refresh");
+        // submitButton.setAttribute("uk-icon", "refresh");
+      }, 500);
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+// EDIT MODAL
+
+function openEditModal(row) {
+  // Get the existing row data
+  const merchantName = row.cells[0].textContent;
+  const merchantAddress = row.cells[1].textContent;
+  const transactionDate = row.cells[2].textContent;
+  const transactionTime = row.cells[3].textContent;
+  const itemName = row.cells[4].textContent;
+  const itemQuantity = row.cells[5].textContent;
+  const itemTotalPrice = row.cells[6].textContent;
+
+  // Pre-fill the form with existing row data
+  document.getElementById("edit-merchantName").value = merchantName;
+  document.getElementById("edit-merchantAddress").value = merchantAddress;
+  document.getElementById("edit-transactionDate").value = transactionDate;
+  document.getElementById("edit-transactionTime").value = transactionTime;
+  document.getElementById("edit-itemName").value = itemName;
+  document.getElementById("edit-itemTotalPrice").value = itemTotalPrice;
+  document.getElementById("edit-itemQuantity").value = itemQuantity;
+
+  // Show the modal
+  UIkit.modal("#edit-modal").show();
+
+  // Handle form submission
+  document.getElementById("edit-form").onsubmit = function (event) {
+    event.preventDefault();
+
+    // Get the updated data from the form
+    const updatedMerchantName =
+      document.getElementById("edit-merchantName").value;
+    const updatedMerchantAddress = document.getElementById(
+      "edit-merchantAddress"
+    ).value;
+    const updatedTransactionDate = document.getElementById(
+      "edit-transactionDate"
+    ).value;
+    const updatedTransactionTime = document.getElementById(
+      "edit-transactionTime"
+    ).value;
+    const updatedItemName = document.getElementById("edit-itemName").value;
+    const updatedItemTotalPrice = document.getElementById(
+      "edit-itemTotalPrice"
+    ).value;
+    const updatedItemQuantity =
+      document.getElementById("edit-itemQuantity").value;
+
+    // Update the row with the new data
+    row.cells[0].textContent = updatedMerchantName;
+    row.cells[1].textContent = updatedMerchantAddress;
+    row.cells[2].textContent = updatedTransactionDate;
+    row.cells[3].textContent = updatedTransactionTime;
+    row.cells[4].textContent = updatedItemName;
+    row.cells[5].textContent = updatedItemQuantity;
+    row.cells[6].textContent = updatedItemTotalPrice;
+
+    // Close the modal
+    UIkit.modal("#edit-modal").hide();
+
+    // Prepare the updated row data
+    const updatedRowData = {
+      merchantName: updatedMerchantName,
+      merchantAddress: updatedMerchantAddress,
+      transactionDate: updatedTransactionDate,
+      transactionTime: updatedTransactionTime,
+      itemName: updatedItemName,
+      itemTotalPrice: parseFloat(updatedItemTotalPrice) || 0,
+      itemQuantity: parseInt(updatedItemQuantity, 10) || 0,
+      weburl: row.cells[7].querySelector("a").href || "",
+      receiptId: row.getAttribute("data-receipt-id") || "",
+      userID: userTokenInput.value || "",
+      itemStatus: "active",
+      id: row.getAttribute("data-row-id") || "",
+    };
+
+    // Call the submitRowData function with the updated row data
+    submitRowData(
+      updatedRowData,
+      row.querySelector(".uk-icon-button[uk-icon='plus-circle']")
+    );
+  };
+}
+
+//DELETE ROW
+
+function deleteRow(row) {
+  // Prepare the data to be submitted
+  const rowData = {
+    id: row.getAttribute("data-row-id"), // Include the rowID from the attribute
+    itemStatus: "inactive",
+  };
+
+  // Edit (Delete) the individual data line items
+  fetch(
+    "https://prod-06.australiasoutheast.logic.azure.com:443/workflows/4339c710204042cf9787b5f4e548ee2c/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=E7sskUxpn9_lGrl1jXtCrpF-FQXqU2Pkd-SsDL4fi6U",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(rowData),
+    }
+  )
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Failed to submit row data.");
+      }
+    })
+    .then((result) => {
+      console.log("Deleted:", result);
+
+      // Retrieve the rowID from the data-row-id attribute
+      const rowID = row.getAttribute("data-row-id");
+
+      // Find the row using the rowID and remove it
+      const rowElement = document.querySelector(`[data-row-id="${rowID}"]`);
+      if (rowElement) {
+        rowElement.remove();
+      }
+      checkForDuplicates();
+    })
+    .catch((error) => {
+      console.error("Error:", error);
+    });
+}
+
+// Function to generate a GUID
+function generateGUID() {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
+    const r = (Math.random() * 16) | 0,
+      v = c === "x" ? r : (r & 0x3) | 0x8;
+    return v.toString(16);
+  });
+}
+
+function getFormattedDate() {
+  // Get the current date
+  const now = new Date();
+
+  // Format the date as YYYY-MM-DD
+  return now.toISOString().split("T")[0];
+}
+
+function getFormattedTime() {
+  // Get the current time
+  const now = new Date();
+
+  // Round the time to the nearest minute
+  now.setSeconds(0, 0);
+  if (now.getSeconds() >= 30) {
+    now.setMinutes(now.getMinutes() + 1);
+  }
+
+  // Format the time as HH:MM
+  return now.toTimeString().split(" ")[0].substring(0, 5);
+}
