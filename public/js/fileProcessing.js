@@ -93,49 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Function to check for duplicates in the table
-  function checkForDuplicates() {
-    const tableBody = document
-      .getElementById("resultsTable")
-      .getElementsByTagName("tbody")[0];
-    const rows = Array.from(tableBody.rows);
-    const duplicates = {};
-
-    rows.forEach((row) => {
-      row.classList.remove("duplicate");
-      row.setAttribute("data-duplicate", "false");
-
-      const date = row.cells[2].textContent;
-      const time = row.cells[3].textContent;
-      const item = row.cells[4].textContent;
-      const totalPrice = row.cells[5].textContent;
-
-      const key = `${date}_${time}_${item}_${totalPrice}`;
-      if (duplicates[key]) {
-        duplicates[key].push(row);
-      } else {
-        duplicates[key] = [row];
-      }
-    });
-
-    for (const key in duplicates) {
-      if (duplicates[key].length > 1) {
-        UIkit.notification({
-          message:
-            "Duplicates detected in red below. Please review and delete duplicates.",
-          status: "warning",
-          pos: "top-right",
-          timeout: 2000,
-        });
-
-        duplicates[key].forEach((row) => {
-          row.classList.add("duplicate");
-          row.setAttribute("data-duplicate", "true");
-        });
-      }
-    }
-  }
-
   // Function to handle file upload
   function handleFileUpload(file) {
     if (!file) return;
@@ -238,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function () {
               itemName: item.valueObject?.Name?.valueString || "",
               itemQuantity: item.valueObject?.Quantity?.valueNumber || 0,
               itemTotalPrice: item.valueObject?.TotalPrice?.valueNumber || 0,
-              id: itemID
+              id: itemID,
             };
             populateTableRow(
               tableBody,
@@ -321,7 +278,7 @@ document.addEventListener("DOMContentLoaded", function () {
               itemName: entry.itemName || "",
               itemQuantity: entry.itemQuantity || 0,
               itemTotalPrice: entry.itemTotalPrice || 0,
-              id: entry.id
+              id: entry.id,
             };
             populateTableRow(
               tableBody,
@@ -332,6 +289,15 @@ document.addEventListener("DOMContentLoaded", function () {
             );
           }, index * 200); // Delay of 200ms between each row
         });
+        // After all rows have been populated, set all submit buttons to done
+        setTimeout(() => {
+          const submitButtons = document.querySelectorAll(
+            "[id$='-btn-submit']"
+          );
+          submitButtons.forEach((button) => {
+            setDone(button);
+          });
+        }, data.value.length * 200 + 500); // Ensure this runs after the last row is added
       })
       .catch((error) => {
         console.error("Error fetching data:", error); // Log any errors that occur during the fetch request
@@ -376,8 +342,6 @@ document.getElementById("downloadBtn").addEventListener("click", () => {
   downloadCSV(csvContent, "table_data.csv");
 });
 
-
-
 //POPULATE ROW
 function populateTableRow(
   tableBody,
@@ -387,13 +351,12 @@ function populateTableRow(
   userTokenInput
 ) {
   const row = tableBody.insertRow(0);
-  // const rowID = generateGUID(); // Generate a unique ID for the row
 
   // Add the uk-animation-fade class to the row
   row.classList.add("uk-animation-fade");
 
   // Set the ID of the row using the value of the id attribute from the entry
-  row.setAttribute("data-row-id", rowData.rowID);
+  row.setAttribute("data-row-id", rowData.id);
   row.insertCell(0).textContent = rowData.merchantName || "";
   row.insertCell(1).textContent = rowData.merchantAddress || "";
   row.insertCell(2).textContent = rowData.transactionDate || "";
@@ -426,6 +389,8 @@ function populateTableRow(
   const submitButton = document.createElement("button");
   submitButton.className = "uk-icon-button";
   submitButton.setAttribute("uk-icon", "plus-circle");
+  // Set the unique ID for the submit button
+  submitButton.id = `${rowData.id}-btn-submit`;
 
   submitButton.addEventListener("click", function () {
     const rowData = getRowData(row, weburl, receiptId, userTokenInput);
@@ -438,6 +403,8 @@ function populateTableRow(
   const editButton = document.createElement("button");
   editButton.className = "uk-icon-button";
   editButton.setAttribute("uk-icon", "pencil");
+  // Set the unique ID for the edit button
+  editButton.id = `${rowData.id}-btn-edit`;
 
   editButton.addEventListener("click", function () {
     openEditModal(row);
@@ -449,6 +416,9 @@ function populateTableRow(
   const deleteButton = document.createElement("button");
   deleteButton.className = "uk-icon-button";
   deleteButton.setAttribute("uk-icon", "trash");
+
+  // Set the unique ID for the delete button
+  deleteButton.id = `${rowData.id}-btn-delete`;
 
   deleteButton.addEventListener("click", function () {
     deleteRow(row);
@@ -478,6 +448,9 @@ function getRowData(row, weburl, receiptId, userTokenInput) {
 //SUBMIT ROW
 
 function submitRowData(rowData, submitButton) {
+  // Change the submit button to a refresh icon showing pending activity and disable it.
+  setPending(submitButton);
+
   fetch(
     "https://prod-06.australiasoutheast.logic.azure.com:443/workflows/4339c710204042cf9787b5f4e548ee2c/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=E7sskUxpn9_lGrl1jXtCrpF-FQXqU2Pkd-SsDL4fi6U",
     {
@@ -497,14 +470,10 @@ function submitRowData(rowData, submitButton) {
     })
     .then((result) => {
       console.log("Success:", result);
-      submitButton.setAttribute("uk-icon", "check");
-      submitButton.className = "uk-icon-button success";
+      setDone(submitButton);
       // Delay for half a second and then remove the 'success' class
       setTimeout(() => {
-        // submitButton.classList.remove("success");
-        // submitButton.removeAttribute("check");
-        // submitButton.classList.add("refresh");
-        // submitButton.setAttribute("uk-icon", "refresh");
+        //Do Something
       }, 500);
     })
     .catch((error) => {
@@ -571,6 +540,9 @@ function openEditModal(row) {
     // Close the modal
     UIkit.modal("#edit-modal").hide();
 
+    // Define userTokenInput
+    const userTokenInput = document.getElementById("userToken");
+
     // Prepare the updated row data
     const updatedRowData = {
       merchantName: updatedMerchantName,
@@ -587,11 +559,16 @@ function openEditModal(row) {
       id: row.getAttribute("data-row-id") || "",
     };
 
-    // Call the submitRowData function with the updated row data
-    submitRowData(
-      updatedRowData,
-      row.querySelector(".uk-icon-button[uk-icon='plus-circle']")
+    // Get the submit button for the row using the unique ID
+    const submitButton = document.getElementById(
+      `${updatedRowData.id}-btn-submit`
     );
+
+    // Set the submit button to pending state
+    setPending(submitButton);
+
+    // Call the submitRowData function with the updated row data
+    submitRowData(updatedRowData, submitButton);
   };
 }
 
@@ -633,7 +610,6 @@ function deleteRow(row) {
       if (rowElement) {
         rowElement.remove();
       }
-      checkForDuplicates();
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -669,4 +645,74 @@ function getFormattedTime() {
 
   // Format the time as HH:MM
   return now.toTimeString().split(" ")[0].substring(0, 5);
+}
+
+function setPending(button) {
+  button.classList.add("refresh");
+  button.setAttribute("uk-icon", "refresh");
+  button.disabled = true;
+}
+
+function setDone(button) {
+  button.classList.remove("refresh");
+  button.setAttribute("uk-icon", "check");
+  button.className = "uk-icon-button success";
+  button.disabled = false;
+}
+
+function setError(button) {
+  button.classList.remove("refresh");
+  button.setAttribute("uk-icon", "warning");
+  button.className = "uk-icon-button error";
+  button.disabled = false;
+}
+
+function restore(button) {
+  button.classList.remove("refresh", "success", "error");
+  button.className = "uk-icon-button";
+  button.setAttribute("uk-icon", "plus-circle");
+  button.disabled = false;
+}
+
+// Function to check for duplicates in the table
+function checkForDuplicates() {
+  const tableBody = document
+    .getElementById("resultsTable")
+    .getElementsByTagName("tbody")[0];
+  const rows = Array.from(tableBody.rows);
+  const duplicates = {};
+
+  rows.forEach((row) => {
+    row.classList.remove("duplicate");
+    row.setAttribute("data-duplicate", "false");
+
+    const date = row.cells[2].textContent;
+    const time = row.cells[3].textContent;
+    const item = row.cells[4].textContent;
+    const totalPrice = row.cells[5].textContent;
+
+    const key = `${date}_${time}_${item}_${totalPrice}`;
+    if (duplicates[key]) {
+      duplicates[key].push(row);
+    } else {
+      duplicates[key] = [row];
+    }
+  });
+
+  for (const key in duplicates) {
+    if (duplicates[key].length > 1) {
+      UIkit.notification({
+        message:
+          "Duplicates detected in red below. Please review and delete duplicates.",
+        status: "warning",
+        pos: "top-right",
+        timeout: 2000,
+      });
+
+      duplicates[key].forEach((row) => {
+        row.classList.add("duplicate");
+        row.setAttribute("data-duplicate", "true");
+      });
+    }
+  }
 }
