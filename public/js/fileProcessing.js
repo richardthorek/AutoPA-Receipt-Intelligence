@@ -767,3 +767,77 @@ function formatCurrency(value) {
     maximumFractionDigits: 2
   }).format(value);
 }
+
+//Function to enable date preset buttons.
+
+function formatDateToYYYYMMDD(date, locale = 'en-CA') {
+  return date.toLocaleDateString(locale, {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit'
+  }).split('/').reverse().join('-');
+}
+
+function setCurrentMonth() {
+  const now = new Date();
+  const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
+  const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+
+  const userLocale = navigator.language || 'en-CA';
+  document.getElementById('filterFromDate').value = formatDateToYYYYMMDD(firstDay, userLocale);
+  document.getElementById('filterToDate').value = formatDateToYYYYMMDD(lastDay, userLocale);
+}
+
+function setLastMonth() {
+  const now = new Date();
+  const firstDay = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+  const lastDay = new Date(now.getFullYear(), now.getMonth(), 0);
+
+  const userLocale = navigator.language || 'en-CA';
+  document.getElementById('filterFromDate').value = formatDateToYYYYMMDD(firstDay, userLocale);
+  document.getElementById('filterToDate').value = formatDateToYYYYMMDD(lastDay, userLocale);
+}
+
+function setCurrentQuarter() {
+  const now = new Date();
+  const quarterStartMonth = Math.floor(now.getMonth() / 3) * 3;
+  const firstDay = new Date(now.getFullYear(), quarterStartMonth, 1);
+  const lastDay = new Date(now.getFullYear(), quarterStartMonth + 3, 0);
+
+  const userLocale = navigator.language || 'en-CA';
+  document.getElementById('filterFromDate').value = formatDateToYYYYMMDD(firstDay, userLocale);
+  document.getElementById('filterToDate').value = formatDateToYYYYMMDD(lastDay, userLocale);
+}
+
+function setLastQuarter() {
+  const now = new Date();
+  const quarterStartMonth = Math.floor((now.getMonth() - 3) / 3) * 3;
+  const firstDay = new Date(now.getFullYear(), quarterStartMonth, 1);
+  const lastDay = new Date(now.getFullYear(), quarterStartMonth + 3, 0);
+
+  const userLocale = navigator.language || 'en-CA';
+  document.getElementById('filterFromDate').value = formatDateToYYYYMMDD(firstDay, userLocale);
+  document.getElementById('filterToDate').value = formatDateToYYYYMMDD(lastDay, userLocale);
+}
+
+function setCurrentFinancialYear() {
+  const now = new Date();
+  const year = now.getMonth() >= 6 ? now.getFullYear() : now.getFullYear() - 1;
+  const firstDay = new Date(year, 6, 1);
+  const lastDay = new Date(year + 1, 6, 30);
+
+  const userLocale = navigator.language || 'en-CA';
+  document.getElementById('filterFromDate').value = formatDateToYYYYMMDD(firstDay, userLocale);
+  document.getElementById('filterToDate').value = formatDateToYYYYMMDD(lastDay, userLocale);
+}
+
+function setLastFinancialYear() {
+  const now = new Date();
+  const year = now.getMonth() >= 6 ? now.getFullYear() - 1 : now.getFullYear() - 2;
+  const firstDay = new Date(year, 6, 1);
+  const lastDay = new Date(year + 1, 6, 30);
+
+  const userLocale = navigator.language || 'en-CA';
+  document.getElementById('filterFromDate').value = formatDateToYYYYMMDD(firstDay, userLocale);
+  document.getElementById('filterToDate').value = formatDateToYYYYMMDD(lastDay, userLocale);
+}

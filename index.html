@@ -131,36 +131,53 @@
 
           <h3 class="uk-card-title">Filter</h3>
 
-          <!-- Filter Section -->
-
-          <div id="filterSection" class="uk-card uk-card-default uk-card-body uk-margin-auto">
-            <div class="uk-grid-small uk-child-width-expand@s uk-grid-match" data-uk-grid>
-              <div>
-                <div class="uk-card uk-card-small ">
-                  <label class="uk-text-muted uk-text-small" for="filterFromDate">From:</label>
-                  <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterFromDate" class="uk-input"
-                    placeholder="Date From" />
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-small">
-                  <label class="uk-text-muted uk-text-small" for="filterToDate">To:</label>
-                  <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterToDate" class="uk-input"
-                    placeholder="Date To" />
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-small uk-flex uk-flex-middle uk-flex-bottom">
-                  <button id="getBtn" class="uk-button uk-button-default uk-width-1-1">Get</button>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-small uk-flex uk-flex-middle uk-flex-bottom">
-                  <button id="downloadBtn" class="uk-button uk-button-default uk-width-1-1">Download</button>
-                </div>
-              </div>
-            </div>
-          </div>
+<!-- Filter Section -->
+<div id="filterSection" class="uk-card uk-card-default uk-card-body uk-margin-auto">
+  <div class="uk-grid-small uk-child-width-expand@s uk-grid-match" data-uk-grid>
+    <div>
+      <div class="uk-card uk-card-small">
+        <label class="uk-text-muted uk-text-small" for="filterFromDate">From:</label>
+        <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterFromDate" class="uk-input" placeholder="Date From" />
+      </div>
+    </div>
+    <div>
+      <div class="uk-card uk-card-small">
+        <label class="uk-text-muted uk-text-small" for="filterToDate">To:</label>
+        <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterToDate" class="uk-input" placeholder="Date To" />
+      </div>
+    </div>
+    <div>
+      <div class="uk-card uk-card-small uk-flex uk-flex-middle uk-flex-bottom">
+        <button id="getBtn" class="uk-button uk-button-default uk-width-1-1">Get</button>
+      </div>
+    </div>
+    <div>
+      <div class="uk-card uk-card-small uk-flex uk-flex-middle uk-flex-bottom">
+        <button id="downloadBtn" class="uk-button uk-button-default uk-width-1-1">Download</button>
+      </div>
+    </div>
+  </div>
+  <div class="uk-grid-small uk-grid-match uk-margin-top" data-uk-grid>
+    <div>
+      <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small" onclick="setCurrentMonth()">Current Month</button>
+    </div>
+    <div>
+      <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small" onclick="setLastMonth()">Last Month</button>
+    </div>
+    <div>
+      <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small" onclick="setCurrentQuarter()">Current 1/4</button>
+    </div>
+    <div>
+      <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small" onclick="setLastQuarter()">Last 1/4</button>
+    </div>
+    <div>
+      <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small" onclick="setCurrentFinancialYear()">Current FY</button>
+    </div>
+    <div>
+      <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small" onclick="setLastFinancialYear()">Last FY</button>
+    </div>
+  </div>
+</div>
 
           <!-- Results Table -->
           <h3 id="resultsHeading" class="uk-card-title uk-animation-fade">Results</h3>
