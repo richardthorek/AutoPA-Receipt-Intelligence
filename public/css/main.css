@@ -29,6 +29,11 @@ label {
   background-color: green;
 }
 
+.refresh{
+  color: white;
+  background-color: lightgreen;
+}
+
 /* CSS to style table rows with the class 'duplicate' */
 tr.duplicate {
   background-color: #ffe5e5

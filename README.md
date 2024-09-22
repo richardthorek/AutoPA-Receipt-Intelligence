@@ -9,14 +9,15 @@
 - Either click to select a file or drag and drop onto the Upload File field.
 - You can drop multiple files at once
 - The file will automatically process and the results will be returned to the table below.
+- Duplicates will be identified in red
 
 ## Submit Item
 - Once a receipts data is loaded, you can 'Submit' the individual line items you want to keep with the plus icon. 
 - This allows them to be recalled later (e.g. at Quarterly BAS time)
-- Deleting items is not possible at this time.
 
 ## Get History
 - Use the From & To Date Fields to retrieve transactions between those dates
+- You can delete a submitted item by pressing the minus icon. this is permanent. 
 
 ## Download File
 - Press Download to get a CSV file with the data currently in the table.

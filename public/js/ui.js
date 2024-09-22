@@ -63,12 +63,6 @@ const updateUI = async () => {
     if (isAuthenticated) {
       const user = await auth0Client.getUser();
 
-      // document.getElementById("profile-data").innerText = JSON.stringify(
-      //   user,
-      //   null,
-      //   2
-      // );
-
       document.getElementById("profileImg").src = user.picture;
       document.getElementById("profileNickname").innerText = user.nickname;
       document.getElementById("profileLastUpdated").innerText = user.updated_at;
@@ -76,7 +70,8 @@ const updateUI = async () => {
       document.getElementById("profileEmail").innerText = user.email;
 
       document.getElementById("userToken").value = user.sub;
-      // console.log(user.sub)
+      
+      console.log(user)
 
       document.querySelectorAll("pre code").forEach(hljs.highlightBlock);
 

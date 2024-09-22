@@ -8,13 +8,14 @@
 
   <!-- UIkit CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.11/dist/css/uikit.min.css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/monokai-sublime.min.css" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/solid.css"
     integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css"
     integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css" />
+  <!-- <link rel="stylesheet" href="https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css" /> -->
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/monokai-sublime.min.css" /> -->
+
   <script>
     (function () {
       const isLocalhost = window.location.hostname === 'localhost' && window.location.port === '3000';
@@ -132,11 +133,10 @@
           <h3 class="uk-card-title">Filter</h3>
 
           <!-- Filter Section -->
-
           <div id="filterSection" class="uk-card uk-card-default uk-card-body uk-margin-auto">
             <div class="uk-grid-small uk-child-width-expand@s uk-grid-match" data-uk-grid>
               <div>
-                <div class="uk-card uk-card-small ">
+                <div class="uk-card uk-card-small">
                   <label class="uk-text-muted uk-text-small" for="filterFromDate">From:</label>
                   <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterFromDate" class="uk-input"
                     placeholder="Date From" />
@@ -160,33 +160,99 @@
                 </div>
               </div>
             </div>
-          </div>
-
-          <!-- Results Table -->
-          <h3 id="resultsHeading" class="uk-card-title uk-animation-fade">Results</h3>
-          <div id="resultsSection"
-            class="uk-grid uk-flex uk-flex-center uk-flex-middle uk-child-width-expand uk-margin-auto uk-animation-fade">
-            <div class="uk-card uk-card-default uk-card-body uk-width-1-1">
-              <table id="resultsTable" class="uk-table uk-table-divider uk-table-responsive">
-                <thead>
-                  <tr>
-                    <th>Merchant Name</th>
-                    <th>Address</th>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Item Name</th>
-                    <th>Item Total Price</th>
-                    <th>Receipt</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
+            <div class="uk-grid-small uk-grid-match uk-margin-top" data-uk-grid>
+              <div>
+                <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small"
+                  onclick="setCurrentMonth()">Current Month</button>
+              </div>
+              <div>
+                <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small"
+                  onclick="setLastMonth()">Last Month</button>
+              </div>
+              <div>
+                <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small"
+                  onclick="setCurrentQuarter()">Current 1/4</button>
+              </div>
+              <div>
+                <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small"
+                  onclick="setLastQuarter()">Last 1/4</button>
+              </div>
+              <div>
+                <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small"
+                  onclick="setCurrentFinancialYear()">Current FY</button>
+              </div>
+              <div>
+                <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small"
+                  onclick="setLastFinancialYear()">Last FY</button>
+              </div>
             </div>
           </div>
 
+
+
+  <!-- Results Table -->
+<h3 id="resultsHeading" class="uk-card-title uk-animation-fade">Results</h3>
+         
+<div id="resultsSection"
+  class="uk-grid uk-flex uk-flex-center uk-flex-middle uk-child-width-expand uk-margin-auto uk-animation-fade">
+   <!-- Search Box -->
+   <div class="uk-margin">
+    <input class="uk-input" type="text" id="searchBox" placeholder="Search...">
+  </div>
+  <div class="uk-card uk-card-default uk-card-body uk-width-1-1">
+    <table id="resultsTable" class="uk-table uk-table-divider uk-table-responsive">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Merchant Name <span uk-icon="chevron-up" id="sort-icon-0"></span></th> <!-- 0-->
+          <th onclick="sortTable(1)">Address <span uk-icon="" id="sort-icon-1"></span></th><!-- 1-->
+          <th onclick="sortTable(2)">Date <span uk-icon="" id="sort-icon-2"></span></th><!-- 2-->
+          <th onclick="sortTable(3)">Time <span uk-icon="" id="sort-icon-3"></span></th><!-- 3-->
+          <th onclick="sortTable(4)">Item Name <span uk-icon="" id="sort-icon-4"></span></th><!-- 4-->
+          <th onclick="sortTable(5)">Qty <span uk-icon="" id="sort-icon-5"></span></th><!-- 5-->
+          <th onclick="sortTable(6)">Item Total Price <span uk-icon="" id="sort-icon-6"></span></th><!-- 6-->
+          <th>Actions</th><!-- 7-->
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
+
         </div>
       </div>
+    </div>
+  </div>
+
+  <div id="edit-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+      <h2 class="uk-modal-title">Edit Row</h2>
+      <form id="edit-form">
+        <div class="uk-margin">
+          <input class="uk-input" type="text" id="edit-merchantName" placeholder="Merchant Name">
+        </div>
+        <div class="uk-margin">
+          <input class="uk-input" type="text" id="edit-merchantAddress" placeholder="Merchant Address">
+        </div>
+        <div class="uk-margin">
+          <input class="uk-input" type="date" id="edit-transactionDate" placeholder="Transaction Date">
+        </div>
+        <div class="uk-margin">
+          <input class="uk-input" type="time" id="edit-transactionTime" placeholder="Transaction Time">
+        </div>
+        <div class="uk-margin">
+          <input class="uk-input" type="text" id="edit-itemName" placeholder="Item Name">
+        </div>
+        <div class="uk-margin">
+          <input class="uk-input" type="number" id="edit-itemTotalPrice" placeholder="Item Total Price">
+        </div>
+        <div class="uk-margin">
+          <input class="uk-input" type="number" id="edit-itemQuantity" placeholder="Quantity">
+        </div>
+        <p class="uk-text-right">
+          <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+          <button class="uk-button uk-button-primary" type="submit">Update</button>
+        </p>
+      </form>
     </div>
   </div>
 
@@ -203,8 +269,7 @@
             <div class="uk-card-header">
               <div class="uk-grid-small uk-flex-middle" uk-grid>
                 <div class="uk-width-auto">
-                  <img id="profileImg" class="uk-border-circle" width="40" height="40" src="images/avatar.jpg"
-                    alt="Avatar">
+                  <img id="profileImg" class="uk-border-circle" width="40" height="40" src="" alt="Avatar">
                 </div>
                 <div class="uk-width-expand">
                   <h3 id="profileNickname" class="uk-card-title uk-margin-remove-bottom uk-text-capitalize">Title</h3>
@@ -252,34 +317,33 @@
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.11/dist/js/uikit.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.11/dist/js/uikit-icons.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script>
+  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script> -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
   <script type="text/javascript" src="https://unpkg.com/markdown-it/dist/markdown-it.min.js"></script>
   <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
 
-  <script>
+  <script async>
     document.addEventListener('DOMContentLoaded', function () {
-        const githubRepo = 'richardthorek/AutoPA-Receipt-Intelligence'; // Replace with your GitHub username/repo
-        const readmeUrl = `https://api.github.com/repos/${githubRepo}/contents/README.md`;
-
-        fetch(readmeUrl, {
-            headers: {
-                'Accept': 'application/vnd.github.v3.raw'
-            }
-        })
+      const githubRepo = 'richardthorek/AutoPA-Receipt-Intelligence'; // Replace with your GitHub username/repo
+      const readmeUrl = `https://api.github.com/repos/${githubRepo}/contents/README.md`;
+  
+      fetch(readmeUrl, {
+        headers: {
+          'Accept': 'application/vnd.github.v3.raw'
+        }
+      })
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.text();
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+          return response.text();
         })
         .then(markdown => {
-            // const htmlContent = marked(markdown);
-            document.getElementById('documentationContent').innerHTML = marked.parse(markdown);
+          document.getElementById('documentationContent').innerHTML = marked.parse(markdown);
         })
         .catch(error => console.error('Error fetching README.md:', error));
     });
-</script>
+  </script>
 
 </body>
 
