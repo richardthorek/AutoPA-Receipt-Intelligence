@@ -6,8 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const fileInput = document.getElementById("fileInput");
   const userTokenInput = document.getElementById("userToken");
 
-  // Functions to show and hide the results table
-
   // Function to hide the results table
   function hideResultsTable() {
     const resultsHeading = document.getElementById("resultsHeading");
@@ -49,15 +47,6 @@ document.addEventListener("DOMContentLoaded", function () {
     showResultsTable();
   });
 
-  // Function to open the off-canvas and load the image
-  function openReceiptOffCanvas(imageUrl) {
-    const canvasImg = document.getElementById("canvasImg");
-    if (canvasImg) {
-      canvasImg.src = imageUrl;
-      UIkit.offcanvas("#receiptOffCanvas").show();
-    }
-  }
-
   // // Add click event to the drop zone to trigger file input click
   dropZone.addEventListener("click", () => fileInput.click());
 
@@ -96,21 +85,21 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to handle file upload
   function handleFileUpload(file) {
     if (!file) return;
-
+  
     // Check if the file type is allowed
     const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
     if (!allowedTypes.includes(file.type)) {
       alert("Invalid file type. Please upload a JPG, PNG, or PDF file.");
       return;
     }
-
+  
     const receiptGUID = generateGUID();
-
+  
     // Create an image preview before uploading
     const reader = new FileReader();
     reader.onload = function (event) {
       const previewSection = document.getElementById("receiptPreview");
-
+  
       // Create a container for the grid if it doesn't exist
       let gridContainer = document.getElementById("gridContainer");
       if (!gridContainer) {
@@ -119,7 +108,7 @@ document.addEventListener("DOMContentLoaded", function () {
         gridContainer.className = "uk-grid uk-grid-small uk-child-width-1-4@s";
         previewSection.appendChild(gridContainer);
       }
-
+  
       // Create the preview card
       const previewCard = document.createElement("div");
       previewCard.id = receiptGUID;
@@ -133,11 +122,11 @@ document.addEventListener("DOMContentLoaded", function () {
         <div class="uk-overlay uk-overlay-primary uk-position-cover">
             <div uk-spinner></div>
         </div>
-    `;
+      `;
       gridContainer.appendChild(previewCard);
     };
     reader.readAsDataURL(file);
-
+  
     // Create a new FormData object and append the file and additional metadata
     const formData = new FormData();
     formData.append("file", file);
@@ -146,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append("content-type", file.type);
     formData.append("file-extension", file.name.split(".").pop());
     formData.append("receiptGUID", receiptGUID);
-
+  
     // Perform the file upload using fetch
     fetch(
       "https://prod-04.australiasoutheast.logic.azure.com:443/workflows/bd37bd65a79d49499f5b0e91986f8a00/triggers/Receive_POST_File/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FReceive_POST_File%2Frun&sv=1.0&sig=X1QhmY8PSR3wq38j4Q7_kfSMxRtMSzmfKGIj67aBMiY",
@@ -170,42 +159,51 @@ document.addEventListener("DOMContentLoaded", function () {
           .getElementsByTagName("tbody")[0];
         const weburl = data.weburl;
         const receiptId = data.receiptID;
-
+  
         // Remove the preview card after the fetch request is completed
         const cardToRemove = document.getElementById(data.receiptID);
         if (cardToRemove) {
           cardToRemove.remove();
         }
-
+  
         showResultsTable();
-
+  
         // Create a new row for each item in the receipt
-        items.forEach((item, index) => {
-          setTimeout(() => {
-            const formattedDate = getFormattedDate();
-            const formattedTime = getFormattedTime();
-            const itemID = generateGUID();
-            const rowData = {
-              merchantName: receipt.MerchantName?.valueString || "",
-              merchantAddress: receipt.MerchantAddress?.valueString || "",
-              transactionDate:
-                receipt.TransactionDate?.valueDate || formattedDate,
-              transactionTime:
-                receipt.TransactionTime?.valueTime || formattedTime,
-              itemName: item.valueObject?.Name?.valueString || "",
-              itemQuantity: item.valueObject?.Quantity?.valueNumber || 0,
-              itemTotalPrice: item.valueObject?.TotalPrice?.valueNumber || 0,
-              id: itemID,
-            };
-            populateTableRow(
-              tableBody,
-              rowData,
-              weburl,
-              receiptId,
-              userTokenInput
-            );
-          }, index * 200); // Delay of 200ms between each row
+        const rowPromises = items.map((item, index) => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              const formattedDate = getFormattedDate();
+              const formattedTime = getFormattedTime();
+              const itemID = generateGUID();
+              const rowData = {
+                merchantName: receipt.MerchantName?.valueString || "",
+                merchantAddress: receipt.MerchantAddress?.valueString || "",
+                transactionDate:
+                  receipt.TransactionDate?.valueDate || formattedDate,
+                transactionTime:
+                  receipt.TransactionTime?.valueTime || formattedTime,
+                itemName: item.valueObject?.Name?.valueString || "",
+                itemQuantity: item.valueObject?.Quantity?.valueNumber || 0,
+                itemTotalPrice: item.valueObject?.TotalPrice?.valueNumber || 0,
+                id: itemID,
+              };
+              populateTableRow(
+                tableBody,
+                rowData,
+                weburl,
+                receiptId,
+                userTokenInput
+              );
+              resolve();
+            }, index * 200); // Delay of 200ms between each row
+          });
         });
+  
+        // Wait for all rows to be added before checking for duplicates
+        return Promise.all(rowPromises);
+      })
+      .then(() => {
+        // Check for duplicates after adding the new rows
         checkForDuplicates();
       })
       .catch((error) => {
@@ -297,6 +295,8 @@ document.addEventListener("DOMContentLoaded", function () {
           submitButtons.forEach((button) => {
             setDone(button);
           });
+          // Check for duplicates after adding the new rows
+          checkForDuplicates();
         }, data.value.length * 200 + 500); // Ensure this runs after the last row is added
       })
       .catch((error) => {
@@ -365,30 +365,34 @@ function populateTableRow(
   row.insertCell(5).textContent =
     typeof rowData.itemQuantity === "number" ? rowData.itemQuantity : 0;
   row.insertCell(6).textContent =
-    typeof rowData.itemTotalPrice === "number" ? rowData.itemTotalPrice : 0;
+    typeof rowData.itemTotalPrice === "number" ? formatCurrency(rowData.itemTotalPrice) : formatCurrency(0);
 
-  // Create a link to the receipt and add it to the table
-  const receiptCell = row.insertCell(7);
-  const receiptLink = document.createElement("a");
-  receiptLink.href = weburl;
-  receiptLink.setAttribute("uk-toggle", "target: #imgCanvas");
-  receiptLink.textContent = "Receipt";
-  receiptLink.target = "_blank";
-  receiptCell.appendChild(receiptLink);
+// Create a cell for the buttons
+const buttonCell = row.insertCell(7);
 
-  // Add event listener to the receipt link
-  receiptLink.addEventListener("click", function (event) {
-    event.preventDefault(); // Prevent the default action of opening in a new tab
-    openReceiptOffCanvas(weburl);
-  });
+// Create a link to the receipt and add it to the button cell
+const receiptLink = document.createElement("a");
+receiptLink.href = weburl;
+receiptLink.setAttribute("uk-toggle", "target: #imgCanvas");
+receiptLink.className = "uk-icon-button";
+receiptLink.setAttribute("uk-icon", "file-text");
+receiptLink.setAttribute("uk-tooltip", "title: Show Receipt");
 
-  // Create a cell for the buttons
-  const buttonCell = row.insertCell(8);
+receiptLink.target = "_blank";
+buttonCell.appendChild(receiptLink);
+
+// Add event listener to the receipt link
+receiptLink.addEventListener("click", function (event) {
+  event.preventDefault(); // Prevent the default action of opening in a new tab
+  openReceiptOffCanvas(weburl);
+});
 
   // Create a submit button for each row
   const submitButton = document.createElement("button");
   submitButton.className = "uk-icon-button";
   submitButton.setAttribute("uk-icon", "plus-circle");
+  submitButton.setAttribute("uk-tooltip", "title: Submit");
+
   // Set the unique ID for the submit button
   submitButton.id = `${rowData.id}-btn-submit`;
 
@@ -405,6 +409,8 @@ function populateTableRow(
   editButton.setAttribute("uk-icon", "pencil");
   // Set the unique ID for the edit button
   editButton.id = `${rowData.id}-btn-edit`;
+  editButton.setAttribute("uk-tooltip", "title: Edit");
+
 
   editButton.addEventListener("click", function () {
     openEditModal(row);
@@ -415,6 +421,8 @@ function populateTableRow(
   // Create a delete button for each row
   const deleteButton = document.createElement("button");
   deleteButton.className = "uk-icon-button";
+  deleteButton.setAttribute("uk-tooltip", "title: Delete");
+
   deleteButton.setAttribute("uk-icon", "trash");
 
   // Set the unique ID for the delete button
@@ -610,6 +618,9 @@ function deleteRow(row) {
       if (rowElement) {
         rowElement.remove();
       }
+
+      // Check for duplicates after adding the new rows
+      checkForDuplicates();
     })
     .catch((error) => {
       console.error("Error:", error);
@@ -699,20 +710,60 @@ function checkForDuplicates() {
     }
   });
 
+  let hasDuplicates = false;
+
   for (const key in duplicates) {
     if (duplicates[key].length > 1) {
-      UIkit.notification({
-        message:
-          "Duplicates detected in red below. Please review and delete duplicates.",
-        status: "warning",
-        pos: "top-right",
-        timeout: 2000,
-      });
-
+      hasDuplicates = true;
       duplicates[key].forEach((row) => {
         row.classList.add("duplicate");
         row.setAttribute("data-duplicate", "true");
       });
     }
   }
+
+  if (hasDuplicates) {
+    UIkit.notification({
+      message:
+        "Duplicates detected in red below. Please review and delete duplicates.",
+      status: "warning",
+      pos: "top-right",
+      timeout: 2000,
+    });
+  }
+}
+
+// Function to open the off-canvas and load the image
+function openReceiptOffCanvas(imageUrl) {
+  const canvasImg = document.getElementById("canvasImg");
+  const offCanvasElement = document.getElementById("imgCanvas");
+
+  if (canvasImg && offCanvasElement) {
+    console.log("Image URL:", imageUrl); // Debugging: Log the image URL
+    canvasImg.src = imageUrl;
+    canvasImg.onload = () => {
+      console.log("Image loaded successfully"); // Debugging: Log when the image loads
+    };
+    canvasImg.onerror = (error) => {
+      console.error("Error loading image:", error); // Debugging: Log any errors
+    };
+    // UIkit.offcanvas(offCanvasElement).show();
+  } else {
+    if (!canvasImg) {
+      console.error("imgCanvas element not found"); // Debugging: Log if the imgCanvas element is not found
+    }
+    if (!offCanvasElement) {
+      console.error("receiptOffCanvas element not found"); // Debugging: Log if the receiptOffCanvas element is not found
+    }
+  }
+}
+
+// Helper function to format numbers as currency
+function formatCurrency(value) {
+  return new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2
+  }).format(value);
 }
