@@ -357,6 +357,9 @@ function populateTableRow(
 
   // Set the ID of the row using the value of the id attribute from the entry
   row.setAttribute("data-row-id", rowData.id);
+   // Store the original numeric value in a data attribute
+   row.setAttribute("data-item-total-price", rowData.itemTotalPrice || 0);
+
   row.insertCell(0).textContent = rowData.merchantName || "";
   row.insertCell(1).textContent = rowData.merchantAddress || "";
   row.insertCell(2).textContent = rowData.transactionDate || "";
@@ -364,6 +367,8 @@ function populateTableRow(
   row.insertCell(4).textContent = rowData.itemName || "";
   row.insertCell(5).textContent =
     typeof rowData.itemQuantity === "number" ? rowData.itemQuantity : 0;
+  
+  // Display the formatted currency value
   row.insertCell(6).textContent =
     typeof rowData.itemTotalPrice === "number" ? formatCurrency(rowData.itemTotalPrice) : formatCurrency(0);
 
@@ -443,7 +448,7 @@ function getRowData(row, weburl, receiptId, userTokenInput) {
     transactionDate: row.cells[2].textContent || "",
     transactionTime: row.cells[3].textContent || "",
     itemName: row.cells[4].textContent || "",
-    itemTotalPrice: parseFloat(row.cells[6].textContent) || 0,
+    itemTotalPrice: parseFloat(row.getAttribute('data-item-total-price'))|| 0,
     itemQuantity: parseInt(row.cells[5].textContent, 10) || 0,
     weburl: weburl ?? "",
     receiptId: receiptId ?? "",
@@ -499,7 +504,7 @@ function openEditModal(row) {
   const transactionTime = row.cells[3].textContent;
   const itemName = row.cells[4].textContent;
   const itemQuantity = row.cells[5].textContent;
-  const itemTotalPrice = row.cells[6].textContent;
+  const itemTotalPrice = parseFloat(row.getAttribute('data-item-total-price'))
 
   // Pre-fill the form with existing row data
   document.getElementById("edit-merchantName").value = merchantName;
@@ -543,7 +548,10 @@ function openEditModal(row) {
     row.cells[3].textContent = updatedTransactionTime;
     row.cells[4].textContent = updatedItemName;
     row.cells[5].textContent = updatedItemQuantity;
-    row.cells[6].textContent = updatedItemTotalPrice;
+ 
+    // Display the formatted currency value and update the data attribute
+  row.cells[6].textContent = formatCurrency(updatedItemTotalPrice);
+  row.setAttribute('data-item-total-price', updatedItemTotalPrice);
 
     // Close the modal
     UIkit.modal("#edit-modal").hide();
