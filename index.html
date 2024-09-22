@@ -188,29 +188,35 @@
             </div>
           </div>
 
-          <!-- Results Table -->
-          <h3 id="resultsHeading" class="uk-card-title uk-animation-fade">Results</h3>
-          <div id="resultsSection"
-            class="uk-grid uk-flex uk-flex-center uk-flex-middle uk-child-width-expand uk-margin-auto uk-animation-fade">
-            <div class="uk-card uk-card-default uk-card-body uk-width-1-1">
-              <table id="resultsTable" class="uk-table uk-table-divider uk-table-responsive">
-                <thead>
-                  <tr>
-                    <th>Merchant Name</th> <!-- 0-->
-                    <th>Address</th><!-- 1-->
-                    <th>Date</th><!-- 2-->
-                    <th>Time</th><!-- 3-->
-                    <th>Item Name</th><!-- 4-->
-                    <th>Qty</th><!-- 5-->
-                    <th>Item Total Price</th><!-- 6-->
-                    <th>Actions</th><!-- 7-->
 
-                  </tr>
-                </thead>
-                <tbody></tbody>
-              </table>
-            </div>
-          </div>
+
+  <!-- Results Table -->
+<h3 id="resultsHeading" class="uk-card-title uk-animation-fade">Results</h3>
+         
+<div id="resultsSection"
+  class="uk-grid uk-flex uk-flex-center uk-flex-middle uk-child-width-expand uk-margin-auto uk-animation-fade">
+   <!-- Search Box -->
+   <div class="uk-margin">
+    <input class="uk-input" type="text" id="searchBox" placeholder="Search...">
+  </div>
+  <div class="uk-card uk-card-default uk-card-body uk-width-1-1">
+    <table id="resultsTable" class="uk-table uk-table-divider uk-table-responsive">
+      <thead>
+        <tr>
+          <th onclick="sortTable(0)">Merchant Name <span uk-icon="chevron-up" id="sort-icon-0"></span></th> <!-- 0-->
+          <th onclick="sortTable(1)">Address <span uk-icon="" id="sort-icon-1"></span></th><!-- 1-->
+          <th onclick="sortTable(2)">Date <span uk-icon="" id="sort-icon-2"></span></th><!-- 2-->
+          <th onclick="sortTable(3)">Time <span uk-icon="" id="sort-icon-3"></span></th><!-- 3-->
+          <th onclick="sortTable(4)">Item Name <span uk-icon="" id="sort-icon-4"></span></th><!-- 4-->
+          <th onclick="sortTable(5)">Qty <span uk-icon="" id="sort-icon-5"></span></th><!-- 5-->
+          <th onclick="sortTable(6)">Item Total Price <span uk-icon="" id="sort-icon-6"></span></th><!-- 6-->
+          <th>Actions</th><!-- 7-->
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+</div>
 
         </div>
       </div>

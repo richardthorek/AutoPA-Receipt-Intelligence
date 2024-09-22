@@ -849,3 +849,79 @@ function setLastFinancialYear() {
   document.getElementById('filterFromDate').value = formatDateToYYYYMMDD(firstDay, userLocale);
   document.getElementById('filterToDate').value = formatDateToYYYYMMDD(lastDay, userLocale);
 }
+
+let sortOrder = {}; // Object to keep track of sort order for each column
+
+// Function to sort the table
+function sortTable(columnIndex) {
+  const table = document.getElementById("resultsTable");
+  const tbody = table.tBodies[0];
+  const rows = Array.from(tbody.rows);
+
+  // Toggle sort order for the column
+  sortOrder[columnIndex] = !sortOrder[columnIndex];
+
+  const sortedRows = rows.sort((a, b) => {
+    const aText = a.cells[columnIndex].textContent.trim();
+    const bText = b.cells[columnIndex].textContent.trim();
+
+    let comparison = 0;
+    if (columnIndex === 2) { // Date column
+      comparison = new Date(aText) - new Date(bText);
+    } else if (columnIndex === 6) { // Item Total Price column
+      comparison = parseFloat(aText.replace(/[^0-9.-]+/g, "")) - parseFloat(bText.replace(/[^0-9.-]+/g, ""));
+    } else {
+      comparison = aText.localeCompare(bText);
+    }
+
+    return sortOrder[columnIndex] ? comparison : -comparison;
+  });
+
+  // Clear the table body and append sorted rows
+  tbody.innerHTML = "";
+  sortedRows.forEach(row => tbody.appendChild(row));
+
+  // Update sort icons
+  updateSortIcons(columnIndex);
+}
+
+// Function to update sort icons
+function updateSortIcons(activeColumnIndex) {
+  const iconIds = [
+    "sort-icon-0",
+    "sort-icon-1",
+    "sort-icon-2",
+    "sort-icon-3",
+    "sort-icon-4",
+    "sort-icon-5",
+    "sort-icon-6"
+  ];
+
+  iconIds.forEach((id, index) => {
+    const icon = document.getElementById(id);
+    if (icon) {
+      icon.setAttribute("uk-icon", ""); // Clear icon for all columns
+      if (index === activeColumnIndex) {
+        icon.setAttribute("uk-icon", sortOrder[activeColumnIndex] ? "chevron-up" : "chevron-down");
+      }
+    }
+  });
+}
+
+// Function to filter the table based on search input
+function filterTable() {
+  const searchBox = document.getElementById("searchBox");
+  const filter = searchBox.value.toLowerCase();
+  const table = document.getElementById("resultsTable");
+  const tbody = table.tBodies[0];
+  const rows = Array.from(tbody.rows);
+
+  rows.forEach(row => {
+    const cells = Array.from(row.cells);
+    const match = cells.some(cell => cell.textContent.toLowerCase().includes(filter));
+    row.style.display = match ? "" : "none";
+  });
+}
+
+// Add event listener to the search box
+document.getElementById("searchBox").addEventListener("input", filterTable);
