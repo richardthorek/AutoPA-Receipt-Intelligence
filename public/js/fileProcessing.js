@@ -724,8 +724,13 @@ function checkForDuplicates() {
   const duplicates = {};
 
   rows.forEach((row) => {
-    row.classList.remove("duplicate");
-    row.setAttribute("data-duplicate", "false");
+
+    // Remove duplicate class from the delete button
+    const deleteLink = row.querySelector('a[aria-label="Delete"]');
+    if (deleteLink) {
+      deleteLink.classList.remove("duplicate");
+      deleteLink.setAttribute("data-duplicate", "false");
+    }
 
     const date = row.cells[2].textContent;
     const time = row.cells[3].textContent;
@@ -746,8 +751,11 @@ function checkForDuplicates() {
     if (duplicates[key].length > 1) {
       hasDuplicates = true;
       duplicates[key].forEach((row) => {
-        row.classList.add("duplicate");
-        row.setAttribute("data-duplicate", "true");
+        const deleteLink = row.querySelector('a[aria-label="Delete"]');
+        if (deleteLink) {
+          deleteLink.classList.add("duplicate");
+          deleteLink.setAttribute("data-duplicate", "true");
+        }
       });
     }
   }

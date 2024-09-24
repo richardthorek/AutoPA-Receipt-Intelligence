@@ -17,7 +17,7 @@
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.type = 'text/css';
-        link.href = stylesheetInfo.hre
+        link.href = stylesheetInfo.href;
         document.head.appendChild(link);
       });
     })();
@@ -31,10 +31,7 @@
   <!-- UIkit JS -->
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.12/dist/js/uikit.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.12/dist/js/uikit-icons.min.js"></script>
-  <link
-  rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css"
->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css" />
 
 </head>
 
@@ -66,16 +63,15 @@
                   <i class="fas fa-user mr-3"></i> Profile
                 </a>
               </li>
-              <li
-                <a href="#" class="secondary" id="qsLogoutBtn" onclick="logout()">
-                  <i class="fas fa-power-off mr-3"></i> Log out
+              <li <a href="#" class="secondary" id="qsLogoutBtn" onclick="logout()">
+                <i class="fas fa-power-off mr-3"></i> Log out
                 </a>
               </li>
             </ul>
           </details>
         </li>
         <li>
-            <a onclick=toggleTheme() id="themeToggle" href="#" class="uk-icon-button" uk-icon="paint-bucket"></a>
+          <a onclick=toggleTheme() id="themeToggle" href="#" class="uk-icon-button" uk-icon="paint-bucket"></a>
         </li>
       </ul>
     </nav>
@@ -128,17 +124,17 @@
             </article>
           </dialog>
 
-          <h3 class="">Filter</h3>
-
+          <details open>
+            <summary ><h3>Filter</h3></summary>
           <!-- Filter Section -->
-          <div id="filterSection" class="uk-animation-fade">
-            <article class="component">
+          <!-- <div id="filterSection" class="uk-animation-fade"> -->
+            <article id="filterSection" class="component uk-animation-fade">
               <form>
                 <fieldset class="grid">
                   <label class="" for="filterFromDate">From:
-                  <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterFromDate" class=""
-                    placeholder="Date From" /></label>
-                    <label class="" for="filterToDate">To:
+                    <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterFromDate" class=""
+                      placeholder="Date From" /></label>
+                  <label class="" for="filterToDate">To:
                     <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterToDate" class=""
                       placeholder="Date To" /></label>
                   <button id="getBtn">Get</button>
@@ -148,27 +144,29 @@
               </form>
 
               <div class="grid">
-         
-                  <button class=" secondary" onclick="setCurrentMonth()">Current Month</button>
-          
-                  <button class=" secondary" onclick="setLastMonth()">Last Month</button>
-            
-                  <button class=" secondary" onclick="setCurrentQuarter()">Current 1/4</button>
-           
-                  <button class=" secondary" onclick="setLastQuarter()">Last 1/4</button>
-             
-                  <button class=" secondary" onclick="setCurrentFinancialYear()">Current FY</button>
-             
-                  <button class=" secondary" onclick="setLastFinancialYear()">Last FY</button>
-           
+
+                <button class=" secondary" onclick="setCurrentMonth()">Current Month</button>
+
+                <button class=" secondary" onclick="setLastMonth()">Last Month</button>
+
+                <button class=" secondary" onclick="setCurrentQuarter()">Current 1/4</button>
+
+                <button class=" secondary" onclick="setLastQuarter()">Last 1/4</button>
+
+                <button class=" secondary" onclick="setCurrentFinancialYear()">Current FY</button>
+
+                <button class=" secondary" onclick="setLastFinancialYear()">Last FY</button>
+
               </div>
             </article>
-          </div>
+          <!-- </div> -->
+        </details>
 
           <!-- Results Table -->
           <h3 id="resultsHeading" class="uk-animation-fade">Results</h3>
-          <article>
+          
             <div id="resultsSection" class="uk-animation-fade">
+              <article>
               <!-- Search Box -->
               <div class="">
                 <input class="" type="text" id="searchBox" placeholder="Search...">
@@ -197,27 +195,27 @@
     </div>
   </div>
 
-    <dialog id="edit-modal-card">
-      <article class="component">
-        <header>
-          <h2 class="">Edit Row</h2>
-          <button aria-label="Close" rel="prev" onclick="closeModal('edit-modal-card')"></button>
-        </header>
-        <form id="edit-form">
-          <input class="" type="text" id="edit-merchantName" placeholder="Merchant Name">
-          <input class="" type="text" id="edit-merchantAddress" placeholder="Merchant Address">
-          <input class="" type="date" id="edit-transactionDate" placeholder="Transaction Date">
-          <input class="" type="time" id="edit-transactionTime" placeholder="Transaction Time">
-          <input class="" type="text" id="edit-itemName" placeholder="Item Name">
-          <input class="" type="number" id="edit-itemTotalPrice" placeholder="Item Total Price" step="0.01">
-          <input class="" type="number" id="edit-itemQuantity" placeholder="Quantity">
-        
-        
-          <button id="FormUpdateBtn" class="" type="submit">Update</button>
-      
+  <dialog id="edit-modal-card">
+    <article class="component">
+      <header>
+        <h2 class="">Edit Row</h2>
+        <button aria-label="Close" rel="prev" onclick="closeModal('edit-modal-card')"></button>
+      </header>
+      <form id="edit-form">
+        <input class="" type="text" id="edit-merchantName" placeholder="Merchant Name">
+        <input class="" type="text" id="edit-merchantAddress" placeholder="Merchant Address">
+        <input class="" type="date" id="edit-transactionDate" placeholder="Transaction Date">
+        <input class="" type="time" id="edit-transactionTime" placeholder="Transaction Time">
+        <input class="" type="text" id="edit-itemName" placeholder="Item Name">
+        <input class="" type="number" id="edit-itemTotalPrice" placeholder="Item Total Price" step="0.01">
+        <input class="" type="number" id="edit-itemQuantity" placeholder="Quantity">
+
+
+        <button id="FormUpdateBtn" class="" type="submit">Update</button>
+
       </form>
-      </article>
-    </dialog>
+    </article>
+  </dialog>
 
   <!-- User Profile Data and Page -->
   <div class="page" id="content-profile">

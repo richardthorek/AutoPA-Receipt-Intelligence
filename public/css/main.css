@@ -94,6 +94,7 @@ label {
   max-height: 200px;
 }
 
-tr.duplicate {
-  background-color: var(--pico-del-color)
+.duplicate {
+  background-color: var(--pico-del-color);
+  color: white;
 }
