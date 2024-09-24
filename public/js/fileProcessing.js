@@ -1,42 +1,45 @@
 // Wait for the DOM to fully load before running the script
 
 document.addEventListener("DOMContentLoaded", function () {
-  // Get references to the necessary DOM elements
+
+    // Function to hide the results table
+    function hideResultsTable() {
+      const resultsHeading = document.getElementById("resultsHeading");
+      if (resultsHeading) {
+        resultsHeading.style.display = "none";
+      }
+      const resultsSection = document.getElementById("resultsSection");
+      if (resultsSection) {
+        resultsSection.style.display = "none";
+      }
+      const resultsTable = document.getElementById("resultsTable");
+      if (resultsTable) {
+        resultsTable.style.display = "none";
+      }
+    }
+  
+    // Function to show the results table
+    function showResultsTable() {
+      const resultsHeading = document.getElementById("resultsHeading");
+      if (resultsHeading) {
+        resultsHeading.style.display = "block";
+      }
+      const resultsSection = document.getElementById("resultsSection");
+      if (resultsSection) {
+        resultsSection.style.display = "block";
+      }
+      const resultsTable = document.getElementById("resultsTable");
+      if (resultsTable) {
+        resultsTable.style.display = "table";
+      }
+    }
+ 
+ // Get references to the necessary DOM elements
   const dropZone = document.getElementById("dropZone");
   const fileInput = document.getElementById("fileInput");
   const userTokenInput = document.getElementById("userToken");
 
-  // Function to hide the results table
-  function hideResultsTable() {
-    const resultsHeading = document.getElementById("resultsHeading");
-    if (resultsHeading) {
-      resultsHeading.style.display = "none";
-    }
-    const resultsSection = document.getElementById("resultsSection");
-    if (resultsSection) {
-      resultsSection.style.display = "none";
-    }
-    const resultsTable = document.getElementById("resultsTable");
-    if (resultsTable) {
-      resultsTable.style.display = "none";
-    }
-  }
 
-  // Function to show the results table
-  function showResultsTable() {
-    const resultsHeading = document.getElementById("resultsHeading");
-    if (resultsHeading) {
-      resultsHeading.style.display = "block";
-    }
-    const resultsSection = document.getElementById("resultsSection");
-    if (resultsSection) {
-      resultsSection.style.display = "block";
-    }
-    const resultsTable = document.getElementById("resultsTable");
-    if (resultsTable) {
-      resultsTable.style.display = "table";
-    }
-  }
 
   // Hide the results table initially
   hideResultsTable();
@@ -85,21 +88,21 @@ document.addEventListener("DOMContentLoaded", function () {
   // Function to handle file upload
   function handleFileUpload(file) {
     if (!file) return;
-  
+
     // Check if the file type is allowed
     const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
     if (!allowedTypes.includes(file.type)) {
       alert("Invalid file type. Please upload a JPG, PNG, or PDF file.");
       return;
     }
-  
+
     const receiptGUID = generateGUID();
-  
+
     // Create an image preview before uploading
     const reader = new FileReader();
     reader.onload = function (event) {
       const previewSection = document.getElementById("receiptPreview");
-  
+
       // Create a container for the grid if it doesn't exist
       let gridContainer = document.getElementById("gridContainer");
       if (!gridContainer) {
@@ -108,25 +111,22 @@ document.addEventListener("DOMContentLoaded", function () {
         gridContainer.className = "uk-grid uk-grid-small uk-child-width-1-4@s";
         previewSection.appendChild(gridContainer);
       }
-  
+
       // Create the preview card
       const previewCard = document.createElement("div");
       previewCard.id = receiptGUID;
       previewCard.className =
-        "uk-card uk-card-default uk-card-small uk-card-body uk-margin-top uk-margin-auto uk-animation-slide-right uk-height-max-small";
-      previewCard.style.overflowY = "hidden";
+        "receipt-preview card uk-animation-slide-right";
+      previewCard.style.overflow = "hidden";
       previewCard.innerHTML = `
-        <div class="uk-card uk-card-default uk-card-small uk-flex uk-flex-center uk-flex-middle">
-            <img src="${event.target.result}" class="uk-width-1-1" style="padding: 10px;" alt="Receipt Image">
-        </div>
-        <div class="uk-overlay uk-overlay-primary uk-position-cover">
-            <div uk-spinner></div>
-        </div>
+        <article aria-busy="true" class="card overflow">
+            <img src="${event.target.result}" class="" style="padding: 10px;" alt="Receipt Image">
+        </article>
       `;
       gridContainer.appendChild(previewCard);
     };
     reader.readAsDataURL(file);
-  
+
     // Create a new FormData object and append the file and additional metadata
     const formData = new FormData();
     formData.append("file", file);
@@ -135,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append("content-type", file.type);
     formData.append("file-extension", file.name.split(".").pop());
     formData.append("receiptGUID", receiptGUID);
-  
+
     // Perform the file upload using fetch
     fetch(
       "https://prod-04.australiasoutheast.logic.azure.com:443/workflows/bd37bd65a79d49499f5b0e91986f8a00/triggers/Receive_POST_File/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FReceive_POST_File%2Frun&sv=1.0&sig=X1QhmY8PSR3wq38j4Q7_kfSMxRtMSzmfKGIj67aBMiY",
@@ -159,15 +159,15 @@ document.addEventListener("DOMContentLoaded", function () {
           .getElementsByTagName("tbody")[0];
         const weburl = data.weburl;
         const receiptId = data.receiptID;
-  
+
         // Remove the preview card after the fetch request is completed
         const cardToRemove = document.getElementById(data.receiptID);
         if (cardToRemove) {
           cardToRemove.remove();
         }
-  
+
         showResultsTable();
-  
+
         // Create a new row for each item in the receipt
         const rowPromises = items.map((item, index) => {
           return new Promise((resolve) => {
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 transactionTime:
                   receipt.TransactionTime?.valueTime || formattedTime,
                 itemName: item.valueObject?.Name?.valueString || "",
-                itemQuantity: item.valueObject?.Quantity?.valueNumber || 0,
+                itemQuantity: item.valueObject?.Quantity?.valueNumber || 1,
                 itemTotalPrice: item.valueObject?.TotalPrice?.valueNumber || 0,
                 id: itemID,
               };
@@ -198,7 +198,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }, index * 200); // Delay of 200ms between each row
           });
         });
-  
+
         // Wait for all rows to be added before checking for duplicates
         return Promise.all(rowPromises);
       })
@@ -212,7 +212,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Add an event listener to the 'getBtn' button to handle click events
-  document.getElementById("getBtn").addEventListener("click", function () {
+  document.getElementById("getBtn").addEventListener("click", function(event) {
+    event.preventDefault(); // Prevent the default form submission behavior
     // Get the values of the 'from' and 'to' date filters and the user token
     const fromDate = document.getElementById("filterFromDate").value;
     const toDate = document.getElementById("filterToDate").value;
@@ -337,7 +338,8 @@ function downloadCSV(csvContent, filename) {
 }
 
 // Add event listener to the 'Download' button
-document.getElementById("downloadBtn").addEventListener("click", () => {
+document.getElementById("downloadBtn").addEventListener("click", (event) => {
+  event.preventDefault(); // Prevent the default form submission behavior
   const csvContent = tableToCSV();
   downloadCSV(csvContent, "table_data.csv");
 });
@@ -357,8 +359,8 @@ function populateTableRow(
 
   // Set the ID of the row using the value of the id attribute from the entry
   row.setAttribute("data-row-id", rowData.id);
-   // Store the original numeric value in a data attribute
-   row.setAttribute("data-item-total-price", rowData.itemTotalPrice || 0);
+  // Store the original numeric value in a data attribute
+  row.setAttribute("data-item-total-price", rowData.itemTotalPrice || 0);
 
   row.insertCell(0).textContent = rowData.merchantName || "";
   row.insertCell(1).textContent = rowData.merchantAddress || "";
@@ -367,39 +369,38 @@ function populateTableRow(
   row.insertCell(4).textContent = rowData.itemName || "";
   row.insertCell(5).textContent =
     typeof rowData.itemQuantity === "number" ? rowData.itemQuantity : 0;
-  
+
   // Display the formatted currency value
   row.insertCell(6).textContent =
     typeof rowData.itemTotalPrice === "number" ? formatCurrency(rowData.itemTotalPrice) : formatCurrency(0);
 
-// Create a cell for the buttons
-const buttonCell = row.insertCell(7);
+  // Create a cell for the buttons
+  const buttonCell = row.insertCell(7);
 
-// Create a link to the receipt and add it to the button cell
-const receiptLink = document.createElement("a");
-receiptLink.href = weburl;
-receiptLink.setAttribute("uk-toggle", "target: #imgCanvas");
-receiptLink.className = "uk-icon-button";
-receiptLink.setAttribute("uk-icon", "file-text");
-receiptLink.setAttribute("uk-tooltip", "title: Show Receipt");
+  // Create a link to the receipt and add it to the button cell
+  const receiptLink = document.createElement("a");
+  receiptLink.href = weburl;
 
-receiptLink.target = "_blank";
-buttonCell.appendChild(receiptLink);
+  receiptLink.setAttribute("aria-label", "Show Receipt");
+  receiptLink.classList.add("uk-icon-button");
 
-// Add event listener to the receipt link
-receiptLink.addEventListener("click", function (event) {
-  event.preventDefault(); // Prevent the default action of opening in a new tab
-  openReceiptOffCanvas(weburl);
-});
+  receiptLink.target = "_blank";
+  receiptLink.innerHTML = '<span uk-icon="icon: file-text"></span>';
+  buttonCell.appendChild(receiptLink);
+
+  // Add event listener to the receipt link
+  receiptLink.addEventListener("click", function (event) {
+    event.preventDefault(); // Prevent the default action of opening in a new tab
+    openReceiptOffCanvas(weburl);
+  });
+
+  setReceipt(receiptLink)
 
   // Create a submit button for each row
-  const submitButton = document.createElement("button");
-  submitButton.className = "uk-icon-button";
-  submitButton.setAttribute("uk-icon", "plus-circle");
-  submitButton.setAttribute("uk-tooltip", "title: Submit");
-
-  // Set the unique ID for the submit button
+  const submitButton = document.createElement("a");
+  submitButton.setAttribute("aria-label", "Submit");
   submitButton.id = `${rowData.id}-btn-submit`;
+  setSubmit(submitButton);
 
   submitButton.addEventListener("click", function () {
     const rowData = getRowData(row, weburl, receiptId, userTokenInput);
@@ -409,13 +410,10 @@ receiptLink.addEventListener("click", function (event) {
   buttonCell.appendChild(submitButton);
 
   // Create an edit button for each row
-  const editButton = document.createElement("button");
-  editButton.className = "uk-icon-button";
-  editButton.setAttribute("uk-icon", "pencil");
-  // Set the unique ID for the edit button
+  const editButton = document.createElement("a");
+  editButton.setAttribute("aria-label", "Edit");
   editButton.id = `${rowData.id}-btn-edit`;
-  editButton.setAttribute("uk-tooltip", "title: Edit");
-
+  setEdit(editButton);
 
   editButton.addEventListener("click", function () {
     openEditModal(row);
@@ -424,20 +422,17 @@ receiptLink.addEventListener("click", function (event) {
   buttonCell.appendChild(editButton);
 
   // Create a delete button for each row
-  const deleteButton = document.createElement("button");
-  deleteButton.className = "uk-icon-button";
-  deleteButton.setAttribute("uk-tooltip", "title: Delete");
-
-  deleteButton.setAttribute("uk-icon", "trash");
-
-  // Set the unique ID for the delete button
+  const deleteButton = document.createElement("a");
+  deleteButton.setAttribute("aria-label", "Delete");
   deleteButton.id = `${rowData.id}-btn-delete`;
+  setDelete(deleteButton);
 
   deleteButton.addEventListener("click", function () {
     deleteRow(row);
   });
 
   buttonCell.appendChild(deleteButton);
+
 }
 
 //GET ROW
@@ -448,7 +443,7 @@ function getRowData(row, weburl, receiptId, userTokenInput) {
     transactionDate: row.cells[2].textContent || "",
     transactionTime: row.cells[3].textContent || "",
     itemName: row.cells[4].textContent || "",
-    itemTotalPrice: parseFloat(row.getAttribute('data-item-total-price'))|| 0,
+    itemTotalPrice: parseFloat(row.getAttribute('data-item-total-price')) || 0,
     itemQuantity: parseInt(row.cells[5].textContent, 10) || 0,
     weburl: weburl ?? "",
     receiptId: receiptId ?? "",
@@ -497,6 +492,9 @@ function submitRowData(rowData, submitButton) {
 // EDIT MODAL
 
 function openEditModal(row) {
+
+  document.getElementById("edit-modal-card").setAttribute("open", "");
+
   // Get the existing row data
   const merchantName = row.cells[0].textContent;
   const merchantAddress = row.cells[1].textContent;
@@ -515,12 +513,11 @@ function openEditModal(row) {
   document.getElementById("edit-itemTotalPrice").value = itemTotalPrice;
   document.getElementById("edit-itemQuantity").value = itemQuantity;
 
-  // Show the modal
-  UIkit.modal("#edit-modal").show();
-
   // Handle form submission
   document.getElementById("edit-form").onsubmit = function (event) {
     event.preventDefault();
+
+    document.getElementById("edit-modal-card").removeAttribute("open", "");
 
     // Get the updated data from the form
     const updatedMerchantName =
@@ -548,13 +545,10 @@ function openEditModal(row) {
     row.cells[3].textContent = updatedTransactionTime;
     row.cells[4].textContent = updatedItemName;
     row.cells[5].textContent = updatedItemQuantity;
- 
-    // Display the formatted currency value and update the data attribute
-  row.cells[6].textContent = formatCurrency(updatedItemTotalPrice);
-  row.setAttribute('data-item-total-price', updatedItemTotalPrice);
 
-    // Close the modal
-    UIkit.modal("#edit-modal").hide();
+    // Display the formatted currency value and update the data attribute
+    row.cells[6].textContent = formatCurrency(updatedItemTotalPrice);
+    row.setAttribute('data-item-total-price', updatedItemTotalPrice);
 
     // Define userTokenInput
     const userTokenInput = document.getElementById("userToken");
@@ -666,9 +660,37 @@ function getFormattedTime() {
   return now.toTimeString().split(" ")[0].substring(0, 5);
 }
 
+function setSubmit(button) {
+  button.classList.remove("refresh", "submit", "error");
+  button.setAttribute("uk-icon", "plus-circle");
+  button.className = "uk-icon-button action";
+  button.disabled = false;
+}
+
+function setDelete(button) {
+  button.classList.remove("refresh", "submit", "error");
+  button.setAttribute("uk-icon", "close");
+  button.className = "uk-icon-button action";
+  button.disabled = false;
+}
+
+function setReceipt(button) {
+  button.classList.remove("refresh", "submit", "error");
+  // button.setAttribute("uk-icon", "file-text");
+  button.className = "uk-icon-button action";
+  button.disabled = false;
+}
+
+function setEdit(button) {
+  button.classList.remove("refresh", "submit", "error");
+  button.setAttribute("uk-icon", "pencil");
+  button.className = "uk-icon-button action";
+  button.disabled = false;
+}
+
 function setPending(button) {
-  button.classList.add("refresh");
   button.setAttribute("uk-icon", "refresh");
+  button.className = "uk-icon-button refreshj";
   button.disabled = true;
 }
 
@@ -688,7 +710,7 @@ function setError(button) {
 
 function restore(button) {
   button.classList.remove("refresh", "success", "error");
-  button.className = "uk-icon-button";
+  button.className = "uk-icon-button action";
   button.setAttribute("uk-icon", "plus-circle");
   button.disabled = false;
 }
@@ -743,8 +765,11 @@ function checkForDuplicates() {
 
 // Function to open the off-canvas and load the image
 function openReceiptOffCanvas(imageUrl) {
+
   const canvasImg = document.getElementById("canvasImg");
   const offCanvasElement = document.getElementById("imgCanvas");
+
+  offCanvasElement.setAttribute("open"  , "");
 
   if (canvasImg && offCanvasElement) {
     console.log("Image URL:", imageUrl); // Debugging: Log the image URL
@@ -755,7 +780,6 @@ function openReceiptOffCanvas(imageUrl) {
     canvasImg.onerror = (error) => {
       console.error("Error loading image:", error); // Debugging: Log any errors
     };
-    // UIkit.offcanvas(offCanvasElement).show();
   } else {
     if (!canvasImg) {
       console.error("imgCanvas element not found"); // Debugging: Log if the imgCanvas element is not found
@@ -908,6 +932,23 @@ function updateSortIcons(activeColumnIndex) {
   });
 }
 
+function openModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.setAttribute("open", "");
+  }
+}
+
+function closeModal(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.removeAttribute("open", "");
+  }
+}
+
+// Add event listener to the search box
+document.getElementById("searchBox").addEventListener("input", filterTable);
+
 // Function to filter the table based on search input
 function filterTable() {
   const searchBox = document.getElementById("searchBox");
@@ -922,6 +963,3 @@ function filterTable() {
     row.style.display = match ? "" : "none";
   });
 }
-
-// Add event listener to the search box
-document.getElementById("searchBox").addEventListener("input", filterTable);

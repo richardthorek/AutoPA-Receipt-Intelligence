@@ -1,3 +1,15 @@
+/* styles.css */
+@layer auth0 ,uikit, picocss;
+
+@import url("https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css")
+layer(auth0);
+
+@import url("https://cdn.jsdelivr.net/npm/uikit@3.21.12/dist/css/uikit.min.css")
+layer(uikit);
+
+@import url("https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css")
+layer(picocss);
+
 .hidden {
   display: none;
 }
@@ -12,16 +24,50 @@ label {
 }
 
 .drop-zone {
-  border: 1px dashed #007bff;
-  border-radius: 5px;
-  padding: 10px;
+  border: 2px dashed var(--pico-primary-background);
+  background-color: var(--pico-background-color);
+  padding: 40px; /* Adjusted padding to create a 10px gap */
+  margin: 10px;
+  cursor: pointer;
   text-align: center;
-  background-color: #f9f9f9;
-  transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease, padding 0.3s ease;
+}
+
+.drop-zone:hover {
+  background-color: transparent;
+  padding: 40px; /* Increase padding on hover to maintain the 10px gap */
 }
 
 .drop-zone.dragover {
-  background-color: lightgrey;
+  background-color: transparent;
+  padding: 40px; /* Increase padding on hover to maintain the 10px gap */
+}
+
+.fade-in {
+  animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.action-btn {
+  background-color: #f0f0f0; /* Light grey background color */
+  padding: 10px;
+  border-radius: 5px;
+  margin: 5px;
+  display: inline-block;
+  text-align: center;
+  transition: background-color 0.3s ease;
+}
+
+.action-btn:hover {
+  background-color: #e0e0e0; /* Slightly darker grey on hover */
 }
 
 .success{
@@ -29,13 +75,25 @@ label {
   background-color: green;
 }
 
+.action{
+  color: white;
+  background-color: var(--pico-muted-color)
+}
+
 .refresh{
   color: white;
   background-color: lightgreen;
 }
 
-/* CSS to style table rows with the class 'duplicate' */
+
+.receipt-preview-card {
+  border: 1px solid var(--pico-border-color);
+  border-radius: 5px;
+  padding: 10px;
+  margin: 10px;
+  max-height: 200px;
+}
+
 tr.duplicate {
-  background-color: #ffe5e5
-  ;
+  background-color: var(--pico-del-color)
 }
