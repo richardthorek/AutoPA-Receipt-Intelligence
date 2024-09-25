@@ -1,20 +1,10 @@
 <!DOCTYPE html>
-<html class="uk-background-muted" lang="en-au" dir="ltr">
+<html lang="en-au" dir="ltr">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AutoPA Receipt Intelligence</title>
-
-  <!-- UIkit CSS -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.21.11/dist/css/uikit.min.css" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/solid.css"
-    integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous" />
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css"
-    integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous" />
-  <!-- <link rel="stylesheet" href="https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css" /> -->
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <!-- <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/monokai-sublime.min.css" /> -->
 
   <script>
     (function () {
@@ -33,238 +23,205 @@
     })();
   </script>
 
+  <!-- Pico CSS -->
+  <!-- <link rel="stylesheet" href="https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css" /> -->
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/monokai-sublime.min.css" />
+
+  <!-- UIkit JS -->
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.12/dist/js/uikit.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.12/dist/js/uikit-icons.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.colors.min.css" />
+
 </head>
 
 <body>
   <!-- Whole Page Container -->
-  <div id="app" class="uk-container uk-container-center uk-margin-auto">
+  <div id="app" class="container uk-animation-fade">
+
     <!-- Navigation Bar -->
-    <nav class="uk-navbar uk-margin-auto">
-      <div class="uk-navbar-container uk-navbar-transparent">
-        <ul class="uk-navbar-nav uk-hidden-small">
-          <li>
-            <a href="/">Home</a>
-          </li>
-          <li>
-            <a href="#documentationCanvas" uk-toggle>Documentation</a>
-          </li>
-          <!-- Login button: show if NOT authenticated -->
-          <li class="auth-invisible uk-flex uk-flex-middle">
-            <button id="qsLoginBtn" onclick="login()"
-              class="uk-button uk-button-small uk-button-primary auth-invisible hidden">
-              Log in
-            </button>
-          </li>
-          <li class="auth-visible hidden">
-            <a href="#offcanvas-usage" uk-toggle>Menu</a> <!-- Profile Dropdown -->
-            <div uk-dropdown>
-              <ul class="uk-nav uk-dropdown-nav">
-                <li>
-                  <a href="/profile" class="dropdown-item dropdown-profile route-link">
-                    <i class="fas fa-user mr-3"></i> Profile
-                  </a>
-                </li>
-                <li>
-                  <a href="#" class="dropdown-item" id="qsLogoutBtn" onclick="logout()">
-                    <i class="fas fa-power-off mr-3"></i> Log out
-                  </a>
-                </li>
-              </ul>
-            </div>
-          </li>
-        </ul>
-      </div>
+    <nav>
+      <ul>
+        <li>
+          <a class="secondary" href="/">Home</a>
+        </li>
+        <li>
+          <a class="secondary" onclick="openModal('documentationCanvas')">Documentation</a>
+        </li>
+        <!-- Login button: show if NOT authenticated -->
+        <li class="auth-invisible">
+          <button id="qsLoginBtn" onclick="login()" class="auth-invisible hidden">
+            Log in
+          </button>
+        </li>
+        <li class="auth-visible hidden">
+          <details class="dropdown">
+            <summary>Menu</summary> <!-- Profile Dropdown -->
+            <ul class="">
+              <li>
+                <a href="/profile" class="route-link secondary">
+                  <i class="fas fa-user mr-3"></i> Profile
+                </a>
+              </li>
+              <li <a href="#" class="secondary" id="qsLogoutBtn" onclick="logout()">
+                <i class="fas fa-power-off mr-3"></i> Log out
+                </a>
+              </li>
+            </ul>
+          </details>
+        </li>
+        <li>
+          <a onclick=toggleTheme() id="themeToggle" href="#" class="uk-icon-button" uk-icon="paint-bucket"></a>
+        </li>
+      </ul>
     </nav>
 
     <!-- Main Content -->
     <div id="main-content" class="">
       <div id="content-home" class="page">
-        <h1 class="uk-heading-divider">AutoPA Receipt Intelligence</h1>
+        <h1 class="">AutoPA Receipt Intelligence</h1>
 
         <div id="authenticatedContent" class="uk-container uk-container-expand" style="display: none;">
-
           <!-- User Profile Data Hidden Input -->
           <input type="hidden" id="userToken" value="" />
 
-
           <!-- Upload Section -->
-          <div id="uploadSection" class="uk-flex uk-flex-center uk-flex-middle uk-child-width-expand">
-            <div class="uk-grid uk-card uk-card-default uk-child-width-expand drop-zone uk-margin-auto" id="dropZone">
-              <div class="js-upload uk-placeholder uk-text-center">
-                <span uk-icon="icon: cloud-upload"></span>
-                <span class="uk-text-middle">Attach receipts by dropping them here or click to select one</span>
-                <div uk-form-custom>
-                  <input id="fileInput" type="file" multiple accept=".jpg,.jpeg,.png,.pdf">
+          <div id="uploadSection" class="uk-animation-fade">
+            <article>
+              <div class="drop-zone card" id="dropZone">
+                <div class="">
+                  <span class="icon-upload"></span>
+                  <p>Attach receipts by dropping them here or click to select one
+                  <p>
+                    <input id="fileInput" type="file" multiple accept=".jpg,.jpeg,.png,.pdf" style="display: none;">
                 </div>
               </div>
-            </div>
+            </article>
           </div>
 
-
-          <div id="receiptPreview" class="">
-
-          </div>
+          <div id="receiptPreview"></div>
 
           <!-- Receipt Images Off Canvas -->
 
-          <div id="imgCanvas" uk-offcanvas>
-            <div class="uk-offcanvas-bar">
-
-              <button class="uk-offcanvas-close" type="button" uk-close></button>
-              <h4>Receipt Image</h4>
-              <div class="uk-card uk-card-default uk-card-body uk-padding-small">
-                <img id="canvasImg" class="uk-width-1-1" style="padding: 10px;" alt="Receipt Image">
-              </div>
-            </div>
-          </div>
-
-
+          <dialog id="imgCanvas">
+            <article>
+              <header>
+                <button aria-label="Close" rel="prev" onclick="closeModal('imgCanvas')"></button>
+                <p><strong>🧾Receipt Preview</strong></p>
+              </header>
+              <img id="canvasImg" class="" style="padding: 10px;" alt="Receipt Image">
+            </article>
+          </dialog>
 
           <!-- User Guide -->
-
-          <div id="documentationCanvas" uk-offcanvas="flip: true">
-            <div class="uk-offcanvas-bar">
-
-              <button class="uk-offcanvas-close" type="button" uk-close></button>
+          <dialog id="documentationCanvas">
+            <article>
+              <header>
+                <button aria-label="Close" rel="prev" onclick="closeModal('documentationCanvas')"></button>
+                <p><strong>Documentation</strong></p>
+              </header>
               <div id="documentationContent"></div>
-            </div>
-          </div>
+            </article>
+          </dialog>
 
-          <h3 class="uk-card-title">Filter</h3>
-
+          <details open>
+            <summary ><h3>Filter</h3></summary>
           <!-- Filter Section -->
-          <div id="filterSection" class="uk-card uk-card-default uk-card-body uk-margin-auto">
-            <div class="uk-grid-small uk-child-width-expand@s uk-grid-match" data-uk-grid>
-              <div>
-                <div class="uk-card uk-card-small">
-                  <label class="uk-text-muted uk-text-small" for="filterFromDate">From:</label>
-                  <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterFromDate" class="uk-input"
-                    placeholder="Date From" />
-                </div>
+          <!-- <div id="filterSection" class="uk-animation-fade"> -->
+            <article id="filterSection" class="component uk-animation-fade">
+              <form>
+                <fieldset class="grid">
+                  <label class="" for="filterFromDate">From:
+                    <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterFromDate" class=""
+                      placeholder="Date From" /></label>
+                  <label class="" for="filterToDate">To:
+                    <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterToDate" class=""
+                      placeholder="Date To" /></label>
+                  <button id="getBtn">Get</button>
+                  <button id="downloadBtn">Download</button>
+                </fieldset>
+
+              </form>
+
+              <div class="grid">
+
+                <button class=" secondary" onclick="setCurrentMonth()">Current Month</button>
+
+                <button class=" secondary" onclick="setLastMonth()">Last Month</button>
+
+                <button class=" secondary" onclick="setCurrentQuarter()">Current 1/4</button>
+
+                <button class=" secondary" onclick="setLastQuarter()">Last 1/4</button>
+
+                <button class=" secondary" onclick="setCurrentFinancialYear()">Current FY</button>
+
+                <button class=" secondary" onclick="setLastFinancialYear()">Last FY</button>
+
               </div>
-              <div>
-                <div class="uk-card uk-card-small">
-                  <label class="uk-text-muted uk-text-small" for="filterToDate">To:</label>
-                  <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterToDate" class="uk-input"
-                    placeholder="Date To" />
-                </div>
+            </article>
+          <!-- </div> -->
+        </details>
+
+          <!-- Results Table -->
+          <h3 id="resultsHeading" class="uk-animation-fade">Results</h3>
+          
+            <div id="resultsSection" class="uk-animation-fade">
+              <article>
+              <!-- Search Box -->
+              <div class="">
+                <input class="" type="text" id="searchBox" placeholder="Search...">
               </div>
-              <div>
-                <div class="uk-card uk-card-small uk-flex uk-flex-middle uk-flex-bottom">
-                  <button id="getBtn" class="uk-button uk-button-default uk-width-1-1">Get</button>
-                </div>
-              </div>
-              <div>
-                <div class="uk-card uk-card-small uk-flex uk-flex-middle uk-flex-bottom">
-                  <button id="downloadBtn" class="uk-button uk-button-default uk-width-1-1">Download</button>
-                </div>
+              <div class="">
+                <table id="resultsTable" class="uk-table-responsive striped">
+                  <thead>
+                    <tr>
+                      <th onclick="sortTable(0)">Merchant Name <span uk-icon="chevron-up" id="sort-icon-0"></span></th>
+                      <th onclick="sortTable(1)">Address <span uk-icon="" id="sort-icon-1"></span></th>
+                      <th onclick="sortTable(2)">Date <span uk-icon="" id="sort-icon-2"></span></th>
+                      <th onclick="sortTable(3)">Time <span uk-icon="" id="sort-icon-3"></span></th>
+                      <th onclick="sortTable(4)">Item Name <span uk-icon="" id="sort-icon-4"></span></th>
+                      <th onclick="sortTable(5)">Qty <span uk-icon="" id="sort-icon-5"></span></th>
+                      <th onclick="sortTable(6)">Item Total Price <span uk-icon="" id="sort-icon-6"></span></th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody></tbody>
+                </table>
               </div>
             </div>
-            <div class="uk-grid-small uk-grid-match uk-margin-top" data-uk-grid>
-              <div>
-                <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small"
-                  onclick="setCurrentMonth()">Current Month</button>
-              </div>
-              <div>
-                <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small"
-                  onclick="setLastMonth()">Last Month</button>
-              </div>
-              <div>
-                <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small"
-                  onclick="setCurrentQuarter()">Current 1/4</button>
-              </div>
-              <div>
-                <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small"
-                  onclick="setLastQuarter()">Last 1/4</button>
-              </div>
-              <div>
-                <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small"
-                  onclick="setCurrentFinancialYear()">Current FY</button>
-              </div>
-              <div>
-                <button class="uk-button uk-text-muted uk-button-default uk-button-small uk-text-small"
-                  onclick="setLastFinancialYear()">Last FY</button>
-              </div>
-            </div>
-          </div>
-
-
-
-  <!-- Results Table -->
-<h3 id="resultsHeading" class="uk-card-title uk-animation-fade">Results</h3>
-         
-<div id="resultsSection"
-  class="uk-grid uk-flex uk-flex-center uk-flex-middle uk-child-width-expand uk-margin-auto uk-animation-fade">
-   <!-- Search Box -->
-   <div class="uk-margin">
-    <input class="uk-input" type="text" id="searchBox" placeholder="Search...">
-  </div>
-  <div class="uk-card uk-card-default uk-card-body uk-width-1-1">
-    <table id="resultsTable" class="uk-table uk-table-divider uk-table-responsive">
-      <thead>
-        <tr>
-          <th onclick="sortTable(0)">Merchant Name <span uk-icon="chevron-up" id="sort-icon-0"></span></th> <!-- 0-->
-          <th onclick="sortTable(1)">Address <span uk-icon="" id="sort-icon-1"></span></th><!-- 1-->
-          <th onclick="sortTable(2)">Date <span uk-icon="" id="sort-icon-2"></span></th><!-- 2-->
-          <th onclick="sortTable(3)">Time <span uk-icon="" id="sort-icon-3"></span></th><!-- 3-->
-          <th onclick="sortTable(4)">Item Name <span uk-icon="" id="sort-icon-4"></span></th><!-- 4-->
-          <th onclick="sortTable(5)">Qty <span uk-icon="" id="sort-icon-5"></span></th><!-- 5-->
-          <th onclick="sortTable(6)">Item Total Price <span uk-icon="" id="sort-icon-6"></span></th><!-- 6-->
-          <th>Actions</th><!-- 7-->
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-  </div>
-</div>
-
+          </article>
         </div>
       </div>
     </div>
   </div>
 
-  <div id="edit-modal" uk-modal>
-    <div class="uk-modal-dialog uk-modal-body">
-      <h2 class="uk-modal-title">Edit Row</h2>
+  <dialog id="edit-modal-card">
+    <article class="component">
+      <header>
+        <h2 class="">Edit Row</h2>
+        <button aria-label="Close" rel="prev" onclick="closeModal('edit-modal-card')"></button>
+      </header>
       <form id="edit-form">
-        <div class="uk-margin">
-          <input class="uk-input" type="text" id="edit-merchantName" placeholder="Merchant Name">
-        </div>
-        <div class="uk-margin">
-          <input class="uk-input" type="text" id="edit-merchantAddress" placeholder="Merchant Address">
-        </div>
-        <div class="uk-margin">
-          <input class="uk-input" type="date" id="edit-transactionDate" placeholder="Transaction Date">
-        </div>
-        <div class="uk-margin">
-          <input class="uk-input" type="time" id="edit-transactionTime" placeholder="Transaction Time">
-        </div>
-        <div class="uk-margin">
-          <input class="uk-input" type="text" id="edit-itemName" placeholder="Item Name">
-        </div>
-        <div class="uk-margin">
-          <input class="uk-input" type="number" id="edit-itemTotalPrice" placeholder="Item Total Price">
-        </div>
-        <div class="uk-margin">
-          <input class="uk-input" type="number" id="edit-itemQuantity" placeholder="Quantity">
-        </div>
-        <p class="uk-text-right">
-          <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
-          <button class="uk-button uk-button-primary" type="submit">Update</button>
-        </p>
+        <input class="" type="text" id="edit-merchantName" placeholder="Merchant Name">
+        <input class="" type="text" id="edit-merchantAddress" placeholder="Merchant Address">
+        <input class="" type="date" id="edit-transactionDate" placeholder="Transaction Date">
+        <input class="" type="time" id="edit-transactionTime" placeholder="Transaction Time">
+        <input class="" type="text" id="edit-itemName" placeholder="Item Name">
+        <input class="" type="number" id="edit-itemTotalPrice" placeholder="Item Total Price" step="0.01">
+        <input class="" type="number" id="edit-itemQuantity" placeholder="Quantity">
+
+
+        <button id="FormUpdateBtn" class="" type="submit">Update</button>
+
       </form>
-    </div>
-  </div>
+    </article>
+  </dialog>
 
   <!-- User Profile Data and Page -->
   <div class="page" id="content-profile">
     <div class="uk-container">
       <div class="uk-grid">
         <div class="uk-width-1-1">
-          <!-- <pre class="uk-card uk-card-default uk-card-body">
-            <code id="profile-data" class="json"></code>
-          </pre> -->
-
           <div class="auth-visible hidden uk-card uk-card-default uk-width-1-2@m">
             <div class="uk-card-header">
               <div class="uk-grid-small uk-flex-middle" uk-grid>
@@ -288,8 +245,6 @@
               <a id="profile-link" href="#" class="uk-button uk-button-text">Read more</a>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
@@ -310,14 +265,28 @@
         document.body.appendChild(script);
       });
     })();
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme');
+      const prefersDarkScheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      if (savedTheme) {
+        document.documentElement.setAttribute('data-theme', savedTheme);
+      } else if (prefersDarkScheme) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      } else {
+        document.documentElement.setAttribute('data-theme', 'light');
+      }
+    });
   </script>
 
-  <!-- UIkit JS -->
-
-  <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.11/dist/js/uikit.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/uikit@3.21.11/dist/js/uikit-icons.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js"></script> -->
   <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
   <script type="text/javascript" src="https://unpkg.com/markdown-it/dist/markdown-it.min.js"></script>
   <script src="https://cdn.auth0.com/js/auth0-spa-js/2.0/auth0-spa-js.production.js"></script>
@@ -326,7 +295,7 @@
     document.addEventListener('DOMContentLoaded', function () {
       const githubRepo = 'richardthorek/AutoPA-Receipt-Intelligence'; // Replace with your GitHub username/repo
       const readmeUrl = `https://api.github.com/repos/${githubRepo}/contents/README.md`;
-  
+
       fetch(readmeUrl, {
         headers: {
           'Accept': 'application/vnd.github.v3.raw'
