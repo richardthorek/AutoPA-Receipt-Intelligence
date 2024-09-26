@@ -115,16 +115,42 @@ document.addEventListener("DOMContentLoaded", function () {
       // Create the preview card
       const previewCard = document.createElement("div");
       previewCard.id = receiptGUID;
-      previewCard.className =
-        "receipt-preview card uk-animation-slide-right";
+
+      // Create the inner HTML content
+      const article = document.createElement("article");
+      article.setAttribute("aria-busy", "true");
+
+      const imageContainer = document.createElement("div");
+      const img = document.createElement("img");
+      img.src = event.target.result;
+      img.alt = "Receipt Image";
+      img.style.padding = "10px";
+
+      // Append the image to the image container
+      imageContainer.appendChild(img);
+
+      // Append the image container to the article
+      article.appendChild(imageContainer);
+
+      // Append the article to the preview card
+      previewCard.appendChild(article);
+
+      // Add styles and classes
+      previewCard.className = "receipt-preview card uk-animation-slide-right";
       previewCard.style.overflow = "hidden";
-      previewCard.innerHTML = `
-        <article aria-busy="true" class="card overflow">
-            <img src="${event.target.result}" class="" style="padding: 10px;" alt="Receipt Image">
-        </article>
-      `;
+      previewCard.style.maxHeight = "200px"; // Set the maximum height of the card
+      previewCard.style.marginBottom = "40px"; // Add margin below the card
+
+      article.className = "card overflow";
+      imageContainer.className = "image-container";
+      imageContainer.style.maxHeight = "200px";
+      imageContainer.style.overflowY = "auto";
+
+      // Append the preview card to the grid container
       gridContainer.appendChild(previewCard);
     };
+
+    // Read the file as a data URL
     reader.readAsDataURL(file);
 
     // Create a new FormData object and append the file and additional metadata
@@ -220,6 +246,17 @@ document.addEventListener("DOMContentLoaded", function () {
         progressBar.removeAttribute("max");
         // Check for duplicates after adding the new rows
         checkForDuplicates();
+
+        filterDetails.removeAttribute("open");
+
+        // Scroll the page so the results heading is at the top
+        const resultsHeading = document.getElementById("resultsHeading");
+        if (resultsHeading) {
+          resultsHeading.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
+
+
+
       })
       .catch((error) => {
         console.error("Error uploading file:", error);
