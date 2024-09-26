@@ -85,16 +85,36 @@ label {
   background-color: lightgreen;
 }
 
-
-.receipt-preview-card {
-  border: 1px solid var(--pico-border-color);
-  border-radius: 5px;
-  padding: 10px;
-  margin: 10px;
-  max-height: 200px;
-}
-
 .duplicate {
   background-color: var(--pico-del-color);
   color: white;
+}
+
+.progress-bar {
+  margin-top: 1em;
+  display: none;
+}
+
+#duplicate-notification {
+  display: none; /* Hidden by default */
+  color: var(--pico-del-color);
+  margin: 10px 0; /* Optional: Add some margin */
+  margin-left: auto; /* Align the element to the right */
+  text-align: right; /* Align text to the right */
+  
+}
+
+.receipt-preview {
+  max-height: 200px; /* Limit the height of the card */
+  overflow: hidden; /* Hide overflow */
+}
+
+.image-container {
+  max-height: 200px; /* Limit the height of the image container */
+  overflow-y: auto; /* Enable vertical scrolling */
+}
+
+.image-container img {
+  display: block;
+  max-width: 100%;
 }
