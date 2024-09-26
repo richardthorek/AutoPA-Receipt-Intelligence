@@ -124,10 +124,18 @@
             </article>
           </dialog>
 
-          <details open>
-            <summary ><h3>Filter</h3></summary>
-          <!-- Filter Section -->
-          <!-- <div id="filterSection" class="uk-animation-fade"> -->
+
+
+
+
+          <details id="filterDetails" open>
+            <summary>
+              <hgroup>
+                <h3>Filter</h3>
+                <p>Click to show/hide</p>
+              </hgroup>
+            </summary>
+
             <article id="filterSection" class="component uk-animation-fade">
               <form>
                 <fieldset class="grid">
@@ -151,20 +159,27 @@
                 <button class=" secondary" onclick="setCurrentFinancialYear()">Current FY</button>
                 <button class=" secondary" onclick="setLastFinancialYear()">Last FY</button>
               </div>
+
+
             </article>
-          <!-- </div> -->
-        </details>
+            <!-- </div> -->
+          </details>
+
+          <progress id="loadingProgressBar" value="0" max="100"></progress>
+
 
           <!-- Results Table -->
           <h3 id="resultsHeading" class="uk-animation-fade">Results</h3>
-          
-            <div id="resultsSection" class="uk-animation-fade">
-              <article>
+
+          <div id="resultsSection" class="uk-animation-fade">
+            <article>
               <!-- Search Box -->
               <div class="">
                 <input class="" type="text" id="searchBox" placeholder="Search...">
               </div>
               <div class="">
+                <h6 id="duplicate-notification" style="display: none;">Duplicates detected, duplicate rows identified
+                  with a red delete button</h6>
                 <table id="resultsTable" class="uk-table-responsive striped">
                   <thead>
                     <tr>
@@ -181,7 +196,7 @@
                   <tbody></tbody>
                 </table>
               </div>
-            </div>
+          </div>
           </article>
         </div>
       </div>

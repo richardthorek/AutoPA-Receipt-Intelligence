@@ -2,39 +2,39 @@
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    // Function to hide the results table
-    function hideResultsTable() {
-      const resultsHeading = document.getElementById("resultsHeading");
-      if (resultsHeading) {
-        resultsHeading.style.display = "none";
-      }
-      const resultsSection = document.getElementById("resultsSection");
-      if (resultsSection) {
-        resultsSection.style.display = "none";
-      }
-      const resultsTable = document.getElementById("resultsTable");
-      if (resultsTable) {
-        resultsTable.style.display = "none";
-      }
+  // Function to hide the results table
+  function hideResultsTable() {
+    const resultsHeading = document.getElementById("resultsHeading");
+    if (resultsHeading) {
+      resultsHeading.style.display = "none";
     }
-  
-    // Function to show the results table
-    function showResultsTable() {
-      const resultsHeading = document.getElementById("resultsHeading");
-      if (resultsHeading) {
-        resultsHeading.style.display = "block";
-      }
-      const resultsSection = document.getElementById("resultsSection");
-      if (resultsSection) {
-        resultsSection.style.display = "block";
-      }
-      const resultsTable = document.getElementById("resultsTable");
-      if (resultsTable) {
-        resultsTable.style.display = "table";
-      }
+    const resultsSection = document.getElementById("resultsSection");
+    if (resultsSection) {
+      resultsSection.style.display = "none";
     }
- 
- // Get references to the necessary DOM elements
+    const resultsTable = document.getElementById("resultsTable");
+    if (resultsTable) {
+      resultsTable.style.display = "none";
+    }
+  }
+
+  // Function to show the results table
+  function showResultsTable() {
+    const resultsHeading = document.getElementById("resultsHeading");
+    if (resultsHeading) {
+      resultsHeading.style.display = "block";
+    }
+    const resultsSection = document.getElementById("resultsSection");
+    if (resultsSection) {
+      resultsSection.style.display = "block";
+    }
+    const resultsTable = document.getElementById("resultsTable");
+    if (resultsTable) {
+      resultsTable.style.display = "table";
+    }
+  }
+
+  // Get references to the necessary DOM elements
   const dropZone = document.getElementById("dropZone");
   const fileInput = document.getElementById("fileInput");
   const userTokenInput = document.getElementById("userToken");
@@ -168,6 +168,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
         showResultsTable();
 
+        const progressBar = document.getElementById("loadingProgressBar");
+        progressBar.setAttribute("max", 0);
+        progressBar.setAttribute("value", 0);
+        const totalItems = items.length;
+        progressBar.max = totalItems;
+        progressBar.value = 0; // Reset progress bar value to 0
+        progressBar.style.display = totalItems > 0 ? "block" : "none"; // Show or hide progress bar
+
         // Create a new row for each item in the receipt
         const rowPromises = items.map((item, index) => {
           return new Promise((resolve) => {
@@ -195,14 +203,21 @@ document.addEventListener("DOMContentLoaded", function () {
                 userTokenInput
               );
               resolve();
-            }, index * 200); // Delay of 200ms between each row
+
+            }, index * 5); // Delay of 5ms between each row
           });
         });
+
 
         // Wait for all rows to be added before checking for duplicates
         return Promise.all(rowPromises);
       })
       .then(() => {
+
+        const progressBar = document.getElementById("loadingProgressBar");
+        progressBar.style.display = "block";
+        progressBar.removeAttribute("value");
+        progressBar.removeAttribute("max");
         // Check for duplicates after adding the new rows
         checkForDuplicates();
       })
@@ -212,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Add an event listener to the 'getBtn' button to handle click events
-  document.getElementById("getBtn").addEventListener("click", function(event) {
+  document.getElementById("getBtn").addEventListener("click", function (event) {
     event.preventDefault(); // Prevent the default form submission behavior
     // Get the values of the 'from' and 'to' date filters and the user token
     const fromDate = document.getElementById("filterFromDate").value;
@@ -266,39 +281,64 @@ document.addEventListener("DOMContentLoaded", function () {
 
         showResultsTable();
 
+
+
         // Populate table row from historical data
-        data.value.forEach((entry, index) => {
-          setTimeout(() => {
-            const rowData = {
-              merchantName: entry.merchantName || "",
-              merchantAddress: entry.merchantAddress || "",
-              transactionDate: entry.transactionDate || "",
-              transactionTime: entry.transactionTime || "",
-              itemName: entry.itemName || "",
-              itemQuantity: entry.itemQuantity || 0,
-              itemTotalPrice: entry.itemTotalPrice || 0,
-              id: entry.id,
-            };
-            populateTableRow(
-              tableBody,
-              rowData,
-              entry.weburl,
-              entry.receiptId,
-              userTokenInput
-            );
-          }, index * 200); // Delay of 200ms between each row
+
+        const progressBar = document.getElementById("loadingProgressBar");
+        const totalItems = data.value.length;
+        progressBar.max = totalItems;
+        progressBar.value = 0; // Reset progress bar value to 0
+        progressBar.style.display = totalItems > 0 ? "block" : "none"; // Show or hide progress bar
+
+        const promises = data.value.map((entry, index) => {
+          return new Promise((resolve) => {
+            setTimeout(() => {
+              const rowData = {
+                merchantName: entry.merchantName || "",
+                merchantAddress: entry.merchantAddress || "",
+                transactionDate: entry.transactionDate || "",
+                transactionTime: entry.transactionTime || "",
+                itemName: entry.itemName || "",
+                itemQuantity: entry.itemQuantity || 0,
+                itemTotalPrice: entry.itemTotalPrice || 0,
+                id: entry.id,
+              };
+              populateTableRow(
+                tableBody,
+                rowData,
+                entry.weburl,
+                entry.receiptId,
+                userTokenInput
+              );
+              resolve();
+            }, index * 50); // Delay of 50ms between each row
+          });
         });
-        // After all rows have been populated, set all submit buttons to done
-        setTimeout(() => {
-          const submitButtons = document.querySelectorAll(
-            "[id$='-btn-submit']"
-          );
+
+        Promise.all(promises).then(() => {
+          progressBar.removeAttribute("value");
+          progressBar.removeAttribute("max");
+
+          // After all rows have been populated, set all submit buttons to done
+          const submitButtons = document.querySelectorAll("[id$='-btn-submit']");
           submitButtons.forEach((button) => {
             setDone(button);
           });
+
           // Check for duplicates after adding the new rows
           checkForDuplicates();
-        }, data.value.length * 200 + 500); // Ensure this runs after the last row is added
+
+          filterDetails.removeAttribute("open");
+
+          // Scroll the page so the results heading is at the top
+          const resultsHeading = document.getElementById("resultsHeading");
+          if (resultsHeading) {
+            resultsHeading.scrollIntoView({ behavior: "smooth", block: "start" });
+          }
+        }).catch((error) => {
+          console.error("Error processing rows:", error);
+        });
       })
       .catch((error) => {
         console.error("Error fetching data:", error); // Log any errors that occur during the fetch request
@@ -432,6 +472,10 @@ function populateTableRow(
   });
 
   buttonCell.appendChild(deleteButton);
+
+  const progressBar = document.getElementById("loadingProgressBar");
+  // Update the progress bar value
+  progressBar.value += 1;
 
 }
 
@@ -717,6 +761,12 @@ function restore(button) {
 
 // Function to check for duplicates in the table
 function checkForDuplicates() {
+
+  const progressBar = document.getElementById("loadingProgressBar");
+  progressBar.style.display = "block";
+  progressBar.removeAttribute("value");
+  progressBar.removeAttribute("max");
+
   const tableBody = document
     .getElementById("resultsTable")
     .getElementsByTagName("tbody")[0];
@@ -760,15 +810,26 @@ function checkForDuplicates() {
     }
   }
 
+  // if (hasDuplicates) {
+  //   UIkit.notification({
+  //     message:
+  //       "Duplicates detected in red below. Please review and delete duplicates.",
+  //     status: "warning",
+  //     pos: "top-right",
+  //     timeout: 2000,
+  //     cls: 'custom-notification' // Add custom class
+
+  //   });
+  // }
+
   if (hasDuplicates) {
-    UIkit.notification({
-      message:
-        "Duplicates detected in red below. Please review and delete duplicates.",
-      status: "warning",
-      pos: "top-right",
-      timeout: 2000,
-    });
+    document.getElementById('duplicate-notification').style.display = 'block';
+  } else {
+    document.getElementById('duplicate-notification').style.display = 'none';
   }
+
+  progressBar.style.display = "none";
+
 }
 
 // Function to open the off-canvas and load the image
@@ -777,7 +838,7 @@ function openReceiptOffCanvas(imageUrl) {
   const canvasImg = document.getElementById("canvasImg");
   const offCanvasElement = document.getElementById("imgCanvas");
 
-  offCanvasElement.setAttribute("open"  , "");
+  offCanvasElement.setAttribute("open", "");
 
   if (canvasImg && offCanvasElement) {
     console.log("Image URL:", imageUrl); // Debugging: Log the image URL
