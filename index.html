@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>AutoPA Receipt Intelligence</title>
 
   <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
@@ -263,8 +263,9 @@
     (function () {
       const isLocalhost = window.location.hostname === 'localhost' && window.location.port === '3000';
       const scripts = [
-        { src: isLocalhost ? '/js/ui.js' : '/public/js/ui.js' },
         { src: isLocalhost ? '/js/app.js' : '/public/js/app.js' },
+        { src: isLocalhost ? '/js/ui.js' : '/public/js/ui.js' },
+
         { src: isLocalhost ? '/js/fileProcessing.js' : '/public/js/fileProcessing.js' }
       ];
 
