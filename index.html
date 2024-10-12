@@ -55,7 +55,7 @@
         </li>
         <!-- Login button: show if NOT authenticated -->
         <li class="auth-invisible">
-          <button id="qsLoginBtn" onclick="login()" class="auth-invisible hidden">
+          <button id="login" onclick="login()" class="auth-invisible hidden">
             Log in
           </button>
         </li>
@@ -63,12 +63,12 @@
           <details class="dropdown">
             <summary>Menu</summary> <!-- Profile Dropdown -->
             <ul class="">
-              <li>
+              <!-- <li>
                 <a href="/profile" class="route-link secondary">
                   <i class="fas fa-user mr-3"></i> Profile
                 </a>
-              </li>
-              <li <a href="#" class="secondary" id="qsLogoutBtn" onclick="logout()">
+              </li> -->
+              <li <a href="#" class="secondary" id="logout" onclick="logout()">
                 <i class="fas fa-power-off mr-3"></i> Log out
                 </a>
               </li>
@@ -82,146 +82,155 @@
     </nav>
 
     <!-- Main Content -->
-    <div id="main-content" class="">
-      <div id="content-home" class="page">
+    <div id="main-content" class="auth-visible hidden">
+      <div id="content-home" class="page ">
         <h1 class="">AutoPA Receipt Intelligence</h1>
 
-        <div id="authenticatedContent" class="uk-container uk-container-expand" style="display: none;">
+        <div id="" class="uk-container uk-container-expand">
           <!-- User Profile Data Hidden Input -->
           <input type="hidden" id="userToken" value="" />
 
           <!-- Upload Section -->
-          <div id="uploadSection" class="uk-animation-fade">
-            <article>
-              <div class="drop-zone card" id="dropZone">
-                <div class="">
-                  <span class="icon-upload"></span>
-                  <p>Attach receipts by dropping them here or click to select one
-                  <p>
-                    <input id="fileInput" type="file" multiple accept=".jpg,.jpeg,.png,.pdf" style="display: none;">
+
+          <details id="assignmentDetails" open>
+            <summary>
+              <hgroup>
+                <h3>Upload</h3>
+                <!-- <small>Click to show/hide</small> -->
+              </hgroup>
+            </summary>
+            <div class="grid">
+              <div id="uploadSection" class="uk-animation-fade">
+                <article>
+                  <div class="drop-zone card" id="dropZone">
+                    <div class="">
+                      <span class="icon-upload"></span>
+                      <p>Attach receipts by dropping them here or click to select one
+                      <p>
+                        <input id="fileInput" type="file" multiple accept=".jpg,.jpeg,.png,.pdf" style="display: none;">
+                    </div>
+                  </div>
+                </article>
+              </div>
+
+              <div>
+                <div class="form-container">
+                  <div class="form-field">
+                    <!-- <label for="assignee">Assignee:</label> -->
+                    <input type="text" id="assignee" name="assignee" placeholder="Person or activity assigned to">
+                  </div>
+                  <div class="form-field">
+                    <!-- <label for="note">Note:</label> -->
+                    <input type="text" id="note" name="note" placeholder="Note or Reference">
+                  </div>
                 </div>
-              </div>
-            </article>
-          </div>
-
-          <details id="assignmentDetails">
-            <summary>
-              <hgroup>
-                <h3>Assignment</h3>
-                <small>Click to show/hide</small>
-              </hgroup>
-            </summary>
-          <div class="form-container">
-            <div class="form-field">
-              <label for="assignee">Assignee:</label>
-              <input type="text" id="assignee" name="assignee">
-            </div>
-            <div class="form-field">
-              <label for="note">Note:</label>
-              <input type="text" id="note" name="note">
-            </div>
-          </div>
-          <p>The Assignee and Note will copy across all receipts uploaded while they have a value so you can drop a bunch of receipts for the same person or activity at a time.</p>
-        </details>
-          <div id="receiptPreview"></div>
-
-          <!-- Receipt Images Off Canvas -->
-
-          <dialog id="imgCanvas">
-            <article>
-              <header>
-                <button aria-label="Close" rel="prev" onclick="closeModal('imgCanvas')"></button>
-                <p><strong>🧾Receipt Preview</strong></p>
-              </header>
-              <img id="canvasImg" class="" style="padding: 10px;" alt="Receipt Image">
-            </article>
-          </dialog>
-
-          <!-- User Guide -->
-          <dialog id="documentationCanvas">
-            <article>
-              <header>
-                <button aria-label="Close" rel="prev" onclick="closeModal('documentationCanvas')"></button>
-                <p><strong>Documentation</strong></p>
-              </header>
-              <div id="documentationContent"></div>
-            </article>
-          </dialog>
-
-          <details id="filterDetails" open>
-            <summary>
-              <hgroup>
-                <h3>Filter</h3>
-                <small>Click to show/hide</small>
-              </hgroup>
-            </summary>
-
-            <article id="filterSection" class="component uk-animation-fade">
-              <form>
-                <fieldset class="grid">
-                  <label class="" for="filterFromDate">From:
-                    <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterFromDate" class=""
-                      placeholder="Date From" /></label>
-                  <label class="" for="filterToDate">To:
-                    <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterToDate" class=""
-                      placeholder="Date To" /></label>
-                  <button id="getBtn">Get</button>
-                  <!-- <button id="downloadBtn">Download</button> -->
-                </fieldset>
-
-              </form>
-
-              <div class="grid">
-                <button class=" secondary" onclick="setCurrentMonth()">Current Month</button>
-                <button class=" secondary" onclick="setLastMonth()">Last Month</button>
-                <button class=" secondary" onclick="setCurrentQuarter()">Current 1/4</button>
-                <button class=" secondary" onclick="setLastQuarter()">Last 1/4</button>
-                <button class=" secondary" onclick="setCurrentFinancialYear()">Current FY</button>
-                <button class=" secondary" onclick="setLastFinancialYear()">Last FY</button>
-              </div>
-
-
-            </article>
-            <!-- </div> -->
+                <small>The Assignee and Note will copy across all receipts uploaded. You can
+                  upload a group of receipts for the same person or activity at a time.</small>
           </details>
-
-          <progress id="loadingProgressBar" value="0" max="100"></progress>
-
-
-          <!-- Results Table -->
-          <h3 id="resultsHeading" class="uk-animation-fade">Results</h3>
-
-          <div id="resultsSection" class="uk-animation-fade">
-            <article>
-              <!-- Search Box -->
-              <div class="grid">
-                <input class="" type="text" id="searchBox" placeholder="Search...">
-                <button class="secondary" id="downloadBtn">Download</button>
-              </div>
-              <div class="">
-                <h6 id="duplicate-notification" style="display: none;">Duplicates detected, duplicate rows identified
-                  with a coloured delete button</h6>
-                <table id="resultsTable" class="uk-table-responsive striped">
-                  <thead>
-                    <tr>
-                      <th onclick="sortTable(0)">Merchant Name <span uk-icon="chevron-up" id="sort-icon-0"></span></th>
-                      <th onclick="sortTable(1)">Address <span uk-icon="" id="sort-icon-1"></span></th>
-                      <th onclick="sortTable(2)">Date <span uk-icon="" id="sort-icon-2"></span></th>
-                      <th onclick="sortTable(3)">Time <span uk-icon="" id="sort-icon-3"></span></th>
-                      <th onclick="sortTable(4)">Item Name <span uk-icon="" id="sort-icon-4"></span></th>
-                      <th onclick="sortTable(5)">Qty <span uk-icon="" id="sort-icon-5"></span></th>
-                      <th onclick="sortTable(6)">Item Total Price <span uk-icon="" id="sort-icon-6"></span></th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody></tbody>
-                </table>
-              </div>
-          </div>
-          </article>
         </div>
       </div>
+
+
+      <div id="receiptPreview"></div>
+
+      <!-- Receipt Images Off Canvas -->
+
+      <dialog id="imgCanvas">
+        <article>
+          <header>
+            <button aria-label="Close" rel="prev" onclick="closeModal('imgCanvas')"></button>
+            <p><strong>🧾Receipt Preview</strong></p>
+          </header>
+          <img id="canvasImg" class="" style="padding: 10px;" alt="Receipt Image">
+        </article>
+      </dialog>
+
+      <!-- User Guide -->
+      <dialog id="documentationCanvas">
+        <article>
+          <header>
+            <button aria-label="Close" rel="prev" onclick="closeModal('documentationCanvas')"></button>
+            <p><strong>Documentation</strong></p>
+          </header>
+          <div id="documentationContent"></div>
+        </article>
+      </dialog>
+
+      <details id="filterDetails" open>
+        <summary>
+          <hgroup>
+            <h3>Filter</h3>
+            <!-- <small>Click to show/hide</small> -->
+          </hgroup>
+        </summary>
+
+        <article id="filterSection" class="component uk-animation-fade">
+          <form>
+            <fieldset role="group" class="grid">
+              <label class="" for="filterFromDate">From:
+                <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterFromDate" class=""
+                  placeholder="Date From" /></label>
+              <label class="" for="filterToDate">To:
+                <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterToDate" class=""
+                  placeholder="Date To" /></label>
+              <button id="getBtn">Get</button>
+              <!-- <button id="downloadBtn">Download</button> -->
+            </fieldset>
+
+          </form>
+
+          <div class="grid">
+            <button class=" secondary" onclick="setCurrentMonth()">Current Month</button>
+            <button class=" secondary" onclick="setLastMonth()">Last Month</button>
+            <button class=" secondary" onclick="setCurrentQuarter()">Current 1/4</button>
+            <button class=" secondary" onclick="setLastQuarter()">Last 1/4</button>
+            <button class=" secondary" onclick="setCurrentFinancialYear()">Current FY</button>
+            <button class=" secondary" onclick="setLastFinancialYear()">Last FY</button>
+          </div>
+
+
+        </article>
+        <!-- </div> -->
+      </details>
+
+      <progress id="loadingProgressBar" value="0" max="100"></progress>
+
+
+      <!-- Results Table -->
+      <h3 id="resultsHeading" class="uk-animation-fade hidden">Results</h3>
+
+      <div id="resultsSection" class="uk-animation-fade">
+        <article>
+          <!-- Search Box -->
+          <div class="grid">
+            <input class="" type="text" id="searchBox" placeholder="Search...">
+            <button class="secondary" id="downloadBtn">Download</button>
+          </div>
+          <div class="">
+            <h6 id="duplicate-notification" style="display: none;">Duplicates detected, duplicate rows identified
+              with a coloured delete button</h6>
+            <table id="resultsTable" class="uk-table-responsive striped">
+              <thead>
+                <tr>
+                  <th onclick="sortTable(0)">Merchant Name <span uk-icon="chevron-up" id="sort-icon-0"></span>
+                  </th>
+                  <th onclick="sortTable(1)">Address <span uk-icon="" id="sort-icon-1"></span></th>
+                  <th onclick="sortTable(2)">Date <span uk-icon="" id="sort-icon-2"></span></th>
+                  <th onclick="sortTable(3)">Time <span uk-icon="" id="sort-icon-3"></span></th>
+                  <th onclick="sortTable(4)">Item Name <span uk-icon="" id="sort-icon-4"></span></th>
+                  <th onclick="sortTable(5)">Qty <span uk-icon="" id="sort-icon-5"></span></th>
+                  <th onclick="sortTable(6)">Item Total Price <span uk-icon="" id="sort-icon-6"></span></th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+      </div>
+      </article>
     </div>
+  </div>
+  </div>
   </div>
 
   <dialog id="edit-modal-card">
