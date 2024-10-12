@@ -104,6 +104,25 @@
             </article>
           </div>
 
+          <details id="assignmentDetails">
+            <summary>
+              <hgroup>
+                <h3>Assignment</h3>
+                <small>Click to show/hide</small>
+              </hgroup>
+            </summary>
+          <div class="form-container">
+            <div class="form-field">
+              <label for="assignee">Assignee:</label>
+              <input type="text" id="assignee" name="assignee">
+            </div>
+            <div class="form-field">
+              <label for="note">Note:</label>
+              <input type="text" id="note" name="note">
+            </div>
+          </div>
+          <p>The Assignee and Note will copy across all receipts uploaded while they have a value so you can drop a bunch of receipts for the same person or activity at a time.</p>
+        </details>
           <div id="receiptPreview"></div>
 
           <!-- Receipt Images Off Canvas -->
@@ -133,7 +152,7 @@
             <summary>
               <hgroup>
                 <h3>Filter</h3>
-                <p>Click to show/hide</p>
+                <small>Click to show/hide</small>
               </hgroup>
             </summary>
 
@@ -147,7 +166,7 @@
                     <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterToDate" class=""
                       placeholder="Date To" /></label>
                   <button id="getBtn">Get</button>
-                  <button id="downloadBtn">Download</button>
+                  <!-- <button id="downloadBtn">Download</button> -->
                 </fieldset>
 
               </form>
@@ -175,8 +194,9 @@
           <div id="resultsSection" class="uk-animation-fade">
             <article>
               <!-- Search Box -->
-              <div class="">
+              <div class="grid">
                 <input class="" type="text" id="searchBox" placeholder="Search...">
+                <button class="secondary" id="downloadBtn">Download</button>
               </div>
               <div class="">
                 <h6 id="duplicate-notification" style="display: none;">Duplicates detected, duplicate rows identified
@@ -211,14 +231,33 @@
         <button aria-label="Close" rel="prev" onclick="closeModal('edit-modal-card')"></button>
       </header>
       <form id="edit-form">
-        <input class="" type="text" id="edit-merchantName" placeholder="Merchant Name">
-        <input class="" type="text" id="edit-merchantAddress" placeholder="Merchant Address">
-        <input class="" type="date" id="edit-transactionDate" placeholder="Transaction Date">
-        <input class="" type="time" id="edit-transactionTime" placeholder="Transaction Time">
-        <input class="" type="text" id="edit-itemName" placeholder="Item Name">
-        <input class="" type="number" id="edit-itemTotalPrice" placeholder="Item Total Price" step="0.01">
-        <input class="" type="number" id="edit-itemQuantity" placeholder="Quantity">
-
+        <label>Assignee
+          <input class="" type="text" id="edit-assignee" placeholder="Assignee">
+        </label>
+        <label>Note
+          <input class="" type="text" id="edit-note" placeholder="Note">
+        </label>
+        <label>Merchant Name
+          <input class="" type="text" id="edit-merchantName" placeholder="Merchant Name">
+        </label>
+        <label>Merchant Address
+          <input class="" type="text" id="edit-merchantAddress" placeholder="Merchant Address">
+        </label>
+        <label>Transaction Date
+          <input class="" type="date" id="edit-transactionDate" placeholder="Transaction Date">
+        </label>
+        <label>Transaction Time
+          <input class="" type="time" id="edit-transactionTime" placeholder="Transaction Time">
+        </label>
+        <label>Item Name
+          <input class="" type="text" id="edit-itemName" placeholder="Item Name">
+        </label>
+        <label>Item Total Price
+          <input class="" type="number" id="edit-itemTotalPrice" placeholder="Item Total Price" step="0.01">
+        </label>
+        <label>Quantity
+          <input class="" type="number" id="edit-itemQuantity" placeholder="Quantity" step="0.1">
+        </label>
 
         <button id="FormUpdateBtn" class="" type="submit">Update</button>
 

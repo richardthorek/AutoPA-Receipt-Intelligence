@@ -1,7 +1,6 @@
 // Wait for the DOM to fully load before running the script
 
 document.addEventListener("DOMContentLoaded", function () {
-
   // Function to hide the results table
   function hideResultsTable() {
     const resultsHeading = document.getElementById("resultsHeading");
@@ -38,8 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const dropZone = document.getElementById("dropZone");
   const fileInput = document.getElementById("fileInput");
   const userTokenInput = document.getElementById("userToken");
-
-
 
   // Hide the results table initially
   hideResultsTable();
@@ -153,6 +150,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // Read the file as a data URL
     reader.readAsDataURL(file);
 
+    const fileInput = document.getElementById("fileInput");
+    const assignee = document.getElementById("assignee").value;
+    const note = document.getElementById("note").value;
+
     // Create a new FormData object and append the file and additional metadata
     const formData = new FormData();
     formData.append("file", file);
@@ -161,6 +162,8 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append("content-type", file.type);
     formData.append("file-extension", file.name.split(".").pop());
     formData.append("receiptGUID", receiptGUID);
+    formData.append("assignee", assignee);
+    formData.append("note", note);
 
     // Perform the file upload using fetch
     fetch(
@@ -209,6 +212,8 @@ document.addEventListener("DOMContentLoaded", function () {
               const formattedDate = getFormattedDate();
               const formattedTime = getFormattedTime();
               const itemID = generateGUID();
+              const assignee = data.assignee;
+              const note = data.note;
               const rowData = {
                 merchantName: receipt.MerchantName?.valueString || "",
                 merchantAddress: receipt.MerchantAddress?.valueString || "",
@@ -226,20 +231,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 rowData,
                 weburl,
                 receiptId,
+                assignee,
+                note,
                 userTokenInput
               );
               resolve();
-
             }, index * 5); // Delay of 5ms between each row
           });
         });
-
 
         // Wait for all rows to be added before checking for duplicates
         return Promise.all(rowPromises);
       })
       .then(() => {
-
         const progressBar = document.getElementById("loadingProgressBar");
         progressBar.style.display = "block";
         progressBar.removeAttribute("value");
@@ -254,9 +258,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (resultsHeading) {
           resultsHeading.scrollIntoView({ behavior: "smooth", block: "start" });
         }
-
-
-
       })
       .catch((error) => {
         console.error("Error uploading file:", error);
@@ -318,8 +319,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
         showResultsTable();
 
-
-
         // Populate table row from historical data
 
         const progressBar = document.getElementById("loadingProgressBar");
@@ -346,6 +345,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 rowData,
                 entry.weburl,
                 entry.receiptId,
+                entry.assignee,
+                entry.note,
                 userTokenInput
               );
               resolve();
@@ -353,29 +354,36 @@ document.addEventListener("DOMContentLoaded", function () {
           });
         });
 
-        Promise.all(promises).then(() => {
-          progressBar.removeAttribute("value");
-          progressBar.removeAttribute("max");
+        Promise.all(promises)
+          .then(() => {
+            progressBar.removeAttribute("value");
+            progressBar.removeAttribute("max");
 
-          // After all rows have been populated, set all submit buttons to done
-          const submitButtons = document.querySelectorAll("[id$='-btn-submit']");
-          submitButtons.forEach((button) => {
-            setDone(button);
+            // After all rows have been populated, set all submit buttons to done
+            const submitButtons = document.querySelectorAll(
+              "[id$='-btn-submit']"
+            );
+            submitButtons.forEach((button) => {
+              setDone(button);
+            });
+
+            // Check for duplicates after adding the new rows
+            checkForDuplicates();
+
+            filterDetails.removeAttribute("open");
+
+            // Scroll the page so the results heading is at the top
+            const resultsHeading = document.getElementById("resultsHeading");
+            if (resultsHeading) {
+              resultsHeading.scrollIntoView({
+                behavior: "smooth",
+                block: "start",
+              });
+            }
+          })
+          .catch((error) => {
+            console.error("Error processing rows:", error);
           });
-
-          // Check for duplicates after adding the new rows
-          checkForDuplicates();
-
-          filterDetails.removeAttribute("open");
-
-          // Scroll the page so the results heading is at the top
-          const resultsHeading = document.getElementById("resultsHeading");
-          if (resultsHeading) {
-            resultsHeading.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
-        }).catch((error) => {
-          console.error("Error processing rows:", error);
-        });
       })
       .catch((error) => {
         console.error("Error fetching data:", error); // Log any errors that occur during the fetch request
@@ -389,15 +397,30 @@ function tableToCSV() {
   const rows = table.querySelectorAll("tr");
   let csvContent = "";
 
-  rows.forEach((row) => {
-    const cols = row.querySelectorAll("td, th");
+  // Add headers for the attributes
+  const headers = ["ID", "Assignee", "Note", "Total Price"];
+  const tableHeaders = Array.from(table.querySelectorAll("th")).map(th => th.textContent);
+  csvContent += [...tableHeaders, ...headers].join(",") + "\n";
+
+  rows.forEach((row, index) => {
+    // Skip the header row
+    if (index === 0) return;
+
+    const cols = row.querySelectorAll("td");
     const rowData = Array.from(cols)
       .map((col) => {
         const anchor = col.querySelector("a");
         return anchor ? anchor.href : col.textContent;
-      })
-      .join(",");
-    csvContent += rowData + "\n";
+      });
+
+    // Add the row attributes
+    const rowId = row.getAttribute("data-row-id") || "";
+    const assignee = row.getAttribute("data-row-assignee") || "";
+    const note = row.getAttribute("data-row-note") || "";
+    const totalPrice = row.getAttribute("data-item-total-price") || "";
+
+    rowData.push(rowId, assignee, note, totalPrice);
+    csvContent += rowData.join(",") + "\n";
   });
 
   return csvContent;
@@ -427,6 +450,8 @@ function populateTableRow(
   rowData,
   weburl,
   receiptId,
+  assignee,
+  note,
   userTokenInput
 ) {
   const row = tableBody.insertRow(0);
@@ -435,6 +460,8 @@ function populateTableRow(
   row.classList.add("uk-animation-fade");
 
   // Set the ID of the row using the value of the id attribute from the entry
+  row.setAttribute("data-row-assignee", assignee);
+  row.setAttribute("data-row-note", note);
   row.setAttribute("data-row-id", rowData.id);
   // Store the original numeric value in a data attribute
   row.setAttribute("data-item-total-price", rowData.itemTotalPrice || 0);
@@ -449,7 +476,9 @@ function populateTableRow(
 
   // Display the formatted currency value
   row.insertCell(6).textContent =
-    typeof rowData.itemTotalPrice === "number" ? formatCurrency(rowData.itemTotalPrice) : formatCurrency(0);
+    typeof rowData.itemTotalPrice === "number"
+      ? formatCurrency(rowData.itemTotalPrice)
+      : formatCurrency(0);
 
   // Create a cell for the buttons
   const buttonCell = row.insertCell(7);
@@ -471,7 +500,7 @@ function populateTableRow(
     openReceiptOffCanvas(weburl);
   });
 
-  setReceipt(receiptLink)
+  setReceipt(receiptLink);
 
   // Create a submit button for each row
   const submitButton = document.createElement("a");
@@ -480,7 +509,7 @@ function populateTableRow(
   setSubmit(submitButton);
 
   submitButton.addEventListener("click", function () {
-    const rowData = getRowData(row, weburl, receiptId, userTokenInput);
+    const rowData = getRowData(row, weburl, receiptId, userTokenInput, assignee, note);
     submitRowData(rowData, submitButton);
   });
 
@@ -513,7 +542,6 @@ function populateTableRow(
   const progressBar = document.getElementById("loadingProgressBar");
   // Update the progress bar value
   progressBar.value += 1;
-
 }
 
 //GET ROW
@@ -524,13 +552,15 @@ function getRowData(row, weburl, receiptId, userTokenInput) {
     transactionDate: row.cells[2].textContent || "",
     transactionTime: row.cells[3].textContent || "",
     itemName: row.cells[4].textContent || "",
-    itemTotalPrice: parseFloat(row.getAttribute('data-item-total-price')) || 0,
+    itemTotalPrice: parseFloat(row.getAttribute("data-item-total-price")) || 0,
     itemQuantity: parseInt(row.cells[5].textContent, 10) || 0,
     weburl: weburl ?? "",
     receiptId: receiptId ?? "",
     userID: userTokenInput.value ?? "", // Add userID from userToken input field
     itemStatus: "active",
     id: row.getAttribute("data-row-id") ?? "", // Include the rowID from the attribute
+    assignee: row.getAttribute("data-row-assignee") ?? "", // Include the assignee from the attribute
+    note: row.getAttribute("data-row-note") ?? "", // Include the Job or Reason from the attribute
   };
 }
 
@@ -573,7 +603,6 @@ function submitRowData(rowData, submitButton) {
 // EDIT MODAL
 
 function openEditModal(row) {
-
   document.getElementById("edit-modal-card").setAttribute("open", "");
 
   // Get the existing row data
@@ -583,7 +612,9 @@ function openEditModal(row) {
   const transactionTime = row.cells[3].textContent;
   const itemName = row.cells[4].textContent;
   const itemQuantity = row.cells[5].textContent;
-  const itemTotalPrice = parseFloat(row.getAttribute('data-item-total-price'))
+  const itemTotalPrice = parseFloat(row.getAttribute("data-item-total-price"));
+  const assignee = row.getAttribute("data-row-assignee");
+  const note = row.getAttribute("data-row-note");
 
   // Pre-fill the form with existing row data
   document.getElementById("edit-merchantName").value = merchantName;
@@ -593,6 +624,9 @@ function openEditModal(row) {
   document.getElementById("edit-itemName").value = itemName;
   document.getElementById("edit-itemTotalPrice").value = itemTotalPrice;
   document.getElementById("edit-itemQuantity").value = itemQuantity;
+  document.getElementById("edit-assignee").value = assignee;
+  document.getElementById("edit-note").value = note;
+
 
   // Handle form submission
   document.getElementById("edit-form").onsubmit = function (event) {
@@ -618,6 +652,8 @@ function openEditModal(row) {
     ).value;
     const updatedItemQuantity =
       document.getElementById("edit-itemQuantity").value;
+      const updatedAssignee = document.getElementById("edit-assignee").value;
+      const updatedNote = document.getElementById("edit-note").value;
 
     // Update the row with the new data
     row.cells[0].textContent = updatedMerchantName;
@@ -626,10 +662,12 @@ function openEditModal(row) {
     row.cells[3].textContent = updatedTransactionTime;
     row.cells[4].textContent = updatedItemName;
     row.cells[5].textContent = updatedItemQuantity;
+    row.setAttribute("data-row-assignee", updatedAssignee);
+    row.setAttribute("data-row-note", updatedNote);
 
     // Display the formatted currency value and update the data attribute
     row.cells[6].textContent = formatCurrency(updatedItemTotalPrice);
-    row.setAttribute('data-item-total-price', updatedItemTotalPrice);
+    row.setAttribute("data-item-total-price", updatedItemTotalPrice);
 
     // Define userTokenInput
     const userTokenInput = document.getElementById("userToken");
@@ -648,6 +686,8 @@ function openEditModal(row) {
       userID: userTokenInput.value || "",
       itemStatus: "active",
       id: row.getAttribute("data-row-id") || "",
+      assignee: updatedAssignee,
+      note: updatedNote
     };
 
     // Get the submit button for the row using the unique ID
@@ -798,7 +838,6 @@ function restore(button) {
 
 // Function to check for duplicates in the table
 function checkForDuplicates() {
-
   const progressBar = document.getElementById("loadingProgressBar");
   progressBar.style.display = "block";
   progressBar.removeAttribute("value");
@@ -811,7 +850,6 @@ function checkForDuplicates() {
   const duplicates = {};
 
   rows.forEach((row) => {
-
     // Remove duplicate class from the delete button
     const deleteLink = row.querySelector('a[aria-label="Delete"]');
     if (deleteLink) {
@@ -847,31 +885,17 @@ function checkForDuplicates() {
     }
   }
 
-  // if (hasDuplicates) {
-  //   UIkit.notification({
-  //     message:
-  //       "Duplicates detected in red below. Please review and delete duplicates.",
-  //     status: "warning",
-  //     pos: "top-right",
-  //     timeout: 2000,
-  //     cls: 'custom-notification' // Add custom class
-
-  //   });
-  // }
-
   if (hasDuplicates) {
-    document.getElementById('duplicate-notification').style.display = 'block';
+    document.getElementById("duplicate-notification").style.display = "block";
   } else {
-    document.getElementById('duplicate-notification').style.display = 'none';
+    document.getElementById("duplicate-notification").style.display = "none";
   }
 
   progressBar.style.display = "none";
-
 }
 
 // Function to open the off-canvas and load the image
 function openReceiptOffCanvas(imageUrl) {
-
   const canvasImg = document.getElementById("canvasImg");
   const offCanvasElement = document.getElementById("imgCanvas");
 
@@ -898,22 +922,26 @@ function openReceiptOffCanvas(imageUrl) {
 
 // Helper function to format numbers as currency
 function formatCurrency(value) {
-  return new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
+  return new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "USD",
     minimumFractionDigits: 0,
-    maximumFractionDigits: 2
+    maximumFractionDigits: 2,
   }).format(value);
 }
 
 //Function to enable date preset buttons.
 
-function formatDateToYYYYMMDD(date, locale = 'en-CA') {
-  return date.toLocaleDateString(locale, {
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit'
-  }).split('/').reverse().join('-');
+function formatDateToYYYYMMDD(date, locale = "en-CA") {
+  return date
+    .toLocaleDateString(locale, {
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    })
+    .split("/")
+    .reverse()
+    .join("-");
 }
 
 function setCurrentMonth() {
@@ -921,9 +949,15 @@ function setCurrentMonth() {
   const firstDay = new Date(now.getFullYear(), now.getMonth(), 1);
   const lastDay = new Date(now.getFullYear(), now.getMonth() + 1, 0);
 
-  const userLocale = navigator.language || 'en-CA';
-  document.getElementById('filterFromDate').value = formatDateToYYYYMMDD(firstDay, userLocale);
-  document.getElementById('filterToDate').value = formatDateToYYYYMMDD(lastDay, userLocale);
+  const userLocale = navigator.language || "en-CA";
+  document.getElementById("filterFromDate").value = formatDateToYYYYMMDD(
+    firstDay,
+    userLocale
+  );
+  document.getElementById("filterToDate").value = formatDateToYYYYMMDD(
+    lastDay,
+    userLocale
+  );
 }
 
 function setLastMonth() {
@@ -931,9 +965,15 @@ function setLastMonth() {
   const firstDay = new Date(now.getFullYear(), now.getMonth() - 1, 1);
   const lastDay = new Date(now.getFullYear(), now.getMonth(), 0);
 
-  const userLocale = navigator.language || 'en-CA';
-  document.getElementById('filterFromDate').value = formatDateToYYYYMMDD(firstDay, userLocale);
-  document.getElementById('filterToDate').value = formatDateToYYYYMMDD(lastDay, userLocale);
+  const userLocale = navigator.language || "en-CA";
+  document.getElementById("filterFromDate").value = formatDateToYYYYMMDD(
+    firstDay,
+    userLocale
+  );
+  document.getElementById("filterToDate").value = formatDateToYYYYMMDD(
+    lastDay,
+    userLocale
+  );
 }
 
 function setCurrentQuarter() {
@@ -942,9 +982,15 @@ function setCurrentQuarter() {
   const firstDay = new Date(now.getFullYear(), quarterStartMonth, 1);
   const lastDay = new Date(now.getFullYear(), quarterStartMonth + 3, 0);
 
-  const userLocale = navigator.language || 'en-CA';
-  document.getElementById('filterFromDate').value = formatDateToYYYYMMDD(firstDay, userLocale);
-  document.getElementById('filterToDate').value = formatDateToYYYYMMDD(lastDay, userLocale);
+  const userLocale = navigator.language || "en-CA";
+  document.getElementById("filterFromDate").value = formatDateToYYYYMMDD(
+    firstDay,
+    userLocale
+  );
+  document.getElementById("filterToDate").value = formatDateToYYYYMMDD(
+    lastDay,
+    userLocale
+  );
 }
 
 function setLastQuarter() {
@@ -953,9 +999,15 @@ function setLastQuarter() {
   const firstDay = new Date(now.getFullYear(), quarterStartMonth, 1);
   const lastDay = new Date(now.getFullYear(), quarterStartMonth + 3, 0);
 
-  const userLocale = navigator.language || 'en-CA';
-  document.getElementById('filterFromDate').value = formatDateToYYYYMMDD(firstDay, userLocale);
-  document.getElementById('filterToDate').value = formatDateToYYYYMMDD(lastDay, userLocale);
+  const userLocale = navigator.language || "en-CA";
+  document.getElementById("filterFromDate").value = formatDateToYYYYMMDD(
+    firstDay,
+    userLocale
+  );
+  document.getElementById("filterToDate").value = formatDateToYYYYMMDD(
+    lastDay,
+    userLocale
+  );
 }
 
 function setCurrentFinancialYear() {
@@ -964,20 +1016,33 @@ function setCurrentFinancialYear() {
   const firstDay = new Date(year, 6, 1);
   const lastDay = new Date(year + 1, 6, 30);
 
-  const userLocale = navigator.language || 'en-CA';
-  document.getElementById('filterFromDate').value = formatDateToYYYYMMDD(firstDay, userLocale);
-  document.getElementById('filterToDate').value = formatDateToYYYYMMDD(lastDay, userLocale);
+  const userLocale = navigator.language || "en-CA";
+  document.getElementById("filterFromDate").value = formatDateToYYYYMMDD(
+    firstDay,
+    userLocale
+  );
+  document.getElementById("filterToDate").value = formatDateToYYYYMMDD(
+    lastDay,
+    userLocale
+  );
 }
 
 function setLastFinancialYear() {
   const now = new Date();
-  const year = now.getMonth() >= 6 ? now.getFullYear() - 1 : now.getFullYear() - 2;
+  const year =
+    now.getMonth() >= 6 ? now.getFullYear() - 1 : now.getFullYear() - 2;
   const firstDay = new Date(year, 6, 1);
   const lastDay = new Date(year + 1, 6, 30);
 
-  const userLocale = navigator.language || 'en-CA';
-  document.getElementById('filterFromDate').value = formatDateToYYYYMMDD(firstDay, userLocale);
-  document.getElementById('filterToDate').value = formatDateToYYYYMMDD(lastDay, userLocale);
+  const userLocale = navigator.language || "en-CA";
+  document.getElementById("filterFromDate").value = formatDateToYYYYMMDD(
+    firstDay,
+    userLocale
+  );
+  document.getElementById("filterToDate").value = formatDateToYYYYMMDD(
+    lastDay,
+    userLocale
+  );
 }
 
 let sortOrder = {}; // Object to keep track of sort order for each column
@@ -996,10 +1061,14 @@ function sortTable(columnIndex) {
     const bText = b.cells[columnIndex].textContent.trim();
 
     let comparison = 0;
-    if (columnIndex === 2) { // Date column
+    if (columnIndex === 2) {
+      // Date column
       comparison = new Date(aText) - new Date(bText);
-    } else if (columnIndex === 6) { // Item Total Price column
-      comparison = parseFloat(aText.replace(/[^0-9.-]+/g, "")) - parseFloat(bText.replace(/[^0-9.-]+/g, ""));
+    } else if (columnIndex === 6) {
+      // Item Total Price column
+      comparison =
+        parseFloat(aText.replace(/[^0-9.-]+/g, "")) -
+        parseFloat(bText.replace(/[^0-9.-]+/g, ""));
     } else {
       comparison = aText.localeCompare(bText);
     }
@@ -1009,7 +1078,7 @@ function sortTable(columnIndex) {
 
   // Clear the table body and append sorted rows
   tbody.innerHTML = "";
-  sortedRows.forEach(row => tbody.appendChild(row));
+  sortedRows.forEach((row) => tbody.appendChild(row));
 
   // Update sort icons
   updateSortIcons(columnIndex);
@@ -1024,7 +1093,7 @@ function updateSortIcons(activeColumnIndex) {
     "sort-icon-3",
     "sort-icon-4",
     "sort-icon-5",
-    "sort-icon-6"
+    "sort-icon-6",
   ];
 
   iconIds.forEach((id, index) => {
@@ -1032,7 +1101,10 @@ function updateSortIcons(activeColumnIndex) {
     if (icon) {
       icon.setAttribute("uk-icon", ""); // Clear icon for all columns
       if (index === activeColumnIndex) {
-        icon.setAttribute("uk-icon", sortOrder[activeColumnIndex] ? "chevron-up" : "chevron-down");
+        icon.setAttribute(
+          "uk-icon",
+          sortOrder[activeColumnIndex] ? "chevron-up" : "chevron-down"
+        );
       }
     }
   });
@@ -1063,9 +1135,11 @@ function filterTable() {
   const tbody = table.tBodies[0];
   const rows = Array.from(tbody.rows);
 
-  rows.forEach(row => {
+  rows.forEach((row) => {
     const cells = Array.from(row.cells);
-    const match = cells.some(cell => cell.textContent.toLowerCase().includes(filter));
+    const match = cells.some((cell) =>
+      cell.textContent.toLowerCase().includes(filter)
+    );
     row.style.display = match ? "" : "none";
   });
 }

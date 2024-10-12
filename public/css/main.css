@@ -122,3 +122,24 @@ label {
 body {
  margin: 0;
 }
+
+#searchBox {
+  flex: 3; /* Occupies 3/4 of the width */
+  min-width: 200px; /* Minimum width to prevent it from getting too small */
+}
+
+#downloadBtn {
+  flex: 1; /* Occupies 1/4 of the width */
+  min-width: 100px; /* Minimum width to prevent it from getting too small */
+}
+
+@media (max-width: 600px) {
+  .grid {
+    flex-direction: column;
+  }
+
+  #searchBox,
+  #downloadBtn {
+    flex: 1; /* Make both elements occupy full width */
+  }
+}
