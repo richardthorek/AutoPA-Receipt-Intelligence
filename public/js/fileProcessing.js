@@ -2,6 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   // Function to hide the results table
+  
   function hideResultsTable() {
     const resultsHeading = document.getElementById("resultsHeading");
     if (resultsHeading) {

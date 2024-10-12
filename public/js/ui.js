@@ -64,17 +64,17 @@ const updateUI = async () => {
       const user = await auth0Client.getUser();
       eachElement(".auth-invisible", (e) => e.classList.add("hidden"));
       eachElement(".auth-visible", (e) => e.classList.remove("hidden"));
-      document.getElementById("profileImg").src = user.picture;
-      document.getElementById("profileNickname").innerText = user.nickname;
-      document.getElementById("profileLastUpdated").innerText = user.updated_at;
-      document.getElementById("profileSub").innerText = user.sub;
-      document.getElementById("profileEmail").innerText = user.email;
+      // document.getElementById("profileImg").src = user.picture;
+      // document.getElementById("profileNickname").innerText = user.nickname;
+      // document.getElementById("profileLastUpdated").innerText = user.updated_at;
+      // document.getElementById("profileSub").innerText = user.sub;
+      // document.getElementById("profileEmail").innerText = user.email;
       document.getElementById("userToken").value = user.sub;
       console.log(user)
       document.querySelectorAll("pre code").forEach(hljs.highlightBlock);
-      eachElement(".profile-image", (e) => (e.src = user.picture));
-      eachElement(".user-name", (e) => (e.innerText = user.name));
-      eachElement(".user-email", (e) => (e.innerText = user.email));
+      // eachElement(".profile-image", (e) => (e.src = user.picture));
+      // eachElement(".user-name", (e) => (e.innerText = user.name));
+      // eachElement(".user-email", (e) => (e.innerText = user.email));
     } else {
       eachElement(".auth-invisible", (e) => e.classList.remove("hidden"));
       eachElement(".auth-visible", (e) => e.classList.add("hidden"));

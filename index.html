@@ -95,7 +95,7 @@
           <details id="assignmentDetails" open>
             <summary>
               <hgroup>
-                <h3>Upload</h3>
+                <h3>Upload <i class="fas fa-hand-pointer"></i></h3>
                 <!-- <small>Click to show/hide</small> -->
               </hgroup>
             </summary>
@@ -114,6 +114,7 @@
               </div>
 
               <div>
+                <article
                 <div class="form-container">
                   <div class="form-field">
                     <!-- <label for="assignee">Assignee:</label> -->
@@ -123,9 +124,11 @@
                     <!-- <label for="note">Note:</label> -->
                     <input type="text" id="note" name="note" placeholder="Note or Reference">
                   </div>
+                  <small>The Assignee and Note will copy across all receipts uploaded. You can
+                    upload a group of receipts for the same person or activity at a time.</small>
                 </div>
-                <small>The Assignee and Note will copy across all receipts uploaded. You can
-                  upload a group of receipts for the same person or activity at a time.</small>
+               
+                </article>
           </details>
         </div>
       </div>
@@ -159,7 +162,7 @@
       <details id="filterDetails" open>
         <summary>
           <hgroup>
-            <h3>Filter</h3>
+            <h3>Filter <i class="fas fa-hand-pointer"></i></h3>
             <!-- <small>Click to show/hide</small> -->
           </hgroup>
         </summary>
@@ -173,7 +176,8 @@
               <label class="" for="filterToDate">To:
                 <input type="date" data-uk-datepicker="{format:'YYYY-MM-DD'}" id="filterToDate" class=""
                   placeholder="Date To" /></label>
-              <button id="getBtn">Get</button>
+                 
+                  <button id="getBtn">Get</button>
               <!-- <button id="downloadBtn">Download</button> -->
             </fieldset>
 
@@ -274,7 +278,7 @@
     </article>
   </dialog>
 
-  <!-- User Profile Data and Page -->
+  <!-- User Profile Data and Page
   <div class="page" id="content-profile">
     <div class="uk-container">
       <div class="uk-grid">
@@ -305,7 +309,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
   <script>
     (function () {
