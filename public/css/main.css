@@ -1,8 +1,10 @@
 /* styles.css */
-@layer auth0 ,uikit, picocss;
+@layer uikit, picocss;
 
-@import url("https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css")
-layer(auth0);
+/* @layer auth0 ,uikit, picocss; */
+
+/* @import url("https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css")
+layer(auth0); */
 
 @import url("https://cdn.jsdelivr.net/npm/uikit@3.21.12/dist/css/uikit.min.css")
 layer(uikit);
@@ -11,7 +13,7 @@ layer(uikit);
 layer(picocss);
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 label {
@@ -142,4 +144,30 @@ body {
   #downloadBtn {
     flex: 1; /* Make both elements occupy full width */
   }
+}
+
+/* Center the landing view container */
+.landing-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh; /* Full viewport height */
+  padding: 20px;
+}
+
+.landing-view h1 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+}
+
+.landing-view p {
+  font-size: 1.2rem;
+  margin-bottom: 10px;
+}
+
+.landing-view .receipt-icon {
+  font-size: 5rem; /* Adjust the size of the icon */
+  margin-top: 20px;
 }
