@@ -15,7 +15,7 @@
 
 ## Submit Item
 
-- Once a receipts data is loaded, you can 'Submit' the individual line items you want to keep with the plus icon. 
+- Once a receipts data is loaded, you can 'Submit' the individual line items you want to keep with the plus icon.
 - This allows them to be recalled later (e.g. at Quarterly BAS time)
 
 ## Edit Item
