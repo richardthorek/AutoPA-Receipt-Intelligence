@@ -94,7 +94,11 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
+    
+
     const receiptGUID = generateGUID();
+    
+
 
     // Create an image preview before uploading
     const reader = new FileReader();

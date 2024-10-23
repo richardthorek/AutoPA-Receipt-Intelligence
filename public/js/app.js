@@ -40,6 +40,8 @@ const logout = async () => {
   }
 };
 
+
+
 /**
  * Retrieves the auth configuration from the server
  */
@@ -57,6 +59,9 @@ const configureClient = async () => {
     clientId: config.clientId
   });
 };
+
+// Initializing our Auth0Lock
+
 
 /**
  * Checks to see if the user is authenticated. If so, `fn` is executed. Otherwise, the user
