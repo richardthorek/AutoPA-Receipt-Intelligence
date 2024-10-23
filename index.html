@@ -41,6 +41,12 @@
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
+  <!-- <script async src="https://js.stripe.com/v3/buy-button.js"></script> -->
+  <script src="https://cdn.auth0.com/js/lock/12.5.1/lock.min.js"></script>
+
+
+
+
 </head>
 
 <body>
@@ -75,8 +81,14 @@
                 <i class="fas fa-power-off mr-3"></i> Log out
                 </a>
               </li>
+              <li>
+                <a class="auth-visible hidden" target="_blank" id="manageSubButton" href="https://billing.stripe.com/p/login/5kAeWUauU9aC4wgdQQ">Manage Subscription</a>
+              </li>
             </ul>
           </details>
+        </li>
+        <li>
+          <button id="createSubButton" class="primary auth-visible">Subscribe $5/mth</button>
         </li>
         <li>
           <a onclick=toggleTheme() id="themeToggle" href="#" class="uk-icon-button" uk-icon="paint-bucket"></a>
@@ -101,6 +113,8 @@
         <div id="" class="uk-container uk-container-expand">
           <!-- User Profile Data Hidden Input -->
           <input type="hidden" id="userToken" value="" />
+          <input type="hidden" id="stripeUser" value="" />
+          <input type="hidden" id="subscriptionStatus" value="" />
 
           <!-- Upload Section -->
 
@@ -289,52 +303,49 @@
     </article>
   </dialog>
 
-  <!-- User Profile Data and Page
-  <div class="page" id="content-profile">
-    <div class="uk-container">
-      <div class="uk-grid">
-        <div class="uk-width-1-1">
-          <div class="auth-visible hidden uk-card uk-card-default uk-width-1-2@m">
-            <div class="uk-card-header">
-              <div class="uk-grid-small uk-flex-middle" uk-grid>
-                <div class="uk-width-auto">
-                  <img id="profileImg" class="uk-border-circle" width="40" height="40" src="" alt="Avatar">
-                </div>
-                <div class="uk-width-expand">
-                  <h3 id="profileNickname" class="uk-card-title uk-margin-remove-bottom uk-text-capitalize">Title</h3>
-                  <p id="profileLastUpdated" class="uk-text-meta uk-margin-remove-top"><time
-                      datetime="2016-04-01T19:00">April 01, 2016</time></p>
-                </div>
-              </div>
-            </div>
-            <div class="uk-card-body">
-              <ul class="uk-list uk-list-disc uk-list-muted">
-                <li id="profileSub">List item 1</li>
-                <li id="profileEmail">List item 2</li>
-              </ul>
-            </div>
-            <div class="uk-card-footer">
-              <a id="profile-link" href="#" class="uk-button uk-button-text">Read more</a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div> -->
+  <dialog id="errorModal">
+    <article>
+      <header>
+        <a href="#close" aria-label="Close" class="close"></a>
+        <h3 id="errorModalTitle">Error</h3>
+      </header>
+      <p id="errorModalBody">Error description goes here.</p>
+      <footer>
+        <a href="#close" class="secondary">Close</a>
+      </footer>
+    </article>
+  </dialog>
+
+  <dialog id="subscribeModal">
+    <article>
+      <header>
+        <a href="#close" aria-label="Close" class="close"></a>
+        <h3>Subscribe</h3>
+      </header>
+      <p>Subscribe for $5 per month or $50 per year to access all features.</p>
+      <footer>
+        <button id="subscribeMonthlyButton" class="primary">Subscribe $5/mth</button>
+        <button id="subscribeYearlyButton" class="primary">Subscribe $50/yr</button>
+        <a href="#close" class="secondary">Close</a>
+      </footer>
+    </article>
+  </dialog>
 
   <script>
-    (function () {
+        (function () {
       const isLocalhost = window.location.hostname === 'localhost' && window.location.port === '3000';
       const scripts = [
         { src: isLocalhost ? '/js/app.js' : '/public/js/app.js' },
         { src: isLocalhost ? '/js/ui.js' : '/public/js/ui.js' },
-
-        { src: isLocalhost ? '/js/fileProcessing.js' : '/public/js/fileProcessing.js' }
+        { src: isLocalhost ? '/js/fileProcessing.js' : '/public/js/fileProcessing.js' },
       ];
 
       scripts.forEach(scriptInfo => {
         const script = document.createElement('script');
         script.src = scriptInfo.src;
+        if (scriptInfo.type) {
+          script.type = scriptInfo.type;
+        }
         document.body.appendChild(script);
       });
     })();
