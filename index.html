@@ -65,12 +65,12 @@
         <!-- Login button: show if NOT authenticated -->
         <li class="auth-invisible">
           <button id="login" onclick="login()" class="auth-invisible hidden">
-            Log in
+            Log in / Sign Up
           </button>
         </li>
         <li class="auth-visible hidden">
           <details class="dropdown">
-            <summary>Profile</summary> <!-- Profile Dropdown -->
+            <summary>Profile / Logout </summary> <!-- Profile Dropdown -->
             <ul class="">
               <li>
                 <ul id="profileInfoList"></ul>
@@ -103,6 +103,7 @@
       <p>Welcome to AutoPA Receipt Intelligence. Our application helps you manage and analyze your receipts with ease.
       </p>
       <p>Upload your receipts and let our intelligent system read and store them for you.</p>
+      <p>Sign up for a 5 day unlimited free trial to unlock saving and downloading data, then $5 per month or save $10 if you pay for a year</p>
       <i class="fas fa-receipt receipt-icon"></i> <!-- Using Font Awesome icon -->
     </div>
 
@@ -111,7 +112,7 @@
       <div id="content-home" class="page ">
         <h1 class="">AutoPA Receipt Intelligence</h1>
 
-        <div id="" class="uk-container uk-container-expand">
+        <div id="" class="">
           <!-- User Profile Data Hidden Input -->
           <input type="hidden" id="userToken" value="" />
           <input type="hidden" id="stripeUser" value="" />
@@ -122,11 +123,27 @@
           <details id="assignmentDetails" open>
             <summary>
               <hgroup>
-                <h3>Upload <i class="fas fa-hand-pointer"></i></h3>
+                <h3>Upload <i class=""></i></h3>
                 <!-- <small>Click to show/hide</small> -->
               </hgroup>
             </summary>
+
             <div class="grid">
+              <div>
+                <article <div class="form-container">
+                  <div class="form-field">
+                    <!-- <label for="assignee">Assignee:</label> -->
+                    <input type="text" id="assignee" name="assignee" placeholder="Person or activity assigned to">
+                  </div>
+                  <div class="form-field">
+                    <!-- <label for="note">Note:</label> -->
+                    <input type="text" id="note" name="note" placeholder="Note or Reference">
+                  </div>
+                  <small>The Assignee and Note will copy across all receipts uploaded. You can
+                    upload a group of receipts for the same person or activity at a time.</small>
+             
+              </article>
+            </div>
               <div id="uploadSection" class="uk-animation-fade">
                 <article>
                   <div class="drop-zone card" id="dropZone">
@@ -140,22 +157,8 @@
                 </article>
               </div>
 
-              <div>
-                <article <div class="form-container">
-                  <div class="form-field">
-                    <!-- <label for="assignee">Assignee:</label> -->
-                    <input type="text" id="assignee" name="assignee" placeholder="Person or activity assigned to">
-                  </div>
-                  <div class="form-field">
-                    <!-- <label for="note">Note:</label> -->
-                    <input type="text" id="note" name="note" placeholder="Note or Reference">
-                  </div>
-                  <small>The Assignee and Note will copy across all receipts uploaded. You can
-                    upload a group of receipts for the same person or activity at a time.</small>
-              </div>
-
-              </article>
           </details>
+
         </div>
       </div>
 
@@ -188,7 +191,7 @@
       <details id="filterDetails" open>
         <summary>
           <hgroup>
-            <h3>Filter <i class="fas fa-hand-pointer"></i></h3>
+            <h3>Filter</h3>
             <!-- <small>Click to show/hide</small> -->
           </hgroup>
         </summary>
@@ -323,7 +326,7 @@
         <a href="#close" aria-label="Close" class="close"></a>
         <h3>Subscribe</h3>
       </header>
-      <p>Subscribe for $5 per month or $50 per year to access all features.</p>
+      <p>Subscribe for $5 per month or $50 per year to access all features. 5 Day free trial.</p>
       <footer>
         <button id="subscribeMonthlyButton" class="primary">Subscribe $5/mth</button>
         <button id="subscribeYearlyButton" class="primary">Subscribe $50/yr</button>
