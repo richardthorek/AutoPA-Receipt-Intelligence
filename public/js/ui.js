@@ -1,6 +1,3 @@
-//REDEPLOY CHECK
-
-
 // URL mapping, from hash to a function that responds to that URL action
 const router = {
   "/": () => showContent("content-home"),
@@ -79,67 +76,52 @@ const updateUI = async () => {
       const config = await response.json();
 
       // Create a new instance of Auth0Lock with the fetched configuration
-      lock = new Auth0Lock(config.clientId, config.domain);
+      // lock = new Auth0Lock(config.clientId, config.domain);
 
       // Use the accessToken acquired upon authentication to call getUserInfo
-      const accessToken = await auth0Client.getTokenSilently();
-      lock.getUserInfo(accessToken, function (error, profile) {
-        if (!error) {
-          const subscriptions = profile.subscriptions;
-          document.getElementById("stripeUser").value =
-            profile.stripe_customer_id;
+      // const accessToken = await auth0Client.getTokenSilently();
+      // lock.getUserInfo(accessToken, function (error, profile) {
+      // if (!error) {
+      const subscriptions = user.subscriptions;
+      document.getElementById("stripeUser").value = user.stripe_customer_id;
 
-          // Append ?prefilled_email= and the encoded email to the href link
-          const encodedEmail = encodeURIComponent(profile.email);
-          const manageSubButton = document.getElementById("manageSubButton");
-          manageSubButton.href += `?prefilled_email=${encodedEmail}`;
+      // Append ?prefilled_email= and the encoded email to the href link
+      const encodedEmail = encodeURIComponent(user.email);
+      const manageSubButton = document.getElementById("manageSubButton");
+      manageSubButton.href += `?prefilled_email=${encodedEmail}`;
 
-          console.log(document.getElementById("stripeUser").value);
-          console.log(document.getElementById("userToken").value);
+      console.log(document.getElementById("stripeUser").value);
+      console.log(document.getElementById("userToken").value);
 
-          if (subscriptions && subscriptions.length > 0) {
-            const subscription = subscriptions[0];
+      if (subscriptions && subscriptions.length > 0) {
+        const subscription = subscriptions[0];
 
-            if (subscription.status === "active") {
-              document.getElementById("subscriptionStatus").value = "Active";
-              document
-                .getElementById("manageSubButton")
-                .classList.remove("hidden");
-              document
-                .getElementById("createSubButton")
-                .classList.add("hidden");
-              document.getElementById("downloadBtn").style.display = "block";
-              document.querySelectorAll(".submit").forEach((btn) => {
-                btn.style.display = "block";
-              });
-            } else if (subscription.status === "inactive") {
-              document.getElementById("subscriptionStatus").value = "Inactive";
-              document
-                .getElementById("createSubButton")
-                .classList.remove("hidden");
-              document
-                .getElementById("manageSubButton")
-                .classList.add("hidden");
-              document.getElementById("downloadBtn").style.display = "none";
-              document.querySelectorAll(".submit").forEach((btn) => {
-                btn.style.display = "none";
-              });
-            }
-          } else {
-            console.log("No subscriptions found.");
-            document
-              .getElementById("createSubButton")
-              .classList.remove("hidden");
-            document.getElementById("manageSubButton").classList.add("hidden");
-            document.getElementById("downloadBtn").style.display = "none";
-            document.querySelectorAll(".submit").forEach((btn) => {
-              btn.style.display = "none";
-            });
-          }
+        if (subscription.status === "active") {
+          document.getElementById("subscriptionStatus").textContent = "Active";
+          document.getElementById("manageSubButton").classList.remove("hidden");
+          document.getElementById("createSubButton").classList.add("hidden");
+          document.getElementById("downloadBtn").style.display = "block";
+          document.querySelectorAll(".submit").forEach((btn) => {
+            btn.style.display = "block";
+          });
+        } else if (subscription.status === "inactive") {
+          document.getElementById("subscriptionStatus").textContent = "Inactive";
+          document.getElementById("createSubButton").classList.remove("hidden");
+          document.getElementById("manageSubButton").classList.add("hidden");
+          document.getElementById("downloadBtn").style.display = "none";
+          document.querySelectorAll(".submit").forEach((btn) => {
+            btn.style.display = "none";
+          });
         }
-      });
-
-      document.querySelectorAll("pre code").forEach(hljs.highlightBlock);
+      } else {
+        console.log("No subscriptions found.");
+        document.getElementById("createSubButton").classList.remove("hidden");
+        document.getElementById("manageSubButton").classList.add("hidden");
+        document.getElementById("downloadBtn").style.display = "none";
+        document.querySelectorAll(".submit").forEach((btn) => {
+          btn.style.display = "none";
+        });
+      }
     } else {
       eachElement(".auth-invisible", (e) => e.classList.remove("hidden"));
       eachElement(".auth-visible", (e) => e.classList.add("hidden"));
