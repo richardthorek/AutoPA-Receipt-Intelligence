@@ -34,7 +34,16 @@ jobs:
           output_location: "." # Built app content directory - optional
           ###### End of Repository/Build Configurations ######
           production_branch: "main"
-
+      - name: Cloudflare Cache Purge
+        uses: fishmanlabs/cloudflare-purge-cache-action@v1.0.0
+        with:
+          # Cloudflare API token with the following permissions: Zone.Cache Purge.
+          api_token: ${{ secrets.CF_PURGE_TOKEN }}
+          # Purge everything from the zone. (true/false)
+          purge_everything: true
+          # Cloudflare Zone ID.
+          zone_id: ca5883d0a78ca731d7b5aaa4ba10638e
+  
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
@@ -47,3 +56,6 @@ jobs:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_SALMON_FOREST_04AAFAF0F }}
           action: "close"
           app_location: "/"  # Location of your application code
+  
+
+          
