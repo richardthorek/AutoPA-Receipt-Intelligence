@@ -93,22 +93,33 @@ const updateUI = async () => {
       console.log(document.getElementById("stripeUser").value);
       console.log(document.getElementById("userToken").value);
 
+      // Create a new <li> element to display profile information
+      const profileInfo = document.createElement("li");
+      profileInfo.innerHTML = `
+      <span style="display: flex; align-items: center;">
+        <img src="${user.picture}" alt="${user.nickname}" style="height: 20px; border-radius: 50%; margin-right: 10px;">
+        ${user.nickname}
+      </span>
+      <p>${user.email}</p>
+    `;
+
+      document.getElementById("profileInfoList").appendChild(profileInfo);
+
       if (subscriptions && subscriptions.length > 0) {
         const subscription = subscriptions[0];
 
         if (subscription.status === "active") {
+          document.getElementsByClassName("subscriber").classList.remove("hidden");
+          document.getElementsByClassName("not-subscriber").classList.add("hidden");
           document.getElementById("subscriptionStatus").textContent = "Active";
-          document.getElementById("manageSubButton").classList.remove("hidden");
-          document.getElementById("createSubButton").classList.add("hidden");
-          document.getElementById("downloadBtn").style.display = "block";
           document.querySelectorAll(".submit").forEach((btn) => {
             btn.style.display = "block";
           });
         } else if (subscription.status === "inactive") {
-          document.getElementById("subscriptionStatus").textContent = "Inactive";
-          document.getElementById("createSubButton").classList.remove("hidden");
-          document.getElementById("manageSubButton").classList.add("hidden");
-          document.getElementById("downloadBtn").style.display = "none";
+          document.getElementById("subscriptionStatus").textContent =
+            "Inactive";
+          document.getElementsByClassName("subscriber").classList.add("hidden");
+          document.getElementsByClassName("not-subscriber").classList.remove("hidden");
           document.querySelectorAll(".submit").forEach((btn) => {
             btn.style.display = "none";
           });

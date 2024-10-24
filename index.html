@@ -70,28 +70,29 @@
         </li>
         <li class="auth-visible hidden">
           <details class="dropdown">
-            <summary>Menu</summary> <!-- Profile Dropdown -->
+            <summary>Profile</summary> <!-- Profile Dropdown -->
             <ul class="">
-              <!-- <li>
-                <a href="/profile" class="route-link secondary">
-                  <i class="fas fa-user mr-3"></i> Profile
-                </a>
-              </li> -->
+              <li>
+                <ul id="profileInfoList"></ul>
+              </li>
+              <li class="subscriber">
+                <a target="_blank" id="manageSubButton" href="https://billing.stripe.com/p/login/5kAeWUauU9aC4wgdQQ">Manage Subscription</a>
+              </li>
               <li <a href="#" class="secondary" id="logout" onclick="logout()">
                 <i class="fas fa-power-off mr-3"></i> Log out
                 </a>
-              </li>
-              <li>
-                <a class="auth-visible hidden" target="_blank" id="manageSubButton" href="https://billing.stripe.com/p/login/5kAeWUauU9aC4wgdQQ">Manage Subscription</a>
               </li>
             </ul>
           </details>
         </li>
         <li>
-          <button id="createSubButton" class="primary auth-visible hidden">Subscribe $5/mth</button>
+          <button id="createSubButton" class="not-subscriber primary hidden">Subscribe $5/mth</button>
         </li>
         <li>
           <a onclick=toggleTheme() id="themeToggle" href="#" class="uk-icon-button" uk-icon="paint-bucket"></a>
+        </li>
+        <li>
+          <span id="loginLoading"></span>
         </li>
       </ul>
     </nav>
@@ -233,7 +234,7 @@
           <!-- Search Box -->
           <div class="grid">
             <input class="" type="text" id="searchBox" placeholder="Search...">
-            <button class="secondary" id="downloadBtn">Download</button>
+            <button class="secondary subscriber" id="downloadBtn">Download</button>
           </div>
           <div class="">
             <h6 id="duplicate-notification" style="display: none;">Duplicates detected, duplicate rows identified

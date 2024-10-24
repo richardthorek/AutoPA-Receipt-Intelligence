@@ -511,6 +511,7 @@ function populateTableRow(
   const submitButton = document.createElement("a");
   submitButton.setAttribute("aria-label", "Submit");
   submitButton.id = `${rowData.id}-btn-submit`;
+  submitButton.classList.add("subscriber"); // Add the "subscriber" class
   setSubmit(submitButton);
 
   submitButton.addEventListener("click", function () {
@@ -547,6 +548,7 @@ function populateTableRow(
   const progressBar = document.getElementById("loadingProgressBar");
   // Update the progress bar value
   progressBar.value += 1;
+
 }
 
 //GET ROW
@@ -574,6 +576,14 @@ function getRowData(row, weburl, receiptId, userTokenInput) {
 function submitRowData(rowData, submitButton) {
   // Change the submit button to a refresh icon showing pending activity and disable it.
   setPending(submitButton);
+
+    // Check for an active subscription
+    if (document.getElementById("subscriptionStatus").textContent !== "Active") {
+      // Open the subscribe modal if no active subscription is found
+      showSubscribeModal();
+      return; // Exit the function to prevent submission
+    }
+
 
   fetch(
     "https://prod-06.australiasoutheast.logic.azure.com:443/workflows/4339c710204042cf9787b5f4e548ee2c/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=E7sskUxpn9_lGrl1jXtCrpF-FQXqU2Pkd-SsDL4fi6U",

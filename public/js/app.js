@@ -64,12 +64,13 @@ const configureClient = async () => {
  * @param {*} fn The function to execute if the user is logged in
  */
 const requireAuth = async (fn, targetUrl) => {
+
   const isAuthenticated = await auth0Client.isAuthenticated();
 
   if (isAuthenticated) {
     return fn();
+ 
   }
-
   return login(targetUrl);
 };
 
@@ -97,7 +98,11 @@ window.onload = async () => {
     }
   });
 
+  document.getElementById('loginLoading').setAttribute("aria-busy", "true");
+  console.log("Checking authentication status");
   const isAuthenticated = await auth0Client.isAuthenticated();
+  document.getElementById('loginLoading').setAttribute("aria-busy", "false");
+  console.log("Checked authentication status");
 
   if (isAuthenticated) {
     console.log("> User is authenticated");
