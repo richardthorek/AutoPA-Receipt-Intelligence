@@ -40,8 +40,6 @@ const logout = async () => {
   }
 };
 
-
-
 /**
  * Retrieves the auth configuration from the server
  */
@@ -60,21 +58,19 @@ const configureClient = async () => {
   });
 };
 
-// Initializing our Auth0Lock
-
-
 /**
  * Checks to see if the user is authenticated. If so, `fn` is executed. Otherwise, the user
  * is prompted to log in
  * @param {*} fn The function to execute if the user is logged in
  */
 const requireAuth = async (fn, targetUrl) => {
+
   const isAuthenticated = await auth0Client.isAuthenticated();
 
   if (isAuthenticated) {
     return fn();
+ 
   }
-
   return login(targetUrl);
 };
 
@@ -102,7 +98,11 @@ window.onload = async () => {
     }
   });
 
+  document.getElementById('loginLoading').setAttribute("aria-busy", "true");
+  console.log("Checking authentication status");
   const isAuthenticated = await auth0Client.isAuthenticated();
+  document.getElementById('loginLoading').setAttribute("aria-busy", "false");
+  console.log("Checked authentication status");
 
   if (isAuthenticated) {
     console.log("> User is authenticated");
