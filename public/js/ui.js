@@ -1,3 +1,6 @@
+//REDEPLOY CHECK
+
+
 // URL mapping, from hash to a function that responds to that URL action
 const router = {
   "/": () => showContent("content-home"),
