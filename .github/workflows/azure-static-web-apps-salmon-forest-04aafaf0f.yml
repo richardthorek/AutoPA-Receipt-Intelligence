@@ -46,3 +46,4 @@ jobs:
         with:
           azure_static_web_apps_api_token: ${{ secrets.AZURE_STATIC_WEB_APPS_API_TOKEN_SALMON_FOREST_04AAFAF0F }}
           action: "close"
+          app_location: "/"  # Location of your application code
