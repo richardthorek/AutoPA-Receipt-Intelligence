@@ -15,9 +15,7 @@ const router = {
  * @param {*} fn The function to execute for every element
  */
 const eachElement = (selector, fn) => {
-  for (let e of document.querySelectorAll(selector)) {
-    fn(e);
-  }
+  document.querySelectorAll(selector).forEach(fn);
 };
 
 /**
@@ -31,7 +29,6 @@ const showContentFromUrl = (url) => {
     router[url]();
     return true;
   }
-
   return false;
 };
 
@@ -75,13 +72,6 @@ const updateUI = async () => {
       const response = await fetch("/auth_config.json");
       const config = await response.json();
 
-      // Create a new instance of Auth0Lock with the fetched configuration
-      // lock = new Auth0Lock(config.clientId, config.domain);
-
-      // Use the accessToken acquired upon authentication to call getUserInfo
-      // const accessToken = await auth0Client.getTokenSilently();
-      // lock.getUserInfo(accessToken, function (error, profile) {
-      // if (!error) {
       const subscriptions = user.subscriptions;
       document.getElementById("stripeUser").value = user.stripe_customer_id;
 
@@ -96,30 +86,31 @@ const updateUI = async () => {
       // Create a new <li> element to display profile information
       const profileInfo = document.createElement("li");
       profileInfo.innerHTML = `
-      <span style="display: flex; align-items: center;">
-        <img src="${user.picture}" alt="${user.nickname}" style="height: 20px; border-radius: 50%; margin-right: 10px;">
-        ${user.name}
-      </span>
-      <p>${user.email}</p>
-    `;
-
+        <span style="display: flex; align-items: center;">
+          <img src="${user.picture}" alt="${user.nickname}" style="height: 20px; border-radius: 50%; margin-right: 10px;">
+          ${user.name} | ${user.email}
+        </span>
+      `;
       document.getElementById("profileInfoList").appendChild(profileInfo);
+
+      const subscriptionStatus = document.getElementById("subscriptionStatus");
+      const subscriberElements = document.getElementsByClassName("subscriber");
+      const notSubscriberElements = document.getElementsByClassName("not-subscriber");
 
       if (subscriptions && subscriptions.length > 0) {
         const subscription = subscriptions[0];
 
         if (subscription.status === "active") {
-          document.getElementsByClassName("subscriber").classList.remove("hidden");
-          document.getElementsByClassName("not-subscriber").classList.add("hidden");
-          document.getElementById("subscriptionStatus").textContent = "Active";
+          subscriptionStatus.textContent = "Active";
+          Array.from(subscriberElements).forEach((el) => el.classList.remove("hidden"));
+          Array.from(notSubscriberElements).forEach((el) => el.classList.add("hidden"));
           document.querySelectorAll(".submit").forEach((btn) => {
             btn.style.display = "block";
           });
         } else if (subscription.status === "inactive") {
-          document.getElementById("subscriptionStatus").textContent =
-            "Inactive";
-          document.getElementsByClassName("subscriber").classList.add("hidden");
-          document.getElementsByClassName("not-subscriber").classList.remove("hidden");
+          subscriptionStatus.textContent = "Inactive";
+          Array.from(subscriberElements).forEach((el) => el.classList.add("hidden"));
+          Array.from(notSubscriberElements).forEach((el) => el.classList.remove("hidden"));
           document.querySelectorAll(".submit").forEach((btn) => {
             btn.style.display = "none";
           });
@@ -139,10 +130,7 @@ const updateUI = async () => {
     }
   } catch (err) {
     console.log("Error updating UI!", err);
-    return;
   }
-
-  // console.log("UI updated");
 };
 
 window.onpopstate = (e) => {
