@@ -98,7 +98,7 @@ const updateUI = async () => {
       profileInfo.innerHTML = `
       <span style="display: flex; align-items: center;">
         <img src="${user.picture}" alt="${user.nickname}" style="height: 20px; border-radius: 50%; margin-right: 10px;">
-        ${user.nickname}
+        ${user.name}
       </span>
       <p>${user.email}</p>
     `;
