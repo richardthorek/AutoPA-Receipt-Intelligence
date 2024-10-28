@@ -578,7 +578,7 @@ function submitRowData(rowData, submitButton) {
   setPending(submitButton);
 
     // Check for an active subscription
-    if (document.getElementById("subscriptionStatus").textContent !== "Active") {
+    if (document.getElementById("subscriptionStatus").textContent !== "Active" && document.getElementById("subscriptionStatus").textContent !== "Trialing") {
       // Open the subscribe modal if no active subscription is found
       showSubscribeModal();
       return; // Exit the function to prevent submission
