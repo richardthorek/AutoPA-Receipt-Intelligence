@@ -2,11 +2,44 @@
 let auth0Client = null;
 
 /**
+ * Retrieves the auth configuration from the server
+ */
+const fetchAuthConfig = () => fetch("/auth_config.json");
+
+/**
+ * Initializes the Auth0 client
+ */
+const configureClient = async () => {
+  try {
+    const response = await fetchAuthConfig();
+    const config = await response.json();
+
+    auth0Client = await auth0.createAuth0Client({
+      domain: config.domain,
+      clientId: config.clientId
+    });
+  } catch (err) {
+    console.error("Error configuring Auth0 client:", err);
+  }
+};
+
+/**
+ * Ensures the Auth0 client is initialized before proceeding
+ */
+const ensureAuth0ClientInitialized = async () => {
+  if (!auth0Client) {
+    await configureClient();
+  }
+};
+
+/**
  * Starts the authentication flow
  */
 const login = async (targetUrl) => {
   try {
     console.log("Logging in", targetUrl);
+
+    await ensureAuth0ClientInitialized();
 
     const options = {
       authorizationParams: {
@@ -30,6 +63,9 @@ const login = async (targetUrl) => {
 const logout = async () => {
   try {
     console.log("Logging out");
+
+    await ensureAuth0ClientInitialized();
+
     await auth0Client.logout({
       logoutParams: {
         returnTo: window.location.origin
@@ -41,34 +77,14 @@ const logout = async () => {
 };
 
 /**
- * Retrieves the auth configuration from the server
- */
-const fetchAuthConfig = () => fetch("/auth_config.json");
-
-/**
- * Initializes the Auth0 client
- */
-const configureClient = async () => {
-  try {
-    const response = await fetchAuthConfig();
-    const config = await response.json();
-
-    auth0Client = await auth0.createAuth0Client({
-      domain: config.domain,
-      clientId: config.clientId
-    });
-  } catch (err) {
-    console.error("Error configuring Auth0 client:", err);
-  }
-};
-
-/**
  * Checks to see if the user is authenticated. If so, `fn` is executed. Otherwise, the user
  * is prompted to log in
  * @param {*} fn The function to execute if the user is logged in
  */
 const requireAuth = async (fn, targetUrl) => {
   try {
+    await ensureAuth0ClientInitialized();
+
     const isAuthenticated = await auth0Client.isAuthenticated();
 
     if (isAuthenticated) {
@@ -84,7 +100,7 @@ const requireAuth = async (fn, targetUrl) => {
 // Will run when the DOM is fully loaded
 document.addEventListener("DOMContentLoaded", async () => {
   try {
-    await configureClient();
+    await ensureAuth0ClientInitialized();
 
     // If unable to parse the history hash, default to the root URL
     if (!showContentFromUrl(window.location.pathname)) {

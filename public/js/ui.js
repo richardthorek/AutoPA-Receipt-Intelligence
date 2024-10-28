@@ -95,22 +95,36 @@ const updateUI = async () => {
 
       const subscriptionStatus = document.getElementById("subscriptionStatus");
       const subscriberElements = document.getElementsByClassName("subscriber");
-      const notSubscriberElements = document.getElementsByClassName("not-subscriber");
+      const notSubscriberElements =
+        document.getElementsByClassName("not-subscriber");
 
       if (subscriptions && subscriptions.length > 0) {
         const subscription = subscriptions[0];
 
-        if (document.getElementById("subscriptionStatus").textContent !== "Active" && document.getElementById("subscriptionStatus").textContent !== "Trialing") {
+        if (
+          document.getElementById("subscriptionStatus").textContent !==
+            "Active" &&
+          document.getElementById("subscriptionStatus").textContent !==
+            "Trialing"
+        ) {
           subscriptionStatus.textContent = "Active";
-          Array.from(subscriberElements).forEach((el) => el.classList.remove("hidden"));
-          Array.from(notSubscriberElements).forEach((el) => el.classList.add("hidden"));
+          Array.from(subscriberElements).forEach((el) =>
+            el.classList.remove("hidden")
+          );
+          Array.from(notSubscriberElements).forEach((el) =>
+            el.classList.add("hidden")
+          );
           document.querySelectorAll(".submit").forEach((btn) => {
             btn.style.display = "block";
           });
         } else if (subscription.status === "inactive") {
           subscriptionStatus.textContent = "Inactive";
-          Array.from(subscriberElements).forEach((el) => el.classList.add("hidden"));
-          Array.from(notSubscriberElements).forEach((el) => el.classList.remove("hidden"));
+          Array.from(subscriberElements).forEach((el) =>
+            el.classList.add("hidden")
+          );
+          Array.from(notSubscriberElements).forEach((el) =>
+            el.classList.remove("hidden")
+          );
           document.querySelectorAll(".submit").forEach((btn) => {
             btn.style.display = "none";
           });
@@ -218,12 +232,73 @@ function getUrlParams() {
 /**
  * Displays error messages in a Pico CSS modal
  */
+// Function to display the error modal if error parameters are present in the URL
 function displayErrorModal() {
   const { error, error_description } = getUrlParams();
   if (error && error_description) {
     const modal = document.getElementById("errorModal");
     const modalTitle = document.getElementById("errorModalTitle");
     const modalBody = document.getElementById("errorModalBody");
+
+    // Check for the specific error description
+    if (
+      error_description ===
+      "Please verify your email before continuing, this helps us manage spam and fake accounts."
+    ) {
+      const subscribeForm = document.querySelector("#errorModalEmailSet");
+      const emailInput = subscribeForm.querySelector("input[type='email']");
+      const submitButton = subscribeForm.querySelector("input[type='submit']");
+
+      // Show the input field group by removing the 'hidden' class
+      subscribeForm.classList.remove("hidden");
+
+      // Add event listener to the submit button
+      submitButton.addEventListener("click", async (event) => {
+        event.preventDefault();
+
+        const email = emailInput.value;
+        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+        if (emailPattern.test(email)) {
+          emailInput.setAttribute("aria-invalid", "false");
+
+          const data = { email: email };
+
+          // Indicate loading time
+          const originalValue = submitButton.value;
+          submitButton.setAttribute("aria-busy", "true");
+          submitButton.value = "";
+
+          try {
+            const response = await fetch(
+              "https://prod-14.australiaeast.logic.azure.com:443/workflows/f8add5506c1d4bff8d087989b88930d6/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=e16T1Omr7UB-sNFLEVLeOd_h7-LXyGjC-uEnhrid6-Q",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              }
+            );
+
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+
+            const responseData = await response.json();
+            console.log("Resend successful:", responseData);
+          } catch (error) {
+            console.error("Error sending POST request:", error);
+            submitButton.value = originalValue; // Restore original value
+          } finally {
+            submitButton.removeAttribute("aria-busy");
+          }
+        } else {
+          emailInput.setAttribute("aria-invalid", "true");
+          console.error("Invalid email address");
+        }
+      });
+    }
 
     modalTitle.textContent = "Sorry, something isn't right";
     modalBody.textContent = error_description;
