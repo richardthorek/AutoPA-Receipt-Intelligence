@@ -314,8 +314,20 @@
       </header>
       <p id="errorModalBody">Error description goes here.</p>
       <footer>
+        
+        <fieldset id="errorModalEmailSet" class="hidden" role="group">
+          <input
+            id="errorModalEmailSubmit"
+          type="email"
+            name="email"
+            placeholder="Enter your email"
+            autocomplete="email"
+          />
+          <input type="submit" value="Resend"/>
+        </fieldset>     
+        <br>
         <a href="#close" class="secondary">Close</a>
-      </footer>
+    </footer>
     </article>
   </dialog>
 
