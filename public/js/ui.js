@@ -100,7 +100,7 @@ const updateUI = async () => {
       if (subscriptions && subscriptions.length > 0) {
         const subscription = subscriptions[0];
 
-        if (subscription.status === "active") {
+        if (document.getElementById("subscriptionStatus").textContent !== "Active" && document.getElementById("subscriptionStatus").textContent !== "Trialing") {
           subscriptionStatus.textContent = "Active";
           Array.from(subscriberElements).forEach((el) => el.classList.remove("hidden"));
           Array.from(notSubscriberElements).forEach((el) => el.classList.add("hidden"));
@@ -225,7 +225,7 @@ function displayErrorModal() {
     const modalTitle = document.getElementById("errorModalTitle");
     const modalBody = document.getElementById("errorModalBody");
 
-    modalTitle.textContent = error;
+    modalTitle.textContent = "Sorry, something isn't right";
     modalBody.textContent = error_description;
 
     modal.showModal();
