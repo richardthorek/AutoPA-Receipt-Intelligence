@@ -158,6 +158,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const fileInput = document.getElementById("fileInput");
     const assignee = document.getElementById("assignee").value;
     const note = document.getElementById("note").value;
+    const documentType = document.querySelector('input[name="documentType"]:checked').value;
+
 
     // Create a new FormData object and append the file and additional metadata
     const formData = new FormData();
@@ -169,6 +171,8 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append("receiptGUID", receiptGUID);
     formData.append("assignee", assignee);
     formData.append("note", note);
+    formData.append("documentType", documentType);
+
 
     // Perform the file upload using fetch
     fetch(
