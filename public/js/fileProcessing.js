@@ -2,7 +2,7 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   // Function to hide the results table
-  
+
   function hideResultsTable() {
     const resultsHeading = document.getElementById("resultsHeading");
     if (resultsHeading) {
@@ -94,11 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
       return;
     }
 
-    
-
     const receiptGUID = generateGUID();
-    
-
 
     // Create an image preview before uploading
     const reader = new FileReader();
@@ -158,8 +154,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const fileInput = document.getElementById("fileInput");
     const assignee = document.getElementById("assignee").value;
     const note = document.getElementById("note").value;
-    const documentType = document.querySelector('input[name="documentType"]:checked').value;
-
+    const documentType = document.querySelector(
+      'input[name="documentType"]:checked'
+    ).value;
 
     // Create a new FormData object and append the file and additional metadata
     const formData = new FormData();
@@ -172,7 +169,6 @@ document.addEventListener("DOMContentLoaded", function () {
     formData.append("assignee", assignee);
     formData.append("note", note);
     formData.append("documentType", documentType);
-
 
     // Perform the file upload using fetch
     fetch(
@@ -189,14 +185,14 @@ document.addEventListener("DOMContentLoaded", function () {
         return response.json(); // Parse the response as JSON
       })
       .then((data) => {
-        // Process the response data
-        const receipt = data.documentResults[0].fields;
-        const items = receipt.Items.valueArray;
+        const documentResults = data.documentResults[0];
+        const items = documentResults.Items.valueArray;
         const tableBody = document
           .getElementById("resultsTable")
           .getElementsByTagName("tbody")[0];
         const weburl = data.weburl;
         const receiptId = data.receiptID;
+        const documentType = data.documentType;
 
         // Remove the preview card after the fetch request is completed
         const cardToRemove = document.getElementById(data.receiptID);
@@ -214,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
         progressBar.value = 0; // Reset progress bar value to 0
         progressBar.style.display = totalItems > 0 ? "block" : "none"; // Show or hide progress bar
 
-        // Create a new row for each item in the receipt
+        // Create a new row for each item in the document
         const rowPromises = items.map((item, index) => {
           return new Promise((resolve) => {
             setTimeout(() => {
@@ -224,13 +220,25 @@ document.addEventListener("DOMContentLoaded", function () {
               const assignee = data.assignee;
               const note = data.note;
               const rowData = {
-                merchantName: receipt.MerchantName?.valueString || "",
-                merchantAddress: receipt.MerchantAddress?.valueString || "",
+                merchantName: documentResults.MerchantName?.valueString || "",
+                merchantAddress:
+                  documentResults.MerchantAddress?.valueString || "",
                 transactionDate:
-                  receipt.TransactionDate?.valueDate || formattedDate,
+                  documentType === "Invoice"
+                    ? documentResults.InvoiceDate?.valueDate || formattedDate
+                    : documentResults.TransactionDate?.valueDate ||
+                      formattedDate,
                 transactionTime:
-                  receipt.TransactionTime?.valueTime || formattedTime,
-                itemName: item.valueObject?.Name?.valueString || "",
+                  documentType === "Invoice"
+                    ? ""
+                    : documentResults.TransactionTime?.valueTime ||
+                      formattedTime,
+                itemName:
+                  documentType === "Invoice"
+                    ? `${item.valueObject?.Description?.valueString || ""} ${
+                        item.valueObject?.ProductCode?.valueString || ""
+                      }`
+                    : item.valueObject?.Name?.valueString || "",
                 itemQuantity: item.valueObject?.Quantity?.valueNumber || 1,
                 itemTotalPrice: item.valueObject?.TotalPrice?.valueNumber || 0,
                 id: itemID,
@@ -408,7 +416,9 @@ function tableToCSV() {
 
   // Add headers for the attributes
   const headers = ["ID", "Assignee", "Note", "Total Price"];
-  const tableHeaders = Array.from(table.querySelectorAll("th")).map(th => th.textContent);
+  const tableHeaders = Array.from(table.querySelectorAll("th")).map(
+    (th) => th.textContent
+  );
   csvContent += [...tableHeaders, ...headers].join(",") + "\n";
 
   rows.forEach((row, index) => {
@@ -416,11 +426,10 @@ function tableToCSV() {
     if (index === 0) return;
 
     const cols = row.querySelectorAll("td");
-    const rowData = Array.from(cols)
-      .map((col) => {
-        const anchor = col.querySelector("a");
-        return anchor ? anchor.href : col.textContent;
-      });
+    const rowData = Array.from(cols).map((col) => {
+      const anchor = col.querySelector("a");
+      return anchor ? anchor.href : col.textContent;
+    });
 
     // Add the row attributes
     const rowId = row.getAttribute("data-row-id") || "";
@@ -519,7 +528,14 @@ function populateTableRow(
   setSubmit(submitButton);
 
   submitButton.addEventListener("click", function () {
-    const rowData = getRowData(row, weburl, receiptId, userTokenInput, assignee, note);
+    const rowData = getRowData(
+      row,
+      weburl,
+      receiptId,
+      userTokenInput,
+      assignee,
+      note
+    );
     submitRowData(rowData, submitButton);
   });
 
@@ -552,7 +568,6 @@ function populateTableRow(
   const progressBar = document.getElementById("loadingProgressBar");
   // Update the progress bar value
   progressBar.value += 1;
-
 }
 
 //GET ROW
@@ -581,13 +596,15 @@ function submitRowData(rowData, submitButton) {
   // Change the submit button to a refresh icon showing pending activity and disable it.
   setPending(submitButton);
 
-    // Check for an active subscription
-    if (document.getElementById("subscriptionStatus").textContent !== "Active" && document.getElementById("subscriptionStatus").textContent !== "Trialing") {
-      // Open the subscribe modal if no active subscription is found
-      showSubscribeModal();
-      return; // Exit the function to prevent submission
-    }
-
+  // Check for an active subscription
+  if (
+    document.getElementById("subscriptionStatus").textContent !== "Active" &&
+    document.getElementById("subscriptionStatus").textContent !== "Trialing"
+  ) {
+    // Open the subscribe modal if no active subscription is found
+    showSubscribeModal();
+    return; // Exit the function to prevent submission
+  }
 
   fetch(
     "https://prod-06.australiasoutheast.logic.azure.com:443/workflows/4339c710204042cf9787b5f4e548ee2c/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=E7sskUxpn9_lGrl1jXtCrpF-FQXqU2Pkd-SsDL4fi6U",
@@ -646,7 +663,6 @@ function openEditModal(row) {
   document.getElementById("edit-assignee").value = assignee;
   document.getElementById("edit-note").value = note;
 
-
   // Handle form submission
   document.getElementById("edit-form").onsubmit = function (event) {
     event.preventDefault();
@@ -671,8 +687,8 @@ function openEditModal(row) {
     ).value;
     const updatedItemQuantity =
       document.getElementById("edit-itemQuantity").value;
-      const updatedAssignee = document.getElementById("edit-assignee").value;
-      const updatedNote = document.getElementById("edit-note").value;
+    const updatedAssignee = document.getElementById("edit-assignee").value;
+    const updatedNote = document.getElementById("edit-note").value;
 
     // Update the row with the new data
     row.cells[0].textContent = updatedMerchantName;
@@ -706,7 +722,7 @@ function openEditModal(row) {
       itemStatus: "active",
       id: row.getAttribute("data-row-id") || "",
       assignee: updatedAssignee,
-      note: updatedNote
+      note: updatedNote,
     };
 
     // Get the submit button for the row using the unique ID
