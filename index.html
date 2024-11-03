@@ -11,10 +11,22 @@
   <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
   <link rel="manifest" href="/site.webmanifest">
 
-  <link rel="stylesheet" href="/css/main.css">
-  <script src="/js/app.js" defer></script>
-  <script src="/js/fileProcessing.js" defer></script>
-  <script src="/js/ui.js" defer></script>
+  <script>
+    (function () {
+      const isLocalhost = window.location.hostname === 'localhost' && window.location.port === '3000';
+      const stylesheets = [
+        { href: isLocalhost ? '/css/main.css' : '/public/css/main.css' }
+      ];
+
+      stylesheets.forEach(stylesheetInfo => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = stylesheetInfo.href;
+        document.head.appendChild(link);
+      });
+    })();
+  </script>
 
   <!-- Pico CSS -->
   <!-- <link rel="stylesheet" href="https://cdn.auth0.com/js/auth0-samples-theme/1.0/css/auth0-theme.min.css" /> -->
@@ -117,24 +129,19 @@
 
             <div class="grid">
               <div>
-                <article>
-                  <div class="form-container">
-                    <fieldset id="docType">
-                      <legend>Document Type:</legend>
-                      <input type="radio" id="receipt" name="documentType" value="Receipt" checked />
-                      <label for="receipt">Receipt</label>
-                      <input type="radio" id="invoice" name="documentType" value="Invoice" />
-                      <label for="invoice">Invoice</label>
-                    </fieldset>
-                    <div class="form-field">
-                      <input type="text" id="assignee" name="assignee" placeholder="Person or activity assigned to">
-                    </div>
-                    <div class="form-field">
-                      <input type="text" id="note" name="note" placeholder="Note or Reference">
-                    </div>
-                    <small>The Assignee and Note will copy across all receipts uploaded. You can upload a group of receipts for the same person or activity at a time.</small>
+                <article <div class="form-container">
+                  <div class="form-field">
+                    <!-- <label for="assignee">Assignee:</label> -->
+                    <input type="text" id="assignee" name="assignee" placeholder="Person or activity assigned to">
                   </div>
-                </article>
+                  <div class="form-field">
+                    <!-- <label for="note">Note:</label> -->
+                    <input type="text" id="note" name="note" placeholder="Note or Reference">
+                  </div>
+                  <small>The Assignee and Note will copy across all receipts uploaded. You can
+                    upload a group of receipts for the same person or activity at a time.</small>
+             
+              </article>
             </div>
               <div id="uploadSection" class="uk-animation-fade">
                 <article>
@@ -340,23 +347,23 @@
   </dialog>
 
   <script>
-    //     (function () {
-    //   const isLocalhost = window.location.hostname === 'localhost' && window.location.port === '3000';
-    //   const scripts = [
-    //   { src: isLocalhost ? '/js/ui.js' : '/public/js/ui.js' },
-    //     { src: isLocalhost ? '/js/app.js' : '/public/js/app.js' },
-    //     { src: isLocalhost ? '/js/fileProcessing.js' : '/public/js/fileProcessing.js' },
-    //   ];
+        (function () {
+      const isLocalhost = window.location.hostname === 'localhost' && window.location.port === '3000';
+      const scripts = [
+      { src: isLocalhost ? '/js/ui.js' : '/public/js/ui.js' },
+        { src: isLocalhost ? '/js/app.js' : '/public/js/app.js' },
+        { src: isLocalhost ? '/js/fileProcessing.js' : '/public/js/fileProcessing.js' },
+      ];
 
-    //   scripts.forEach(scriptInfo => {
-    //     const script = document.createElement('script');
-    //     script.src = scriptInfo.src;
-    //     if (scriptInfo.type) {
-    //       script.type = scriptInfo.type;
-    //     }
-    //     document.body.appendChild(script);
-    //   });
-    // })();
+      scripts.forEach(scriptInfo => {
+        const script = document.createElement('script');
+        script.src = scriptInfo.src;
+        if (scriptInfo.type) {
+          script.type = scriptInfo.type;
+        }
+        document.body.appendChild(script);
+      });
+    })();
 
     function toggleTheme() {
       const currentTheme = document.documentElement.getAttribute('data-theme');
