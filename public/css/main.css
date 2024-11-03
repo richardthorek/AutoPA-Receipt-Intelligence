@@ -171,3 +171,16 @@ body {
   font-size: 5rem; /* Adjust the size of the icon */
   margin-top: 20px;
 }
+
+  #docType {
+    display: flex;
+    align-items: center;
+  }
+
+  #docType input[type="radio"] {
+    margin-right: 5px;
+  }
+
+  #docType label {
+    margin-right: 15px;
+  }

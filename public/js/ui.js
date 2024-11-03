@@ -58,6 +58,7 @@ const showContent = (id) => {
  */
 const updateUI = async () => {
   try {
+    await ensureAuth0ClientInitialized();
     const isAuthenticated = await auth0Client.isAuthenticated();
 
     if (isAuthenticated) {
@@ -95,36 +96,22 @@ const updateUI = async () => {
 
       const subscriptionStatus = document.getElementById("subscriptionStatus");
       const subscriberElements = document.getElementsByClassName("subscriber");
-      const notSubscriberElements =
-        document.getElementsByClassName("not-subscriber");
+      const notSubscriberElements = document.getElementsByClassName("not-subscriber");
 
       if (subscriptions && subscriptions.length > 0) {
         const subscription = subscriptions[0];
 
-        if (
-          document.getElementById("subscriptionStatus").textContent !==
-            "Active" &&
-          document.getElementById("subscriptionStatus").textContent !==
-            "Trialing"
-        ) {
+        if (subscription.status === "active" || subscription.status === "trialing") {
           subscriptionStatus.textContent = "Active";
-          Array.from(subscriberElements).forEach((el) =>
-            el.classList.remove("hidden")
-          );
-          Array.from(notSubscriberElements).forEach((el) =>
-            el.classList.add("hidden")
-          );
+          Array.from(subscriberElements).forEach((el) => el.classList.remove("hidden"));
+          Array.from(notSubscriberElements).forEach((el) => el.classList.add("hidden"));
           document.querySelectorAll(".submit").forEach((btn) => {
             btn.style.display = "block";
           });
         } else if (subscription.status === "inactive") {
           subscriptionStatus.textContent = "Inactive";
-          Array.from(subscriberElements).forEach((el) =>
-            el.classList.add("hidden")
-          );
-          Array.from(notSubscriberElements).forEach((el) =>
-            el.classList.remove("hidden")
-          );
+          Array.from(subscriberElements).forEach((el) => el.classList.add("hidden"));
+          Array.from(notSubscriberElements).forEach((el) => el.classList.remove("hidden"));
           document.querySelectorAll(".submit").forEach((btn) => {
             btn.style.display = "none";
           });

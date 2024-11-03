@@ -1,8 +1,79 @@
 // Wait for the DOM to fully load before running the script
 
+// Function to normalize data structure
+const normalizeData = (data) => {
+  const normalizedData = {
+    items: [],
+    merchantName: "",
+    merchantAddress: "",
+    merchantPhoneNumber: "",
+    receiptType: "",
+    subtotal: 0,
+    tax: 0,
+    total: 0,
+    transactionDate: "",
+    transactionTime: "",
+    invoiceId: "",
+    customerName: "",
+    customerAddress: "",
+    dueDate: "",
+    invoiceDate: "",
+  };
+
+  if (data.documentType === "Receipt") {
+    const fields = data.documentResults[0].fields;
+
+    normalizedData.merchantName = fields.MerchantName ? fields.MerchantName.valueString : "";
+    normalizedData.merchantAddress = fields.MerchantAddress ? fields.MerchantAddress.valueString : "";
+    normalizedData.merchantPhoneNumber = fields.MerchantPhoneNumber ? fields.MerchantPhoneNumber.valuePhoneNumber : "";
+    normalizedData.receiptType = fields.ReceiptType ? fields.ReceiptType.valueString : "";
+    normalizedData.subtotal = fields.Subtotal ? fields.Subtotal.valueNumber : 0;
+    normalizedData.tax = fields.Tax ? fields.Tax.valueNumber : 0;
+    normalizedData.total = fields.Total ? fields.Total.valueNumber : 0;
+    normalizedData.transactionDate = fields.TransactionDate ? fields.TransactionDate.valueDate : "";
+    normalizedData.transactionTime = fields.TransactionTime ? fields.TransactionTime.valueTime : "";
+
+    if (fields.Items && fields.Items.valueArray) {
+      fields.Items.valueArray.forEach((item) => {
+        normalizedData.items.push({
+          name: item.valueObject.Name ? item.valueObject.Name.valueString : "Unknown",
+          price: item.valueObject.TotalPrice ? item.valueObject.TotalPrice.valueNumber : 0,
+          quantity: item.valueObject.Quantity ? item.valueObject.Quantity.valueNumber : 1,
+        });
+      });
+    }
+  } else if (data.documentType === "Invoice") {
+    const fields = data.documentResults[0].fields;
+
+    normalizedData.invoiceId = fields.InvoiceId ? fields.InvoiceId.valueString : "";
+    normalizedData.customerName = fields.CustomerName ? fields.CustomerName.valueString : "";
+    normalizedData.customerAddress = fields.CustomerAddress ? fields.CustomerAddress.valueString : "";
+    normalizedData.dueDate = fields.DueDate ? fields.DueDate.text : "";
+    normalizedData.invoiceDate = fields.InvoiceDate ? fields.InvoiceDate.text : "";
+    normalizedData.total = fields.InvoiceTotal ? fields.InvoiceTotal.valueNumber : 0;
+    normalizedData.merchantName = fields.VendorName ? fields.VendorName.valueString : "";
+    normalizedData.merchantAddress = fields.VendorAddress ? fields.VendorAddress.valueString : "";
+    normalizedData.merchantAddressRecipient = fields.VendorAddressRecipient ? fields.VendorAddressRecipient.valueString : "";
+
+    if (fields.Items && fields.Items.valueArray) {
+      fields.Items.valueArray.forEach((item) => {
+        normalizedData.items.push({
+          description: item.valueObject.Description ? item.valueObject.Description.valueString : "Unknown",
+          productCode: item.valueObject.ProductCode ? item.valueObject.ProductCode.valueString : "",
+          unitPrice: item.valueObject.UnitPrice ? item.valueObject.UnitPrice.valueNumber : 0,
+          quantity: item.valueObject.Quantity ? item.valueObject.Quantity.valueNumber : 1,
+          amount: item.valueObject.Amount ? item.valueObject.Amount.valueNumber : 0,
+        });
+      });
+    }
+  }
+
+  return normalizedData;
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   // Function to hide the results table
-  
+
   function hideResultsTable() {
     const resultsHeading = document.getElementById("resultsHeading");
     if (resultsHeading) {
@@ -84,190 +155,175 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   // Function to handle file upload
-  function handleFileUpload(file) {
-    if (!file) return;
+const handleFileUpload = async (file) => {
+  if (!file) return;
 
-    // Check if the file type is allowed
-    const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
-    if (!allowedTypes.includes(file.type)) {
-      alert("Invalid file type. Please upload a JPG, PNG, or PDF file.");
-      return;
+  // Check if the file type is allowed
+  const allowedTypes = ["image/jpeg", "image/png", "application/pdf"];
+  if (!allowedTypes.includes(file.type)) {
+    alert("Invalid file type. Please upload a JPG, PNG, or PDF file.");
+    return;
+  }
+
+  const receiptGUID = generateGUID();
+
+  // Create an image preview before uploading
+  const reader = new FileReader();
+  reader.onload = function (event) {
+    const previewSection = document.getElementById("receiptPreview");
+
+    // Create a container for the grid if it doesn't exist
+    let gridContainer = document.getElementById("gridContainer");
+    if (!gridContainer) {
+      gridContainer = document.createElement("div");
+      gridContainer.id = "gridContainer";
+      gridContainer.className = "uk-grid uk-grid-small uk-child-width-1-4@s";
+      previewSection.appendChild(gridContainer);
     }
 
-    
+    // Create the preview card
+    const previewCard = document.createElement("div");
+    previewCard.id = receiptGUID;
 
-    const receiptGUID = generateGUID();
-    
+    // Create the inner HTML content
+    const article = document.createElement("article");
+    article.setAttribute("aria-busy", "true");
 
+    const imageContainer = document.createElement("div");
+    const img = document.createElement("img");
+    img.src = event.target.result;
+    img.alt = "Receipt Image";
+    img.style.padding = "10px";
 
-    // Create an image preview before uploading
-    const reader = new FileReader();
-    reader.onload = function (event) {
-      const previewSection = document.getElementById("receiptPreview");
+    // Append the image to the image container
+    imageContainer.appendChild(img);
 
-      // Create a container for the grid if it doesn't exist
-      let gridContainer = document.getElementById("gridContainer");
-      if (!gridContainer) {
-        gridContainer = document.createElement("div");
-        gridContainer.id = "gridContainer";
-        gridContainer.className = "uk-grid uk-grid-small uk-child-width-1-4@s";
-        previewSection.appendChild(gridContainer);
+    // Append the image container to the article
+    article.appendChild(imageContainer);
+
+    // Append the article to the preview card
+    previewCard.appendChild(article);
+
+    // Add styles and classes
+    previewCard.className = "receipt-preview card uk-animation-slide-right";
+    previewCard.style.overflow = "hidden";
+    previewCard.style.maxHeight = "200px"; // Set the maximum height of the card
+    previewCard.style.marginBottom = "40px"; // Add margin below the card
+
+    article.className = "card overflow";
+    imageContainer.className = "image-container";
+    imageContainer.style.maxHeight = "200px";
+    imageContainer.style.overflowY = "auto";
+
+    // Append the preview card to the grid container
+    gridContainer.appendChild(previewCard);
+  };
+
+  // Read the file as a data URL
+  reader.readAsDataURL(file);
+
+  const fileInput = document.getElementById("fileInput");
+  const assignee = document.getElementById("assignee").value;
+  const note = document.getElementById("note").value;
+  const documentType = document.querySelector('input[name="documentType"]:checked').value;
+
+  // Create a new FormData object and append the file and additional metadata
+  const formData = new FormData();
+  formData.append("file", file);
+  formData.append("date", new Date().toISOString());
+  formData.append("filename", file.name);
+  formData.append("content-type", file.type);
+  formData.append("file-extension", file.name.split(".").pop());
+  formData.append("receiptGUID", receiptGUID);
+  formData.append("assignee", assignee);
+  formData.append("note", note);
+  formData.append("documentType", documentType);
+
+  // Perform the file upload using fetch
+  fetch(
+    "https://prod-04.australiasoutheast.logic.azure.com:443/workflows/bd37bd65a79d49499f5b0e91986f8a00/triggers/Receive_POST_File/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FReceive_POST_File%2Frun&sv=1.0&sig=X1QhmY8PSR3wq38j4Q7_kfSMxRtMSzmfKGIj67aBMiY",
+    {
+      method: "POST",
+      body: formData,
+    }
+  )
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok"); // Throw an error if the response is not ok
+      }
+      return response.json(); // Parse the response as JSON
+    })
+    .then((data) => {
+      const normalizedData = normalizeData(data);
+
+      console.log("Normalized Data:", normalizedData);
+
+      const tableBody = document.getElementById("resultsTable").getElementsByTagName("tbody")[0];
+      const weburl = data.weburl;
+      const receiptId = data.receiptID;
+
+      // Remove the preview card after the fetch request is completed
+      const cardToRemove = document.getElementById(data.receiptID);
+      if (cardToRemove) {
+        cardToRemove.remove();
       }
 
-      // Create the preview card
-      const previewCard = document.createElement("div");
-      previewCard.id = receiptGUID;
+      showResultsTable();
 
-      // Create the inner HTML content
-      const article = document.createElement("article");
-      article.setAttribute("aria-busy", "true");
+      const progressBar = document.getElementById("loadingProgressBar");
+      progressBar.setAttribute("max", 0);
+      progressBar.setAttribute("value", 0);
+      const totalItems = normalizedData.items.length;
+      progressBar.max = totalItems;
+      progressBar.value = 0; // Reset progress bar value to 0
+      progressBar.style.display = totalItems > 0 ? "block" : "none"; // Show or hide progress bar
 
-      const imageContainer = document.createElement("div");
-      const img = document.createElement("img");
-      img.src = event.target.result;
-      img.alt = "Receipt Image";
-      img.style.padding = "10px";
-
-      // Append the image to the image container
-      imageContainer.appendChild(img);
-
-      // Append the image container to the article
-      article.appendChild(imageContainer);
-
-      // Append the article to the preview card
-      previewCard.appendChild(article);
-
-      // Add styles and classes
-      previewCard.className = "receipt-preview card uk-animation-slide-right";
-      previewCard.style.overflow = "hidden";
-      previewCard.style.maxHeight = "200px"; // Set the maximum height of the card
-      previewCard.style.marginBottom = "40px"; // Add margin below the card
-
-      article.className = "card overflow";
-      imageContainer.className = "image-container";
-      imageContainer.style.maxHeight = "200px";
-      imageContainer.style.overflowY = "auto";
-
-      // Append the preview card to the grid container
-      gridContainer.appendChild(previewCard);
-    };
-
-    // Read the file as a data URL
-    reader.readAsDataURL(file);
-
-    const fileInput = document.getElementById("fileInput");
-    const assignee = document.getElementById("assignee").value;
-    const note = document.getElementById("note").value;
-
-    // Create a new FormData object and append the file and additional metadata
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("date", new Date().toISOString());
-    formData.append("filename", file.name);
-    formData.append("content-type", file.type);
-    formData.append("file-extension", file.name.split(".").pop());
-    formData.append("receiptGUID", receiptGUID);
-    formData.append("assignee", assignee);
-    formData.append("note", note);
-
-    // Perform the file upload using fetch
-    fetch(
-      "https://prod-04.australiasoutheast.logic.azure.com:443/workflows/bd37bd65a79d49499f5b0e91986f8a00/triggers/Receive_POST_File/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FReceive_POST_File%2Frun&sv=1.0&sig=X1QhmY8PSR3wq38j4Q7_kfSMxRtMSzmfKGIj67aBMiY",
-      {
-        method: "POST",
-        body: formData,
-      }
-    )
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Network response was not ok"); // Throw an error if the response is not ok
-        }
-        return response.json(); // Parse the response as JSON
-      })
-      .then((data) => {
-        // Process the response data
-        const receipt = data.documentResults[0].fields;
-        const items = receipt.Items.valueArray;
-        const tableBody = document
-          .getElementById("resultsTable")
-          .getElementsByTagName("tbody")[0];
-        const weburl = data.weburl;
-        const receiptId = data.receiptID;
-
-        // Remove the preview card after the fetch request is completed
-        const cardToRemove = document.getElementById(data.receiptID);
-        if (cardToRemove) {
-          cardToRemove.remove();
-        }
-
-        showResultsTable();
-
-        const progressBar = document.getElementById("loadingProgressBar");
-        progressBar.setAttribute("max", 0);
-        progressBar.setAttribute("value", 0);
-        const totalItems = items.length;
-        progressBar.max = totalItems;
-        progressBar.value = 0; // Reset progress bar value to 0
-        progressBar.style.display = totalItems > 0 ? "block" : "none"; // Show or hide progress bar
-
-        // Create a new row for each item in the receipt
-        const rowPromises = items.map((item, index) => {
-          return new Promise((resolve) => {
-            setTimeout(() => {
-              const formattedDate = getFormattedDate();
-              const formattedTime = getFormattedTime();
-              const itemID = generateGUID();
-              const assignee = data.assignee;
-              const note = data.note;
-              const rowData = {
-                merchantName: receipt.MerchantName?.valueString || "",
-                merchantAddress: receipt.MerchantAddress?.valueString || "",
-                transactionDate:
-                  receipt.TransactionDate?.valueDate || formattedDate,
-                transactionTime:
-                  receipt.TransactionTime?.valueTime || formattedTime,
-                itemName: item.valueObject?.Name?.valueString || "",
-                itemQuantity: item.valueObject?.Quantity?.valueNumber || 1,
-                itemTotalPrice: item.valueObject?.TotalPrice?.valueNumber || 0,
-                id: itemID,
-              };
-              populateTableRow(
-                tableBody,
-                rowData,
-                weburl,
-                receiptId,
-                assignee,
-                note,
-                userTokenInput
-              );
-              resolve();
-            }, index * 5); // Delay of 5ms between each row
-          });
+      // Create a new row for each item in the document
+      const rowPromises = normalizedData.items.map((item, index) => {
+        return new Promise((resolve) => {
+          setTimeout(() => {
+            const formattedDate = getFormattedDate();
+            const formattedTime = getFormattedTime();
+            const itemID = generateGUID();
+            const rowData = {
+              merchantName: normalizedData.merchantName,
+              merchantAddress: normalizedData.merchantAddress,
+              transactionDate: normalizedData.transactionDate || formattedDate,
+              transactionTime: normalizedData.transactionTime || formattedTime,
+              itemName: item.name || item.description || "",
+              itemQuantity: item.quantity || 1,
+              itemTotalPrice: item.price || item.amount || 0,
+              id: itemID,
+            };
+            populateTableRow(tableBody, rowData, weburl, receiptId, assignee, note, userTokenInput);
+            resolve();
+          }, index * 5); // Delay of 5ms between each row
         });
-
-        // Wait for all rows to be added before checking for duplicates
-        return Promise.all(rowPromises);
-      })
-      .then(() => {
-        const progressBar = document.getElementById("loadingProgressBar");
-        progressBar.style.display = "block";
-        progressBar.removeAttribute("value");
-        progressBar.removeAttribute("max");
-        // Check for duplicates after adding the new rows
-        checkForDuplicates();
-
-        filterDetails.removeAttribute("open");
-
-        // Scroll the page so the results heading is at the top
-        const resultsHeading = document.getElementById("resultsHeading");
-        if (resultsHeading) {
-          resultsHeading.scrollIntoView({ behavior: "smooth", block: "start" });
-        }
-      })
-      .catch((error) => {
-        console.error("Error uploading file:", error);
       });
-  }
+
+      // Wait for all rows to be added before checking for duplicates
+      return Promise.all(rowPromises);
+    })
+    .then(() => {
+      const progressBar = document.getElementById("loadingProgressBar");
+      progressBar.style.display = "block";
+      progressBar.removeAttribute("value");
+      progressBar.removeAttribute("max");
+      // Check for duplicates after adding the new rows
+      checkForDuplicates();
+
+      filterDetails.removeAttribute("open");
+
+      // Scroll the page so the results heading is at the top
+      const resultsHeading = document.getElementById("resultsHeading");
+      if (resultsHeading) {
+        resultsHeading.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    })
+    .catch((error) => {
+      console.error("Error uploading file:", error);
+    });
+};
 
   // Add an event listener to the 'getBtn' button to handle click events
   document.getElementById("getBtn").addEventListener("click", function (event) {
@@ -404,7 +460,9 @@ function tableToCSV() {
 
   // Add headers for the attributes
   const headers = ["ID", "Assignee", "Note", "Total Price"];
-  const tableHeaders = Array.from(table.querySelectorAll("th")).map(th => th.textContent);
+  const tableHeaders = Array.from(table.querySelectorAll("th")).map(
+    (th) => th.textContent
+  );
   csvContent += [...tableHeaders, ...headers].join(",") + "\n";
 
   rows.forEach((row, index) => {
@@ -412,11 +470,10 @@ function tableToCSV() {
     if (index === 0) return;
 
     const cols = row.querySelectorAll("td");
-    const rowData = Array.from(cols)
-      .map((col) => {
-        const anchor = col.querySelector("a");
-        return anchor ? anchor.href : col.textContent;
-      });
+    const rowData = Array.from(cols).map((col) => {
+      const anchor = col.querySelector("a");
+      return anchor ? anchor.href : col.textContent;
+    });
 
     // Add the row attributes
     const rowId = row.getAttribute("data-row-id") || "";
@@ -515,7 +572,14 @@ function populateTableRow(
   setSubmit(submitButton);
 
   submitButton.addEventListener("click", function () {
-    const rowData = getRowData(row, weburl, receiptId, userTokenInput, assignee, note);
+    const rowData = getRowData(
+      row,
+      weburl,
+      receiptId,
+      userTokenInput,
+      assignee,
+      note
+    );
     submitRowData(rowData, submitButton);
   });
 
@@ -548,7 +612,6 @@ function populateTableRow(
   const progressBar = document.getElementById("loadingProgressBar");
   // Update the progress bar value
   progressBar.value += 1;
-
 }
 
 //GET ROW
@@ -577,13 +640,15 @@ function submitRowData(rowData, submitButton) {
   // Change the submit button to a refresh icon showing pending activity and disable it.
   setPending(submitButton);
 
-    // Check for an active subscription
-    if (document.getElementById("subscriptionStatus").textContent !== "Active" && document.getElementById("subscriptionStatus").textContent !== "Trialing") {
-      // Open the subscribe modal if no active subscription is found
-      showSubscribeModal();
-      return; // Exit the function to prevent submission
-    }
-
+  // Check for an active subscription
+  if (
+    document.getElementById("subscriptionStatus").textContent !== "Active" &&
+    document.getElementById("subscriptionStatus").textContent !== "Trialing"
+  ) {
+    // Open the subscribe modal if no active subscription is found
+    showSubscribeModal();
+    return; // Exit the function to prevent submission
+  }
 
   fetch(
     "https://prod-06.australiasoutheast.logic.azure.com:443/workflows/4339c710204042cf9787b5f4e548ee2c/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=E7sskUxpn9_lGrl1jXtCrpF-FQXqU2Pkd-SsDL4fi6U",
@@ -642,7 +707,6 @@ function openEditModal(row) {
   document.getElementById("edit-assignee").value = assignee;
   document.getElementById("edit-note").value = note;
 
-
   // Handle form submission
   document.getElementById("edit-form").onsubmit = function (event) {
     event.preventDefault();
@@ -667,8 +731,8 @@ function openEditModal(row) {
     ).value;
     const updatedItemQuantity =
       document.getElementById("edit-itemQuantity").value;
-      const updatedAssignee = document.getElementById("edit-assignee").value;
-      const updatedNote = document.getElementById("edit-note").value;
+    const updatedAssignee = document.getElementById("edit-assignee").value;
+    const updatedNote = document.getElementById("edit-note").value;
 
     // Update the row with the new data
     row.cells[0].textContent = updatedMerchantName;
@@ -702,7 +766,7 @@ function openEditModal(row) {
       itemStatus: "active",
       id: row.getAttribute("data-row-id") || "",
       assignee: updatedAssignee,
-      note: updatedNote
+      note: updatedNote,
     };
 
     // Get the submit button for the row using the unique ID

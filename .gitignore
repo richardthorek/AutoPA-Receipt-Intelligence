@@ -1,1 +1,5 @@
-node_modules
+public/js/exampleInvoice.json
+public/js/exampleReceipt.json
+node_modules/
+sampleInvoice.json
+sampleReceipt.json

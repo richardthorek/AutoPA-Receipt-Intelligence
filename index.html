@@ -129,19 +129,24 @@
 
             <div class="grid">
               <div>
-                <article <div class="form-container">
-                  <div class="form-field">
-                    <!-- <label for="assignee">Assignee:</label> -->
-                    <input type="text" id="assignee" name="assignee" placeholder="Person or activity assigned to">
+                <article>
+                  <div class="form-container">
+                    <fieldset id="docType">
+                      <legend>Document Type:</legend>
+                      <input type="radio" id="receipt" name="documentType" value="Receipt" checked />
+                      <label for="receipt">Receipt</label>
+                      <input type="radio" id="invoice" name="documentType" value="Invoice" />
+                      <label for="invoice">Invoice</label>
+                    </fieldset>
+                    <div class="form-field">
+                      <input type="text" id="assignee" name="assignee" placeholder="Person or activity assigned to">
+                    </div>
+                    <div class="form-field">
+                      <input type="text" id="note" name="note" placeholder="Note or Reference">
+                    </div>
+                    <small>The Assignee and Note will copy across all receipts uploaded. You can upload a group of receipts for the same person or activity at a time.</small>
                   </div>
-                  <div class="form-field">
-                    <!-- <label for="note">Note:</label> -->
-                    <input type="text" id="note" name="note" placeholder="Note or Reference">
-                  </div>
-                  <small>The Assignee and Note will copy across all receipts uploaded. You can
-                    upload a group of receipts for the same person or activity at a time.</small>
-             
-              </article>
+                </article>
             </div>
               <div id="uploadSection" class="uk-animation-fade">
                 <article>
