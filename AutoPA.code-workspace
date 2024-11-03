@@ -1,15 +1,11 @@
 {
-	"folders": [
-		{
-			"path": "."
-		},
-		{
-			"path": "../AutoPA-Function"
-		}
-	],
-	"settings": {
-		"files.associations": {
-			"*.yaml": "home-assistant"
-		}
-	}
+=======
+    "folders": [
+        {
+            "path": "."
+        },
+        {
+            "path": "../AutoPA-Function"
+        }
+    ]
 }
