@@ -1,0 +1,1371 @@
+{
+  "version": "2.1.0",
+  "readResults": [
+    {
+      "page": 1,
+      "angle": 0,
+      "width": 8.2639,
+      "height": 11.6806,
+      "unit": "inch"
+    }
+  ],
+  "pageResults": [
+    {
+      "page": 1,
+      "tables": [
+        {
+          "rows": 6,
+          "columns": 8,
+          "cells": [
+            {
+              "rowIndex": 0,
+              "columnIndex": 0,
+              "text": "Code",
+              "boundingBox": [
+                0.3256,
+                4.654,
+                1.2512,
+                4.654,
+                1.2512,
+                4.8289,
+                0.3256,
+                4.8289
+              ],
+              "isHeader": true
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 1,
+              "text": "Description",
+              "boundingBox": [
+                1.2512,
+                4.654,
+                3.569,
+                4.654,
+                3.569,
+                4.8289,
+                1.2512,
+                4.8289
+              ],
+              "isHeader": true
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 2,
+              "text": "Qty",
+              "boundingBox": [
+                3.569,
+                4.654,
+                4.448,
+                4.654,
+                4.448,
+                4.8289,
+                3.569,
+                4.8289
+              ],
+              "isHeader": true
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 3,
+              "text": "Unit",
+              "boundingBox": [
+                4.448,
+                4.654,
+                5.0624,
+                4.654,
+                5.0624,
+                4.8289,
+                4.448,
+                4.8289
+              ],
+              "isHeader": true
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 4,
+              "text": "Retail",
+              "boundingBox": [
+                5.0624,
+                4.654,
+                5.8169,
+                4.654,
+                5.8169,
+                4.8289,
+                5.0624,
+                4.8289
+              ],
+              "isHeader": true
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 5,
+              "text": "Disc$",
+              "boundingBox": [
+                5.8169,
+                4.654,
+                6.4858,
+                4.6464,
+                6.478,
+                4.8289,
+                5.8169,
+                4.8289
+              ],
+              "isHeader": true
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 6,
+              "text": "Total GST",
+              "boundingBox": [
+                6.4858,
+                4.6464,
+                7.357,
+                4.6464,
+                7.357,
+                4.8289,
+                6.478,
+                4.8289
+              ],
+              "isHeader": true
+            },
+            {
+              "rowIndex": 0,
+              "columnIndex": 7,
+              "text": "Total",
+              "boundingBox": [
+                7.357,
+                4.6464,
+                7.9403,
+                4.6464,
+                7.9403,
+                4.8289,
+                7.357,
+                4.8289
+              ],
+              "isHeader": true
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 0,
+              "text": "50220",
+              "boundingBox": [
+                0.3256,
+                4.8289,
+                1.2512,
+                4.8289,
+                1.2512,
+                5.0342,
+                0.3256,
+                5.0342
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 1,
+              "text": "Wire Twist Tie PVC 30m Cd 2",
+              "boundingBox": [
+                1.2512,
+                4.8289,
+                3.569,
+                4.8289,
+                3.569,
+                5.0342,
+                1.2512,
+                5.0342
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 2,
+              "text": "1",
+              "boundingBox": [
+                3.569,
+                4.8289,
+                4.448,
+                4.8289,
+                4.4402,
+                5.0342,
+                3.569,
+                5.0342
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 3,
+              "text": "Each",
+              "boundingBox": [
+                4.448,
+                4.8289,
+                5.0624,
+                4.8289,
+                5.0624,
+                5.0342,
+                4.4402,
+                5.0342
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 4,
+              "text": "8.99",
+              "boundingBox": [
+                5.0624,
+                4.8289,
+                5.8169,
+                4.8289,
+                5.8169,
+                5.0342,
+                5.0624,
+                5.0342
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 5,
+              "text": "NETT",
+              "boundingBox": [
+                5.8169,
+                4.8289,
+                6.478,
+                4.8289,
+                6.478,
+                5.0342,
+                5.8169,
+                5.0342
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 6,
+              "text": "0.82",
+              "boundingBox": [
+                6.478,
+                4.8289,
+                7.357,
+                4.8289,
+                7.357,
+                5.0418,
+                6.478,
+                5.0342
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 1,
+              "columnIndex": 7,
+              "text": "8.99",
+              "boundingBox": [
+                7.357,
+                4.8289,
+                7.9403,
+                4.8289,
+                7.9403,
+                5.0418,
+                7.357,
+                5.0418
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 0,
+              "text": "SC=8020514",
+              "boundingBox": [
+                0.3256,
+                5.0342,
+                1.2512,
+                5.0342,
+                1.2434,
+                5.1863,
+                0.3334,
+                5.1863
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 1,
+              "text": "",
+              "boundingBox": [
+                1.2512,
+                5.0342,
+                3.569,
+                5.0342,
+                3.569,
+                5.1863,
+                1.2434,
+                5.1863
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 2,
+              "text": "",
+              "boundingBox": [
+                3.569,
+                5.0342,
+                4.4402,
+                5.0342,
+                4.4402,
+                5.1863,
+                3.569,
+                5.1863
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 3,
+              "text": "",
+              "boundingBox": [
+                4.4402,
+                5.0342,
+                5.0624,
+                5.0342,
+                5.0624,
+                5.1863,
+                4.4402,
+                5.1863
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 4,
+              "text": "",
+              "boundingBox": [
+                5.0624,
+                5.0342,
+                5.8169,
+                5.0342,
+                5.8091,
+                5.1863,
+                5.0624,
+                5.1863
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 5,
+              "text": "",
+              "boundingBox": [
+                5.8169,
+                5.0342,
+                6.478,
+                5.0342,
+                6.478,
+                5.1863,
+                5.8091,
+                5.1863
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 6,
+              "text": "",
+              "boundingBox": [
+                6.478,
+                5.0342,
+                7.357,
+                5.0418,
+                7.357,
+                5.1787,
+                6.478,
+                5.1863
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 2,
+              "columnIndex": 7,
+              "text": "",
+              "boundingBox": [
+                7.357,
+                5.0418,
+                7.9403,
+                5.0418,
+                7.9326,
+                5.1863,
+                7.357,
+                5.1787
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 0,
+              "text": "BRPS2LT",
+              "boundingBox": [
+                0.3334,
+                5.1863,
+                1.2434,
+                5.1863,
+                1.2434,
+                5.346,
+                0.3334,
+                5.3384
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 1,
+              "text": "Pressure Sprayer 2Lt Buy Right",
+              "boundingBox": [
+                1.2434,
+                5.1863,
+                3.569,
+                5.1863,
+                3.569,
+                5.346,
+                1.2434,
+                5.346
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 2,
+              "text": "1",
+              "boundingBox": [
+                3.569,
+                5.1863,
+                4.4402,
+                5.1863,
+                4.4402,
+                5.346,
+                3.569,
+                5.346
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 3,
+              "rowSpan": 2,
+              "text": "Each",
+              "boundingBox": [
+                4.4402,
+                5.1863,
+                5.0624,
+                5.1863,
+                5.0624,
+                5.4905,
+                4.4402,
+                5.4905
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 4,
+              "text": "9.99",
+              "boundingBox": [
+                5.0624,
+                5.1863,
+                5.8091,
+                5.1863,
+                5.8091,
+                5.346,
+                5.0624,
+                5.346
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 5,
+              "text": "NETT",
+              "boundingBox": [
+                5.8091,
+                5.1863,
+                6.478,
+                5.1863,
+                6.4703,
+                5.346,
+                5.8091,
+                5.346
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 6,
+              "text": "0.91",
+              "boundingBox": [
+                6.478,
+                5.1863,
+                7.357,
+                5.1787,
+                7.357,
+                5.346,
+                6.4703,
+                5.346
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 3,
+              "columnIndex": 7,
+              "text": "9.99",
+              "boundingBox": [
+                7.357,
+                5.1787,
+                7.9326,
+                5.1863,
+                7.9326,
+                5.3536,
+                7.357,
+                5.346
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 0,
+              "text": "SC=8026730",
+              "boundingBox": [
+                0.3334,
+                5.3384,
+                1.2434,
+                5.346,
+                1.2434,
+                5.4905,
+                0.3334,
+                5.4905
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 1,
+              "text": "",
+              "boundingBox": [
+                1.2434,
+                5.346,
+                3.569,
+                5.346,
+                3.569,
+                5.4905,
+                1.2434,
+                5.4905
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 2,
+              "text": "",
+              "boundingBox": [
+                3.569,
+                5.346,
+                4.4402,
+                5.346,
+                4.4402,
+                5.4905,
+                3.569,
+                5.4905
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 4,
+              "text": "",
+              "boundingBox": [
+                5.0624,
+                5.346,
+                5.8091,
+                5.346,
+                5.8091,
+                5.4905,
+                5.0624,
+                5.4905
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 5,
+              "text": "",
+              "boundingBox": [
+                5.8091,
+                5.346,
+                6.4703,
+                5.346,
+                6.4703,
+                5.4905,
+                5.8091,
+                5.4905
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 6,
+              "text": "",
+              "boundingBox": [
+                6.4703,
+                5.346,
+                7.357,
+                5.346,
+                7.357,
+                5.4905,
+                6.4703,
+                5.4905
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 4,
+              "columnIndex": 7,
+              "text": "",
+              "boundingBox": [
+                7.357,
+                5.346,
+                7.9326,
+                5.3536,
+                7.9326,
+                5.4905,
+                7.357,
+                5.4905
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 0,
+              "text": "LA510MB SC=8004384",
+              "boundingBox": [
+                0.3334,
+                5.4905,
+                1.2434,
+                5.4905,
+                1.2434,
+                5.8023,
+                0.3334,
+                5.8023
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 1,
+              "text": "Jug Measuring Oil-Res 250ml",
+              "boundingBox": [
+                1.2434,
+                5.4905,
+                3.569,
+                5.4905,
+                3.5613,
+                5.8023,
+                1.2434,
+                5.8023
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 2,
+              "text": "1",
+              "boundingBox": [
+                3.569,
+                5.4905,
+                4.4402,
+                5.4905,
+                4.4402,
+                5.7947,
+                3.5613,
+                5.8023
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 3,
+              "text": "",
+              "boundingBox": [
+                4.4402,
+                5.4905,
+                5.0624,
+                5.4905,
+                5.0624,
+                5.7947,
+                4.4402,
+                5.7947
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 4,
+              "text": "6.99",
+              "boundingBox": [
+                5.0624,
+                5.4905,
+                5.8091,
+                5.4905,
+                5.8091,
+                5.7947,
+                5.0624,
+                5.7947
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 5,
+              "text": "0.35",
+              "boundingBox": [
+                5.8091,
+                5.4905,
+                6.4703,
+                5.4905,
+                6.4625,
+                5.7947,
+                5.8091,
+                5.7947
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 6,
+              "text": "0.60",
+              "boundingBox": [
+                6.4703,
+                5.4905,
+                7.357,
+                5.4905,
+                7.357,
+                5.8023,
+                6.4625,
+                5.7947
+              ],
+              "isHeader": false
+            },
+            {
+              "rowIndex": 5,
+              "columnIndex": 7,
+              "text": "6.64",
+              "boundingBox": [
+                7.357,
+                5.4905,
+                7.9326,
+                5.4905,
+                7.9326,
+                5.8023,
+                7.357,
+                5.8023
+              ],
+              "isHeader": false
+            }
+          ],
+          "boundingBox": [
+            0.3567,
+            4.6677,
+            7.9403,
+            4.6678,
+            7.9402,
+            5.8031,
+            0.3563,
+            5.8031
+          ]
+        }
+      ]
+    }
+  ],
+  "documentResults": [
+    {
+      "docType": "prebuilt:invoice",
+      "pageRange": [
+        1,
+        1
+      ],
+      "fields": {
+        "CustomerAddress": {
+          "type": "string",
+          "valueString": "Bungendore NSW 2621",
+          "text": "Bungendore NSW 2621",
+          "boundingBox": [
+            1.2137,
+            3.6392,
+            2.3635,
+            3.6392,
+            2.3635,
+            3.7446,
+            1.2137,
+            3.7446
+          ],
+          "page": 1,
+          "confidence": 0.942
+        },
+        "CustomerAddressRecipient": {
+          "type": "string",
+          "valueString": "Richard and Mark Thorek (505156) 17 Reardon Place",
+          "text": "Richard and Mark Thorek (505156) 17 Reardon Place",
+          "boundingBox": [
+            1.2137,
+            3.3306,
+            2.9519,
+            3.3306,
+            2.9519,
+            3.5704,
+            1.2137,
+            3.5704
+          ],
+          "page": 1,
+          "confidence": 0.421
+        },
+        "CustomerId": {
+          "type": "string",
+          "valueString": "495439",
+          "text": "495439",
+          "boundingBox": [
+            4.212,
+            7.4971,
+            4.578,
+            7.4971,
+            4.578,
+            7.5771,
+            4.212,
+            7.5771
+          ],
+          "page": 1,
+          "confidence": 0.962
+        },
+        "CustomerName": {
+          "type": "string",
+          "valueString": "Richard and Mark Thorek (505156) 17 Reardon Place",
+          "text": "Richard and Mark Thorek (505156) 17 Reardon Place",
+          "boundingBox": [
+            1.2137,
+            3.3306,
+            2.9519,
+            3.3306,
+            2.9519,
+            3.5704,
+            1.2137,
+            3.5704
+          ],
+          "page": 1,
+          "confidence": 0.421
+        },
+        "DueDate": {
+          "type": "date",
+          "text": "30/11/2024",
+          "boundingBox": [
+            2.4588,
+            2.9705,
+            2.9746,
+            2.9705,
+            2.9746,
+            3.0644,
+            2.4588,
+            3.0644
+          ],
+          "page": 1,
+          "confidence": 0.967
+        },
+        "InvoiceDate": {
+          "type": "date",
+          "text": "31/10/2024",
+          "boundingBox": [
+            0.8688,
+            2.9705,
+            1.3872,
+            2.9705,
+            1.3872,
+            3.0644,
+            0.8688,
+            3.0644
+          ],
+          "page": 1,
+          "confidence": 0.967
+        },
+        "InvoiceId": {
+          "type": "string",
+          "valueString": "103206754",
+          "text": "103206754",
+          "boundingBox": [
+            4.1957,
+            4.4023,
+            4.9407,
+            4.4023,
+            4.9407,
+            4.5111,
+            4.1957,
+            4.5111
+          ],
+          "page": 1,
+          "confidence": 0.954
+        },
+        "InvoiceTotal": {
+          "type": "number",
+          "valueNumber": 25.62,
+          "text": "$25.62",
+          "boundingBox": [
+            7.4167,
+            6.1686,
+            7.8703,
+            6.1686,
+            7.8703,
+            6.3126,
+            7.4167,
+            6.3126
+          ],
+          "page": 1,
+          "confidence": 0.959
+        },
+        "Items": {
+          "type": "array",
+          "valueArray": [
+            {
+              "type": "object",
+              "valueObject": {
+                "Amount": {
+                  "type": "number",
+                  "valueNumber": 8.99,
+                  "text": "8.99",
+                  "boundingBox": [
+                    7.6549,
+                    4.9171,
+                    7.8657,
+                    4.9171,
+                    7.8657,
+                    4.9971,
+                    7.6549,
+                    4.9971
+                  ],
+                  "page": 1,
+                  "confidence": 0.876
+                },
+                "Description": {
+                  "type": "string",
+                  "valueString": "Wire Twist Tie PVC 30m Cd 2",
+                  "text": "Wire Twist Tie PVC 30m Cd 2",
+                  "boundingBox": [
+                    1.4404,
+                    4.9125,
+                    2.8779,
+                    4.9125,
+                    2.8779,
+                    4.9971,
+                    1.4404,
+                    4.9971
+                  ],
+                  "page": 1,
+                  "confidence": 0.755
+                },
+                "ProductCode": {
+                  "type": "string",
+                  "valueString": "50220",
+                  "text": "50220",
+                  "boundingBox": [
+                    0.4194,
+                    4.9171,
+                    0.7283,
+                    4.9171,
+                    0.7283,
+                    4.9971,
+                    0.4194,
+                    4.9971
+                  ],
+                  "page": 1,
+                  "confidence": 0.788
+                },
+                "Quantity": {
+                  "type": "number",
+                  "valueNumber": 1,
+                  "text": "1",
+                  "boundingBox": [
+                    4.2172,
+                    4.9177,
+                    4.2625,
+                    4.9177,
+                    4.2625,
+                    4.9961,
+                    4.2172,
+                    4.9961
+                  ],
+                  "page": 1,
+                  "confidence": 0.878
+                },
+                "Unit": {
+                  "type": "string",
+                  "valueString": "Each",
+                  "text": "Each",
+                  "boundingBox": [
+                    4.577,
+                    4.9122,
+                    4.794,
+                    4.9122,
+                    4.794,
+                    4.9971,
+                    4.577,
+                    4.9971
+                  ],
+                  "page": 1,
+                  "confidence": 0.878
+                },
+                "UnitPrice": {
+                  "type": "number",
+                  "valueNumber": 8.99,
+                  "text": "8.99",
+                  "boundingBox": [
+                    5.3716,
+                    4.9171,
+                    5.5824,
+                    4.9171,
+                    5.5824,
+                    4.9971,
+                    5.3716,
+                    4.9971
+                  ],
+                  "page": 1,
+                  "confidence": 0.462
+                }
+              },
+              "text": "50220 Wire Twist Tie PVC 30m Cd 2 1 Each 8.99 NETT 0.82 8.99",
+              "boundingBox": [
+                0.4194,
+                4.9122,
+                7.8657,
+                4.9122,
+                7.8657,
+                4.9971,
+                0.4194,
+                4.9971
+              ],
+              "page": 1,
+              "confidence": 0.903
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Amount": {
+                  "type": "number",
+                  "valueNumber": 9.99,
+                  "text": "9.99",
+                  "boundingBox": [
+                    7.6549,
+                    5.2237,
+                    7.8657,
+                    5.2237,
+                    7.8657,
+                    5.3038,
+                    7.6549,
+                    5.3038
+                  ],
+                  "page": 1,
+                  "confidence": 0.8
+                },
+                "Description": {
+                  "type": "string",
+                  "valueString": "Pressure Sprayer 2Lt Buy Right",
+                  "text": "Pressure Sprayer 2Lt Buy Right",
+                  "boundingBox": [
+                    1.447,
+                    5.2189,
+                    2.968,
+                    5.2189,
+                    2.968,
+                    5.3246,
+                    1.447,
+                    5.3246
+                  ],
+                  "page": 1,
+                  "confidence": 0.72
+                },
+                "ProductCode": {
+                  "type": "string",
+                  "valueString": "BRPS2LT",
+                  "text": "BRPS2LT",
+                  "boundingBox": [
+                    0.4237,
+                    5.2237,
+                    0.8446,
+                    5.2237,
+                    0.8446,
+                    5.3038,
+                    0.4237,
+                    5.3038
+                  ],
+                  "page": 1,
+                  "confidence": 0.521
+                },
+                "Quantity": {
+                  "type": "number",
+                  "valueNumber": 1,
+                  "text": "1",
+                  "boundingBox": [
+                    4.2172,
+                    5.2243,
+                    4.2625,
+                    5.2243,
+                    4.2625,
+                    5.3028,
+                    4.2172,
+                    5.3028
+                  ],
+                  "page": 1,
+                  "confidence": 0.803
+                },
+                "Unit": {
+                  "type": "string",
+                  "valueString": "Each",
+                  "text": "Each",
+                  "boundingBox": [
+                    4.577,
+                    5.2189,
+                    4.794,
+                    5.2189,
+                    4.794,
+                    5.3038,
+                    4.577,
+                    5.3038
+                  ],
+                  "page": 1,
+                  "confidence": 0.802
+                },
+                "UnitPrice": {
+                  "type": "number",
+                  "valueNumber": 9.99,
+                  "text": "9.99",
+                  "boundingBox": [
+                    5.3716,
+                    5.2237,
+                    5.5824,
+                    5.2237,
+                    5.5824,
+                    5.3038,
+                    5.3716,
+                    5.3038
+                  ],
+                  "page": 1,
+                  "confidence": 0.306
+                }
+              },
+              "text": "BRPS2LT Pressure Sprayer 2Lt Buy Right 1 Each 9.99 NETT 0.91 9.99",
+              "boundingBox": [
+                0.4237,
+                5.2189,
+                7.8657,
+                5.2189,
+                7.8657,
+                5.3246,
+                0.4237,
+                5.3246
+              ],
+              "page": 1,
+              "confidence": 0.752
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Amount": {
+                  "type": "number",
+                  "valueNumber": 6.64,
+                  "text": "6.64",
+                  "boundingBox": [
+                    7.6564,
+                    5.5271,
+                    7.8684,
+                    5.5271,
+                    7.8684,
+                    5.6071,
+                    7.6564,
+                    5.6071
+                  ],
+                  "page": 1,
+                  "confidence": 0.868
+                },
+                "Description": {
+                  "type": "string",
+                  "valueString": "Jug Measuring Oil-Res 250ml",
+                  "text": "Jug Measuring Oil-Res 250ml",
+                  "boundingBox": [
+                    1.437,
+                    5.5222,
+                    2.8899,
+                    5.5222,
+                    2.8899,
+                    5.6279,
+                    1.437,
+                    5.6279
+                  ],
+                  "page": 1,
+                  "confidence": 0.691
+                },
+                "ProductCode": {
+                  "type": "string",
+                  "valueString": "LA510MB",
+                  "text": "LA510MB",
+                  "boundingBox": [
+                    0.4237,
+                    5.5271,
+                    0.8946,
+                    5.5271,
+                    0.8946,
+                    5.6071,
+                    0.4237,
+                    5.6071
+                  ],
+                  "page": 1,
+                  "confidence": 0.504
+                },
+                "Quantity": {
+                  "type": "number",
+                  "valueNumber": 1,
+                  "text": "1",
+                  "boundingBox": [
+                    4.2172,
+                    5.5277,
+                    4.2625,
+                    5.5277,
+                    4.2625,
+                    5.6061,
+                    4.2172,
+                    5.6061
+                  ],
+                  "page": 1,
+                  "confidence": 0.769
+                },
+                "UnitPrice": {
+                  "type": "number",
+                  "valueNumber": 6.99,
+                  "text": "6.99",
+                  "boundingBox": [
+                    5.3731,
+                    5.5271,
+                    5.5824,
+                    5.5271,
+                    5.5824,
+                    5.6071,
+                    5.3731,
+                    5.6071
+                  ],
+                  "page": 1,
+                  "confidence": 0.407
+                }
+              },
+              "text": "LA510MB Jug Measuring Oil-Res 250ml 1 6.99 0.35 0.60 6.64",
+              "boundingBox": [
+                0.4237,
+                5.5222,
+                7.8684,
+                5.5222,
+                7.8684,
+                5.6279,
+                0.4237,
+                5.6279
+              ],
+              "page": 1,
+              "confidence": 0.787
+            }
+          ]
+        },
+        "SubTotal": {
+          "type": "number",
+          "valueNumber": 25.97,
+          "text": "$25.97",
+          "boundingBox": [
+            7.5291,
+            5.881,
+            7.8679,
+            5.881,
+            7.8679,
+            5.9875,
+            7.5291,
+            5.9875
+          ],
+          "page": 1,
+          "confidence": 0.919
+        },
+        "TotalTax": {
+          "type": "number",
+          "valueNumber": 2.33,
+          "text": "$2.33",
+          "boundingBox": [
+            7.6318,
+            6.3543,
+            7.8674,
+            6.3543,
+            7.8674,
+            6.4492,
+            7.6318,
+            6.4492
+          ],
+          "page": 1,
+          "confidence": 0.961
+        },
+        "VendorAddress": {
+          "type": "string",
+          "valueString": "114 Molonglo Street BUNGENDORE NSW 2621",
+          "text": "114 Molonglo Street BUNGENDORE NSW 2621",
+          "boundingBox": [
+            3.3329,
+            2.1185,
+            4.9793,
+            2.1185,
+            4.9793,
+            2.3973,
+            3.3329,
+            2.3973
+          ],
+          "page": 1,
+          "confidence": 0.933
+        },
+        "VendorAddressRecipient": {
+          "type": "string",
+          "valueString": "Bungendore Rural Services",
+          "text": "Bungendore Rural Services",
+          "boundingBox": [
+            3.3072,
+            1.9452,
+            4.9938,
+            1.9452,
+            4.9938,
+            2.0766,
+            3.3072,
+            2.0766
+          ],
+          "page": 1,
+          "confidence": 0.946
+        },
+        "VendorName": {
+          "type": "string",
+          "valueString": "BRural BUNGENDORE RURAL SERVICES",
+          "text": "BRural BUNGENDORE RURAL SERVICES",
+          "boundingBox": [
+            3.5895,
+            0.6996,
+            5.9216,
+            0.6996,
+            5.9216,
+            1.4398,
+            3.5895,
+            1.4398
+          ],
+          "page": 1,
+          "confidence": 0.851
+        }
+      }
+    }
+  ],
+  "receiptID": "132e4779-0927-4ed2-a510-2cdd90268a91",
+  "weburl": "https://autopastorage.blob.core.windows.net/images/132e4779-0927-4ed2-a510-2cdd90268a91?sv=2023-11-03&st=2024-11-03T01%3A02%3A58Z&se=2123-11-03T02%3A02%3A58Z&sr=b&sp=r&sig=NdJPFZKiliWj8JBTRUaQAqq%2BU5J13FSh3IWzkXkiHW8%3D",
+  "assignee": "",
+  "note": "",
+  "documentType": "Invoice"
+}

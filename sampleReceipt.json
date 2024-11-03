@@ -1,0 +1,559 @@
+{
+  "version": "2.1.0",
+  "readResults": [
+    {
+      "page": 1,
+      "angle": -5.1479,
+      "width": 875,
+      "height": 2573,
+      "unit": "pixel"
+    }
+  ],
+  "documentResults": [
+    {
+      "docType": "prebuilt:receipt",
+      "pageRange": [
+        1,
+        1
+      ],
+      "fields": {
+        "Items": {
+          "type": "array",
+          "valueArray": [
+            {
+              "type": "object",
+              "valueObject": {
+                "Name": {
+                  "type": "string",
+                  "valueString": "ACTIVITY KIT 1EACH",
+                  "text": "ACTIVITY KIT 1EACH",
+                  "boundingBox": [
+                    84.7,
+                    728.6,
+                    428.8,
+                    689.9,
+                    433.3,
+                    729.8,
+                    89.2,
+                    768.5
+                  ],
+                  "page": 1,
+                  "confidence": 0.978
+                },
+                "TotalPrice": {
+                  "type": "number",
+                  "valueNumber": 5.99,
+                  "text": "5.99",
+                  "boundingBox": [
+                    726,
+                    655,
+                    807,
+                    648,
+                    810,
+                    686,
+                    730,
+                    694
+                  ],
+                  "page": 1,
+                  "confidence": 0.983
+                }
+              }
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Name": {
+                  "type": "string",
+                  "valueString": "MCKENZIES COCONUT 250GRAM",
+                  "text": "MCKENZIES COCONUT 250GRAM",
+                  "boundingBox": [
+                    91.8,
+                    769.5,
+                    561.8,
+                    718.4,
+                    566.2,
+                    759,
+                    96.3,
+                    810.1
+                  ],
+                  "page": 1,
+                  "confidence": 0.976
+                },
+                "TotalPrice": {
+                  "type": "number",
+                  "valueNumber": 2.75,
+                  "text": "2.75",
+                  "boundingBox": [
+                    729,
+                    699,
+                    805,
+                    694,
+                    808,
+                    730,
+                    732,
+                    737
+                  ],
+                  "page": 1,
+                  "confidence": 0.985
+                }
+              }
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Name": {
+                  "type": "string",
+                  "valueString": "WW PLAIN FLOUR 1KG",
+                  "text": "WW PLAIN FLOUR 1KG",
+                  "boundingBox": [
+                    93.8,
+                    809.5,
+                    432.9,
+                    776.2,
+                    436.9,
+                    817.2,
+                    97.9,
+                    850.4
+                  ],
+                  "page": 1,
+                  "confidence": 0.975
+                },
+                "TotalPrice": {
+                  "type": "number",
+                  "valueNumber": 3.4,
+                  "text": "3.40",
+                  "boundingBox": [
+                    729,
+                    742,
+                    807,
+                    735,
+                    811,
+                    771,
+                    733,
+                    779
+                  ],
+                  "page": 1,
+                  "confidence": 0.983
+                }
+              }
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Name": {
+                  "type": "string",
+                  "valueString": "CSR CASTER SUGAR 1KG",
+                  "text": "CSR CASTER SUGAR 1KG",
+                  "boundingBox": [
+                    98.9,
+                    851.5,
+                    474.2,
+                    812.8,
+                    478.3,
+                    852.5,
+                    103,
+                    891.2
+                  ],
+                  "page": 1,
+                  "confidence": 0.972
+                },
+                "TotalPrice": {
+                  "type": "number",
+                  "valueNumber": 3,
+                  "text": "3.00",
+                  "boundingBox": [
+                    729,
+                    785,
+                    805,
+                    777,
+                    808,
+                    812,
+                    733,
+                    821
+                  ],
+                  "page": 1,
+                  "confidence": 0.976
+                }
+              }
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Name": {
+                  "type": "string",
+                  "valueString": "CSK GOLDEN SYRUP SQU 500GRAM",
+                  "text": "CSK GOLDEN SYRUP SQU 500GRAM",
+                  "boundingBox": [
+                    103.2,
+                    892.5,
+                    623.9,
+                    837.9,
+                    628.1,
+                    877.9,
+                    107.4,
+                    932.6
+                  ],
+                  "page": 1,
+                  "confidence": 0.863
+                },
+                "TotalPrice": {
+                  "type": "number",
+                  "valueNumber": 3.5,
+                  "text": "3.50",
+                  "boundingBox": [
+                    727,
+                    824,
+                    806,
+                    818,
+                    809,
+                    856,
+                    731,
+                    863
+                  ],
+                  "page": 1,
+                  "confidence": 0.983
+                }
+              }
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Name": {
+                  "type": "string",
+                  "valueString": "MCKNZIE BI CARB SODA 350GRAM",
+                  "text": "MCKNZIE BI CARB SODA 350GRAM",
+                  "boundingBox": [
+                    105.7,
+                    934.9,
+                    621,
+                    880.8,
+                    625.1,
+                    920,
+                    109.8,
+                    974.1
+                  ],
+                  "page": 1,
+                  "confidence": 0.962
+                },
+                "TotalPrice": {
+                  "type": "number",
+                  "valueNumber": 4.5,
+                  "text": "4.50",
+                  "boundingBox": [
+                    732,
+                    868,
+                    803,
+                    860,
+                    807,
+                    896,
+                    734,
+                    904
+                  ],
+                  "page": 1,
+                  "confidence": 0.985
+                }
+              }
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Name": {
+                  "type": "string",
+                  "valueString": "PRIMO HAM OFF BONE PERKG",
+                  "text": "PRIMO HAM OFF BONE PERKG",
+                  "boundingBox": [
+                    103.3,
+                    974.5,
+                    545.3,
+                    930.3,
+                    549.3,
+                    969.9,
+                    107.3,
+                    1014.1
+                  ],
+                  "page": 1,
+                  "confidence": 0.975
+                },
+                "TotalPrice": {
+                  "type": "number",
+                  "valueNumber": 7.42,
+                  "text": "7.42",
+                  "boundingBox": [
+                    728,
+                    906,
+                    808,
+                    902,
+                    810,
+                    941,
+                    731,
+                    946
+                  ],
+                  "page": 1,
+                  "confidence": 0.985
+                }
+              }
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Name": {
+                  "type": "string",
+                  "valueString": "WESTERN STAR DAIRY B 250GRAM",
+                  "text": "WESTERN STAR DAIRY B 250GRAM",
+                  "boundingBox": [
+                    108.2,
+                    1016.2,
+                    622,
+                    962.8,
+                    625.9,
+                    1001,
+                    112.1,
+                    1054.4
+                  ],
+                  "page": 1,
+                  "confidence": 0.975
+                },
+                "Price": {
+                  "type": "number",
+                  "valueNumber": 5.2,
+                  "text": "$5.20",
+                  "boundingBox": [
+                    230,
+                    1044,
+                    329,
+                    1034,
+                    331,
+                    1072,
+                    233,
+                    1082
+                  ],
+                  "page": 1,
+                  "confidence": 0.979
+                },
+                "Quantity": {
+                  "type": "number",
+                  "valueNumber": 2,
+                  "text": "2",
+                  "boundingBox": [
+                    160,
+                    1050,
+                    182,
+                    1048,
+                    186,
+                    1086,
+                    164,
+                    1088
+                  ],
+                  "page": 1,
+                  "confidence": 0.982
+                },
+                "TotalPrice": {
+                  "type": "number",
+                  "valueNumber": 10.4,
+                  "text": "10.40",
+                  "boundingBox": [
+                    715,
+                    952,
+                    805,
+                    943,
+                    809,
+                    979,
+                    717,
+                    988
+                  ],
+                  "page": 1,
+                  "confidence": 0.985
+                }
+              }
+            },
+            {
+              "type": "object",
+              "valueObject": {
+                "Name": {
+                  "type": "string",
+                  "valueString": "UNCLE TOBYS TRAD OAT 500GRAM",
+                  "text": "UNCLE TOBYS TRAD OAT 500GRAM",
+                  "boundingBox": [
+                    107.2,
+                    1095.9,
+                    620.2,
+                    1043,
+                    624.2,
+                    1081.5,
+                    111.1,
+                    1134.4
+                  ],
+                  "page": 1,
+                  "confidence": 0.975
+                },
+                "TotalPrice": {
+                  "type": "number",
+                  "valueNumber": 4.5,
+                  "text": "4.50",
+                  "boundingBox": [
+                    728,
+                    1030,
+                    801,
+                    1023,
+                    805,
+                    1058,
+                    730,
+                    1066
+                  ],
+                  "page": 1,
+                  "confidence": 0.985
+                }
+              }
+            }
+          ]
+        },
+        "MerchantAddress": {
+          "type": "string",
+          "valueString": "NSW AU",
+          "text": "NSW AU",
+          "boundingBox": [
+            645.8,
+            1435.1,
+            761,
+            1427,
+            763.9,
+            1467.9,
+            648.7,
+            1476
+          ],
+          "page": 1,
+          "confidence": 0.929
+        },
+        "MerchantName": {
+          "type": "string",
+          "valueString": "Coles Supermarkets Australia Pty Ltd",
+          "text": "Coles Supermarkets Australia Pty Ltd",
+          "boundingBox": [
+            133.9,
+            144.5,
+            769.9,
+            123.3,
+            771.1,
+            158,
+            135,
+            179.2
+          ],
+          "page": 1,
+          "confidence": 0.97
+        },
+        "MerchantPhoneNumber": {
+          "type": "phoneNumber",
+          "valuePhoneNumber": "+61263346200",
+          "text": "02 6334 6200",
+          "boundingBox": [
+            274.3,
+            467,
+            493.9,
+            455.9,
+            495.6,
+            488.9,
+            276,
+            500
+          ],
+          "page": 1,
+          "confidence": 0.988
+        },
+        "ReceiptType": {
+          "type": "string",
+          "valueString": "Itemized",
+          "confidence": 0.995
+        },
+        "Subtotal": {
+          "type": "number",
+          "valueNumber": 45.46,
+          "text": "$45.46",
+          "boundingBox": [
+            692,
+            1075,
+            805,
+            1063,
+            805,
+            1102,
+            695,
+            1113
+          ],
+          "page": 1,
+          "confidence": 0.982
+        },
+        "Tax": {
+          "type": "number",
+          "valueNumber": 0.52,
+          "text": "$0.52",
+          "boundingBox": [
+            704,
+            1312,
+            801,
+            1303,
+            805,
+            1340,
+            707,
+            1350
+          ],
+          "page": 1,
+          "confidence": 0.987
+        },
+        "Total": {
+          "type": "number",
+          "valueNumber": 43.19,
+          "text": "$43.19",
+          "boundingBox": [
+            687,
+            1194,
+            803,
+            1183,
+            807,
+            1220,
+            691,
+            1233
+          ],
+          "page": 1,
+          "confidence": 0.982
+        },
+        "TransactionDate": {
+          "type": "date",
+          "valueDate": "2024-04-24",
+          "text": "24/04/2024",
+          "boundingBox": [
+            264,
+            561,
+            451,
+            553,
+            452,
+            586,
+            266,
+            592
+          ],
+          "page": 1,
+          "confidence": 0.986
+        },
+        "TransactionTime": {
+          "type": "time",
+          "valueTime": "13:15:00",
+          "text": "13:15",
+          "boundingBox": [
+            714,
+            538,
+            800,
+            532,
+            804,
+            562,
+            716,
+            566
+          ],
+          "page": 1,
+          "confidence": 0.982
+        }
+      }
+    }
+  ],
+  "receiptID": "3af455cb-acda-4eaa-96e2-000f06310e34",
+  "weburl": "https://autopastorage.blob.core.windows.net/images/3af455cb-acda-4eaa-96e2-000f06310e34?sv=2023-11-03&st=2024-11-03T01%3A05%3A27Z&se=2123-11-03T02%3A05%3A27Z&sr=b&sp=r&sig=8bPtBIOIgF4U9Vnvl%2FWRzuvfanMv1IBHIyS21ZznufY%3D",
+  "assignee": "",
+  "note": "",
+  "documentType": "Receipt"
+}
